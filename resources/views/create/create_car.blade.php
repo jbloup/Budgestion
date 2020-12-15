@@ -15,7 +15,7 @@
         <div class="mb-4">
             <label for="email" class="label">Type de carburant</label>
             <input id="email" type="text" name="fuel" class="input" value="{{ old('fuel') }}" autocomplete="fueltype" placeholder="Carburant" autofocus>
-            @error('fuel')
+            @error('fuel_type')
             <span class="help is-danger">{{ $message }}</span>
             @enderror
         </div>

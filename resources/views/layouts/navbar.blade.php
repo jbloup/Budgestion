@@ -15,10 +15,13 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             @guest
-            <a href="{{ route('home') }}" class="navbar-item">
-                Home
+            <a href="{{ url('/') }}" class="navbar-item">
+                Welcome
             </a>
             @else
+                <a href="{{ route('home') }}" class="navbar-item">
+                    Home
+                </a>
             <a href="#" class="navbar-item">
                 Dépense Annuelle
             </a>
@@ -33,7 +36,7 @@
                 </a>
 
                 <div class="navbar-dropdown">
-                    <a href="#" class="navbar-item">
+                    <a href="{{ route('category') }}" class="navbar-item">
                         Créer catégorie
                     </a>
                     <a href="#" class="navbar-item">
@@ -50,7 +53,6 @@
             </div>
             @endguest
         </div>
-
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
@@ -62,7 +64,7 @@
                         Se connecter
                     </a>
                     @else
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" >se déconnecter</a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="button is-light">se déconnecter</a>
                         <form id="logout-form" method="POST" action="{{ route('logout') }}">
                             @csrf
                         </form>

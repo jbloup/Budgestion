@@ -8,10 +8,23 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Gestion</title>
 </head>
-<body>
+<body style="padding-bottom: 200px;">
 @include('layouts.navbar')
 <section class="section">
     @yield('content')
 </section>
+<footer class="footer pt-4 pb-4" style="
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+
+">
+    <div class="content has-text-centered">
+        <p class="is-size-7">
+            <strong>AppGestion</strong> by Jean-baptiste LOUP &copy; Copyright 2020 &middot
+            <a href="#">About Me</a>
+        </p>
+    </div>
+</footer>
 </body>
 </html>
