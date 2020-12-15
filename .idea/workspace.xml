@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="initial commit">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/ce2c993b-96e1-4679-ad87-08e624faae22.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ce2c993b-96e1-4679-ad87-08e624faae22.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Account.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Account.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_231744_create_cars_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_231744_create_cars_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Car.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Car.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Fuel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Fuel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Spent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Spent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/SubType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/SubType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Type.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

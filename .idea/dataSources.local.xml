@@ -11,10 +11,7 @@
       <user-name>root</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="schema">
-            <name qname="appgestiondb" />
-            <name qname="dbspentapp" />
-          </node>
+          <node kind="schema" qname="appgestiondb" />
         </introspection-scope>
       </schema-mapping>
     </data-source>

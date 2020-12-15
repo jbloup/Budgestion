@@ -13,4 +13,24 @@ class Spent extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    public function account()
+    {
+        return $this->belongsTo('App\Models\Account');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
+    }
+
+    public function subtype()
+    {
+        return $this->belongsTo('App\Models\SubType');
+    }
+
+    public function fuels()
+    {
+        return $this->hasMany('App\Models\Fuel');
+    }
 }

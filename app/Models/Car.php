@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Car extends Model
 {
     use HasFactory;
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function fuels()
+    {
+        return $this->hasMany('App\Models\Fuel');
+    }
 }
