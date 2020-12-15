@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/create', function () {
-    return view('create');
-});
+
+Route::get('/home', function () {
+    return view('home');
+})->middleware('auth')->name('home');
+
+Route::get('/create/car', function () {
+    return view('create/create_car');
+})->middleware('auth')->name('car');
+
+Route::post('/create/car', [CarController::class, 'create']);

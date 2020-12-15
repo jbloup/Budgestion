@@ -1261,29 +1261,37 @@ SELECT|sys.sys_config
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="343" parent="247" name="remember_token">
+    <column id="343" parent="247" name="two_factor_secret">
       <Position>6</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="344" parent="247" name="two_factor_recovery_codes">
+      <Position>7</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="345" parent="247" name="remember_token">
+      <Position>8</Position>
       <DataType>varchar(100)|0s</DataType>
     </column>
-    <column id="344" parent="247" name="created_at">
-      <Position>7</Position>
+    <column id="346" parent="247" name="created_at">
+      <Position>9</Position>
       <DataType>timestamp|0s</DataType>
     </column>
-    <column id="345" parent="247" name="updated_at">
-      <Position>8</Position>
+    <column id="347" parent="247" name="updated_at">
+      <Position>10</Position>
       <DataType>timestamp|0s</DataType>
     </column>
-    <index id="346" parent="247" name="users_email_unique">
+    <index id="348" parent="247" name="users_email_unique">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="347" parent="247" name="PRIMARY">
+    <key id="349" parent="247" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="348" parent="247" name="users_email_unique">
+    <key id="350" parent="247" name="users_email_unique">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>users_email_unique</UnderlyingIndexName>
     </key>
