@@ -18,6 +18,7 @@ class CreateCarsTable extends Migration
             $table->string('name');
             $table->string('fuel_type');
             $table->unsignedBigInteger('mileage');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
