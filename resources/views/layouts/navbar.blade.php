@@ -1,8 +1,8 @@
 <header>
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <a class="navbar-item mx-3" href="{{ url('/') }}">
+            <span class="icon has-text-primary"><i class="fas fa-3x fa-table"></i></span>
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -36,11 +36,11 @@
                 </a>
 
                 <div class="navbar-dropdown">
-                    <a href="{{ route('category') }}" class="navbar-item">
+                    <a href="{{ url('create/category') }}" class="navbar-item">
                         Créer catégorie
                     </a>
-                    <a href="#" class="navbar-item">
-                        Créer Type / Sous-Type
+                    <a href="{{ url('create/type') }}" class="navbar-item">
+                        Créer type / sous-Type
                     </a>
                     <a href="{{ route('car') }}" class="navbar-item">
                         Créer voiture

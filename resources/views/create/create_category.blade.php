@@ -19,5 +19,14 @@
             @enderror
         </div>
         <button type="submit" class="button is-primary">Créer une catégorie</button>
+        @if($message_success != "")
+            <span class="help is-success">{{ $message_success }}</span>
+        @endif
     </form>
+    <div class="container">
+        @foreach($categories as $category)
+            <div>{{ $category->name }}</div>
+            <div>{{ $category->description }}</div>
+        @endforeach
+    </div>
 @endsection

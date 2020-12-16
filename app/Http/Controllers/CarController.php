@@ -18,11 +18,10 @@ class CarController extends Controller
         ]);
         $car = Car::create([
             'name' => request('name'),
-            'fuel_type' => request('fuel'),
+            'fuel_type' => request('fuel_type'),
             'mileage' => request('mileage'),
             'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
-        return "La " . $car . " est bien enregistrée";
     }
 }

@@ -7,19 +7,31 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
     public function create()
     {
+        return view('create/create_category',[
+            'categories' => Category::all(),
+            'message_success' => ""
+        ]);
+    }
+
+
+    public function store()
+    {
         request()->validate([
-            'name' => ['required', 'string'],
+            'name' => ['unique','required', 'string'],
             'description' => ['required', 'string']
         ]);
-        $category = Category::create([
+        Category::create([
             'name' => request('name'),
             'description' => request('description'),
 
         ]);
 
-        return "La " . $category . " est bien enregistrée";
+        return view('create/create_category',[
+            'message_success' => "catégorie bien enregistrée",
+            'categories' => Category::all()
+        ]);
     }
+
 }
