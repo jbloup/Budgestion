@@ -2,9 +2,8 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\SubTypeController;
+use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\TypeController;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,19 +25,20 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('auth')->name('home');
 
-Route::get('/create/category', [CategoryController::class, 'create', 'index'])->middleware('auth');
-Route::post('/create/category', [CategoryController::class, 'store', 'index'])->middleware('auth');
+Route::get('/create/category', [CategoryController::class, 'create'])->middleware('auth');
+Route::post('/create/category', [CategoryController::class, 'store'])->middleware('auth');
+
+Route::get('/create/type', [TypeController::class, 'create'])->middleware('auth');
+Route::post('/create/type', [TypeController::class, 'store'])->middleware('auth');
 
 
+Route::get('/create/subtype', [FamilyController::class, 'create'])->middleware('auth');
+Route::post('/create/subtype', [FamilyController::class, 'store'])->middleware('auth')->name('family');
 
-Route::get('/create/car', function () {
-    return view('create/create_car');
-})->middleware('auth')->name('car');
+Route::get('/create/car', [CarController::class, 'create'])->middleware('auth');
+Route::post('/create/car', [CarController::class, 'store'])->name('store_car')->middleware('auth');
+Route::post('/create/car_update', [CarController::class, 'update'])->name('update_car')->middleware('auth');
+Route::get('/create/car_update', [CarController::class, 'create'])->middleware('auth');
+Route::post('/create/car_delete', [CarController::class, 'delete'])->name('delete_car')->middleware('auth');
+Route::get('/create/car_delete', [CarController::class, 'create'])->middleware('auth');
 
-Route::post('/create/car', [CarController::class, 'create']);
-
-Route::get('/create/type', [TypeController::class, 'create']);
-Route::post('/create/type', [TypeController::class, 'store']);
-
-Route::get('/create/type', [SubTypeController::class, 'create']);
-Route::post('/create/type', [SubTypeController::class, 'store']);

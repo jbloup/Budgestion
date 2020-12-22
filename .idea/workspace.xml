@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="develop">
+    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="develop forms">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ce2c993b-96e1-4679-ad87-08e624faae22.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ce2c993b-96e1-4679-ad87-08e624faae22.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CarController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SubTypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SubTypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SubTypeController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Spent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Spent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/SubType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Type.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_223450_create_spents_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_231754_create_spents_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_225442_create_accounts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_225442_create_accounts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_225457_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_225457_create_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_225517_create_types_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_225517_create_types_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_230048_create_sub_types_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_233031_addforeign_key_car.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_16_232832_update_table_unique_name.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/fr/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fr/validation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/create_car.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_car.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/create_category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_category.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/create_type.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_type.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
@@ -207,7 +220,10 @@
       <workItem from="1607701838121" duration="112000" />
       <workItem from="1607701956421" duration="2502000" />
       <workItem from="1607980387429" duration="6819000" />
-      <workItem from="1608151953221" duration="8928000" />
+      <workItem from="1608151953221" duration="9006000" />
+      <workItem from="1608197161123" duration="16431000" />
+      <workItem from="1608558055686" duration="15834000" />
+      <workItem from="1608624557674" duration="9057000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1607702225491</created>
@@ -258,7 +274,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608071119305</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="develop forms">
+      <created>1608161577804</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1608161577804</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,6 +305,17 @@
     <MESSAGE value="add views / bulma / formCar" />
     <MESSAGE value="add views" />
     <MESSAGE value="develop" />
-    <option name="LAST_COMMIT_MESSAGE" value="develop" />
+    <MESSAGE value="develop forms" />
+    <option name="LAST_COMMIT_MESSAGE" value="develop forms" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/layouts/app.blade.php</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

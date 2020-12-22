@@ -24,7 +24,7 @@ class Spent extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
-    public function subtype()
+    public function family()
     {
         return $this->belongsTo('App\Models\SubType');
     }

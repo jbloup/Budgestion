@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateTableUniqueName extends Migration
+class CreateFamiliesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class UpdateTableUniqueName extends Migration
      */
     public function up()
     {
-        Schema::table('Categories', function (Blueprint $table) {
-            $table->string('name')->unique();
+        Schema::create('families', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->foreignId('type_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -25,6 +29,6 @@ class UpdateTableUniqueName extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('families');
     }
 }

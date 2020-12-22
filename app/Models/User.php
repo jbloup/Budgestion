@@ -50,4 +50,16 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Account');
     }
+    public function categories()
+    {
+        return $this->hasMany('App\Models\Category');
+    }
+    public function cars()
+    {
+        return $this->hasMany('App\Models\Car');
+    }
+    public function types()
+    {
+        return $this->hasMany('App\Models\Type');
+    }
 }

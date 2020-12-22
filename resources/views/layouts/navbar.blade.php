@@ -42,7 +42,7 @@
                     <a href="{{ url('create/type') }}" class="navbar-item">
                         Créer type / sous-Type
                     </a>
-                    <a href="{{ route('car') }}" class="navbar-item">
+                    <a href="{{ url('create/car') }}" class="navbar-item">
                         Créer voiture
                     </a>
                     <hr class="navbar-divider">

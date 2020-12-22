@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -19,12 +19,13 @@ class CategoryController extends Controller
     public function store()
     {
         request()->validate([
-            'name' => ['unique','required', 'string'],
-            'description' => ['required', 'string']
+            'name' => ['required', 'string'],
+            'description' => ['nullable', 'string']
         ]);
         Category::create([
             'name' => request('name'),
             'description' => request('description'),
+            'user_id' => Auth::user()->getAuthIdentifier()
 
         ]);
 

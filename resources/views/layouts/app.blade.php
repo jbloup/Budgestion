@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>Gestion</title>
 </head>
-<body>
+<body style="min-height: 100vh">
 @include('layouts.navbar')
-<section class="section">
+<section class="section mb-6 pb-6">
     @yield('content')
 </section>
-<footer class="footer pt-4 pb-4">
+<section class="section mb-6 pb-6">
+
+</section>
+<footer class="footer mt-6 p-5">
     <div class="content has-text-centered">
         <p class="is-size-7">
             <strong>AppGestion</strong> by Jean-baptiste LOUP &copy; Copyright 2020 &middot

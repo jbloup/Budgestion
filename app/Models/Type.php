@@ -9,7 +9,16 @@ class Type extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     public function subtypes()
+    {
+        return $this->hasMany('App\Models\SubType');
+    }
+    public function families()
     {
         return $this->hasMany('App\Models\SubType');
     }
