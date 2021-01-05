@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class TypeController extends Controller
 {
@@ -19,37 +21,83 @@ class TypeController extends Controller
      */
     public function create()
     {
+        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
+
         return view('create/create_type',[
-            'types' => Type::all(),
-            'families' => Family::all(),
+            'types' => $types,
             'message_success' => "",
-            'message_success_family' => ""
+            'message_success_family' => "",
+            'message_updated' => "",
         ]);
     }
 
     /**
      * Store a new type.
      * @param Request $request
-     * @return Application|RedirectResponse|Redirector
+     * @return Application|Factory|View
      */
     public function store(Request $request)
     {
         $request->validate([
-            'type_name' => 'unique:types,name|required|string|max:255',
-            'type_description' => 'required|string|max:255',
+            'type_name' => 'required|string|max:255',
         ]);
 
         Type::create([
            'name'=>request('type_name'),
-           'description'=>request('type_description'),
-            'user_id' => Auth::user()->getAuthIdentifier()
+           'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
+        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
+
         return view('create/create_type',[
-            'types' => DB::table('types')->where('user_id', Auth::user()->getAuthIdentifier()),
-            'families' => Family::all(),
+            'types' => $types,
             'message_success_family' => "",
-            'message_success' => "type bien enregistré"
+            'message_success' => "type bien enregistré",
+            'message_updated' => "",
+        ]);
+    }
+    /**
+     * Store a new type.
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+            'update_name' => 'required|string|max:255',
+        ]);
+
+        Type::where('user_id', Auth::user()->getAuthIdentifier())
+            ->where('id', request('type_id'))
+            ->update(['name' => request('update_name')]
+            );
+
+        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
+
+        return view('create/create_type',[
+            'types' => $types,
+            'message_updated' => "modification bien enregistrée",
+            'message_success' => "",
+            'message_success_family' => "",
+        ]);
+    }
+
+    /**
+     * Store a new type.
+     * @param
+     * @return Application|Factory|View
+     */
+    public function delete()
+    {
+        DB::table('types')->where('id', request('type_id'))->delete();
+
+        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
+
+        return view('create/create_type',[
+            'types' => $types,
+            'message_updated' => "",
+            'message_success' => "",
+            'message_success_family' => "",
         ]);
     }
 }

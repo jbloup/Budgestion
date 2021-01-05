@@ -11,8 +11,7 @@ class Family extends Model
 
     protected $fillable = [
         'name',
-        'description',
-        'type_id'
+        'type_id',
     ];
 
     public function type()

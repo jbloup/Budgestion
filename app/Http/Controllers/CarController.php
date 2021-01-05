@@ -39,7 +39,7 @@ class CarController extends Controller
             'name' => request('name'),
             'fuel_type' => request('fuel_type'),
             'mileage' => request('mileage'),
-            'user_id' => Auth::user()->getAuthIdentifier()
+            'user_id' => Auth::user()->getAuthIdentifier(),
 
         ]);
 
@@ -82,10 +82,7 @@ class CarController extends Controller
      */
     public function delete()
     {
-
-        Car::where('user_id', Auth::user()->getAuthIdentifier())
-            ->where('id', request('car_id'))
-            ->delete();
+        DB::table('cars')->where('id', request('car_id'))->delete();
 
         return view('create/create_car',[
             'cars' => DB::table('cars')->where('user_id', Auth::user()->getAuthIdentifier())->get(),

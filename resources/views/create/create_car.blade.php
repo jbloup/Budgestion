@@ -74,10 +74,7 @@
                                     class="fas fa-pen"></i></span></button>
                     </th>
                     <th>
-                        <form method="GET" action="{{ route('delete_car') }}">
-                            <input id="car_id" name="car_id" class="is-hidden" value="{{ $car->id }}">
-                        <button type="submit" id="delete" class="button is-danger"><span class="icon"><i class="fas fa-trash-alt"></i></span></button>
-                        </form>
+                        <button type="submit" id="delete" class="button is-danger"><a class="has-text-light" href="{{ url('/create/car_delete?car_id='. $car->id) }}" ><span class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
                     </th>
                 </tr>
                 <!-- Modal Card -->
@@ -100,9 +97,6 @@
                                         <input id="update_name" type="text" name="update_name" class="input"
                                                value="{{ $car->name }}"
                                                placeholder="Nom voiture" autofocus>
-                                        @error('name')
-                                        <span class="help is-danger">{{ $message }}</span>
-                                        @enderror
                                     </div>
                                     <div class="mb-5">
                                         <label for="update_fuel_type" class="label">Type de carburant</label>
@@ -127,17 +121,11 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        @error('fuel_type')
-                                        <span class="help is-danger">{{ $message }}</span>
-                                        @enderror
                                     </div>
                                     <div class="mb-5">
                                         <label for="update_mileage" class="label">Kilométrage voiture</label>
                                         <input id="update_mileage" type="text" name="update_mileage" class="input"
                                                value="{{ $car->mileage }}" placeholder="Kilométrage">
-                                        @error('mileage')
-                                        <span class="help is-danger">{{ $message }}</span>
-                                        @enderror
                                     </div>
                                 </div>
                                 <footer class="modal-card-foot">
@@ -151,6 +139,22 @@
                 </div>
             @endforeach
         </table>
+
+        @error('update_name')
+        <div class="card-footer-item">
+        <span class="help is-danger">{{ $message }}</span>
+        </div>
+        @enderror
+        @error('update_fuel_type')
+        <div class="card-footer-item">
+            <span class="help is-danger">{{ $message }}</span>
+        </div>
+        @enderror
+        @error('update_mileage')
+        <div class="card-footer-item">
+        <span class="help is-danger">{{ $message }}</span>
+        </div>
+        @enderror
                 @if($message_updated != "")
             <div class="card-footer-item">
                     <span class="help is-success">{{ $message_updated }}</span>
