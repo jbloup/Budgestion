@@ -31,8 +31,8 @@ class FamilyController extends Controller
     }
 
     /**
-     * Store a new type.
      * @param Request $request
+     * @return Application|Factory|View
      */
     public function store(Request $request)
     {
@@ -44,7 +44,7 @@ class FamilyController extends Controller
 
         Family::create([
             'name'=>request('family_name'),
-            'type_id'=> $request->input('family_type_id')
+            'type_id'=> request('family_type_id')
         ]);
 
         $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
@@ -58,7 +58,6 @@ class FamilyController extends Controller
     }
 
     /**
-     * Store a new type.
      * @param Request $request
      * @return Application|Factory|View
      */
@@ -84,8 +83,6 @@ class FamilyController extends Controller
     }
 
     /**
-     * Store a new type.
-     * @param
      * @return Application|Factory|View
      */
     public function delete()

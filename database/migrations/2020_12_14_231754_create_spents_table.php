@@ -20,9 +20,10 @@ class CreateSpentsTable extends Migration
             $table->unsignedBigInteger('price');
             $table->date('date');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('account_id')->constrained();
+            $table->foreignId('account_id')->nullable();
             $table->foreignId('category_id')->constrained();
-            $table->foreignId('families_id')->constrained();
+            $table->foreignId('type_id')->constrained();
+            $table->foreignId('family_id')->nullable();
             $table->timestamps();
         });
     }

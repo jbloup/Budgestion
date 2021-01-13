@@ -68,32 +68,42 @@
     <!-- Table -->
     <div class="card">
         <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-
-    @foreach($types as $type)
+            <thead>
+            <tr class="is-selected">
+                <th>Type / Sous-Type</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($types as $type)
                 <tr>
                     <th>{{ $type->name }}</th>
                     <th>
                         <button id="modalButton" class="button is-primary"
-                                onclick="document.getElementById({{ $type->id }}).style.display='block'"
+                                onclick="document.getElementById({{ 2 . $type->id }}).style.display='block'"
                                 data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
                                     class="fas fa-pen"></i></span></button>
                     </th>
                     <th>
                         @if($type->families->count() == 0)
-                        <button type="submit" id="delete" class="button is-danger"><a class="has-text-light" href="{{ url('/create/type_delete?type_id='. $type->id) }}" ><span class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
+                            <button type="submit" id="delete" class="button is-danger"><a class="has-text-light"
+                                                                                          href="{{ url('/create/type_delete?type_id='. $type->id) }}"><span
+                                        class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
                         @else
-                            <button type="submit" id="delete" class="button is-danger"><a class="has-text-light" ><span class="icon"><i class="fas fa-times-circle"></i></span></a></button>
+                            <button type="submit" id="delete" class="button is-danger"><a class="has-text-light"><span
+                                        class="icon"><i class="fas fa-times-circle"></i></span></a></button>
                         @endif
                     </th>
                 </tr>
                 <!-- Modal Card Type -->
-                <div id="{{ $type->id }}" class="modal">
+                <div id="{{ 2 . $type->id }}" class="modal">
                     <div class="modal-background"></div>
                     <div class="modal-card">
                         <header class="modal-card-head">
                             <p class="modal-card-title">Modification {{ $type->name }}</p>
                             <button class="delete" aria-label="close"
-                                    onclick="document.getElementById({{ $type->id }}).style.display='none'"></button>
+                                    onclick="document.getElementById({{ 2 . $type->id }}).style.display='none'"></button>
                         </header>
                         <section class="modal-card-body">
                             <!-- Content ... -->
@@ -110,7 +120,6 @@
                                 </div>
                                 <footer class="modal-card-foot">
                                     <button type="submit" class="button is-primary">Enregistrer</button>
-                                    <button class="button">Cancel</button>
                                 </footer>
                             </form>
                             <!-- Content ... -->
@@ -118,19 +127,21 @@
                     </div>
                 </div>
                 <!-- End Modal Card Type -->
-            @foreach ($type->families as $family)
-                <tr>
-                <td>{{ $family->name }}</td>
-                    <th>
-                        <button id="modalButton" class="button is-danger"
-                                onclick="document.getElementById({{ $family->id }}).style.display='block'"
-                                data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
-                                    class="fas fa-pen"></i></span></button>
-                    </th>
-                    <th>
-                        <button type="submit" id="delete" class="button is-danger"><a class="has-text-light" href="{{ url('/create/subtype_delete?family_id='. $family->id) }}" ><span class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
-                    </th>
-                </tr>
+                @foreach ($type->families as $family)
+                    <tr>
+                        <td>{{ $family->name }}</td>
+                        <th>
+                            <button id="modalButton" class="button is-primary"
+                                    onclick="document.getElementById({{ $family->id }}).style.display='block'"
+                                    data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
+                                        class="fas fa-pen"></i></span></button>
+                        </th>
+                        <th>
+                            <button type="submit" id="delete" class="button is-danger"><a class="has-text-light"
+                                                                                          href="{{ url('/create/subtype_delete?family_id='. $family->id) }}"><span
+                                        class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
+                        </th>
+                    </tr>
                     <!-- Modal Card Family -->
                     <div id="{{ $family->id }}" class="modal">
                         <div class="modal-background"></div>
@@ -142,13 +153,15 @@
                             </header>
                             <section class="modal-card-body">
                                 <!-- Content ... -->
-                                <form method="POST" action="{{route('update_family')}}">
+                                <form method="POST" action="{{ route('update_family') }}">
                                     @csrf
                                     <div class="card-content">
                                         <div class="mb-5">
                                             <label for="update_name" class="label">Nom du sous-type</label>
-                                            <input id="family_id" name="family_id" class="is-hidden" value="{{ $family->id }}">
-                                            <input id="update_family_name" type="text" name="family_update_name" class="input"
+                                            <input id="family_id" name="family_id" class="is-hidden"
+                                                   value="{{ $family->id }}">
+                                            <input id="update_family_name" type="text" name="update_family_name"
+                                                   class="input"
                                                    value="{{ $family->name }}"
                                                    placeholder="Nom du sous-type" autofocus>
                                         </div>
@@ -167,7 +180,6 @@
                                     </div>
                                     <footer class="modal-card-foot">
                                         <button type="submit" class="button is-primary">Enregistrer</button>
-                                        <button class="button">Cancel</button>
                                     </footer>
                                 </form>
                                 <!-- Content ... -->
@@ -175,8 +187,9 @@
                         </div>
                     </div>
                     <!-- End Modal Card Family -->
+                @endforeach
             @endforeach
-    @endforeach
+            </tbody>
         </table>
         @error('update_name')
         <div class="card-footer-item">

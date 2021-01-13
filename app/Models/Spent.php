@@ -9,6 +9,19 @@ class Spent extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'date',
+        'user_id',
+        'account_id',
+        'category_id',
+        'type_id',
+        'families_id',
+
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

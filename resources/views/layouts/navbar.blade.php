@@ -40,13 +40,13 @@
                         Créer catégorie
                     </a>
                     <a href="{{ url('create/type') }}" class="navbar-item">
-                        Créer type / sous-Type
+                        Créer type / sous-type
                     </a>
                     <a href="{{ url('create/car') }}" class="navbar-item">
                         Créer voiture
                     </a>
                     <hr class="navbar-divider">
-                    <a href="#" class="navbar-item">
+                    <a href="{{ url('create/spent') }}" class="navbar-item">
                         Créer Dépense
                     </a>
                 </div>

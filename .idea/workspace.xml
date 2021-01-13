@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="develop forms and cars">
+    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="develop category, type and family forms">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ce2c993b-96e1-4679-ad87-08e624faae22.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ce2c993b-96e1-4679-ad87-08e624faae22.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CarController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CarController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SpentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SpentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Family.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Family.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Type.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Spent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Spent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_231754_create_spents_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_231754_create_spents_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/create_car.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_car.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/create_category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_category.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/create_spent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_spent.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/create_type.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_type.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +37,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="composer.json" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -220,7 +230,11 @@
       <workItem from="1609272179771" duration="4296000" />
       <workItem from="1609423537593" duration="1678000" />
       <workItem from="1609867816733" duration="11709000" />
-      <workItem from="1609883933981" duration="772000" />
+      <workItem from="1609883933981" duration="3359000" />
+      <workItem from="1609965673064" duration="7369000" />
+      <workItem from="1610302587903" duration="13030000" />
+      <workItem from="1610364517006" duration="3944000" />
+      <workItem from="1610473121051" duration="8867000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1607702225491</created>
@@ -285,7 +299,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608671454617</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="develop category, type and family forms">
+      <created>1609885656953</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1609885656953</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,7 +332,8 @@
     <MESSAGE value="develop" />
     <MESSAGE value="develop forms" />
     <MESSAGE value="develop forms and cars" />
-    <option name="LAST_COMMIT_MESSAGE" value="develop forms and cars" />
+    <MESSAGE value="develop category, type and family forms" />
+    <option name="LAST_COMMIT_MESSAGE" value="develop category, type and family forms" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -21,7 +21,10 @@ class CategoryController extends Controller
         ]);
     }
 
-
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
     public function store(Request $request)
     {
         $request->validate([

@@ -23,7 +23,6 @@ class CarController extends Controller
     }
 
     /**
-     * Store a new type.
      * @param Request $request
      * @return Application|Factory|View
      */
@@ -51,7 +50,6 @@ class CarController extends Controller
     }
 
     /**
-     * Store a new type.
      * @param Request $request
      * @return Application|Factory|View
      */
@@ -76,8 +74,6 @@ class CarController extends Controller
     }
 
     /**
-     * Store a new type.
-     * @param
      * @return Application|Factory|View
      */
     public function delete()

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>home</h1>
+    <a href="{{ url('create/spent') }}" class="navbar-item">
+        Créer catégorie
+    </a>
 @endsection

@@ -6,7 +6,7 @@
             @csrf
             <header class="card-header">
                 <div class="card-header-title">
-                    <h1 class="title">Completez informations voiture</h1>
+                    <h1 class="title">Complétez informations voiture</h1>
                 </div>
             </header>
             <div class="card-content">
@@ -55,13 +55,16 @@
     </div>
     <div class="card">
         <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <tr>
+            <thead>
+            <tr class="is-selected">
                 <th>Voiture</th>
                 <th>Carburant</th>
                 <th>Kilométrage</th>
-                <th></th>
-                <th></th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
             </tr>
+            </thead>
+            <tbody>
             @foreach($cars as $car)
                 <tr>
                     <td>{{ $car->name }}</td>
@@ -74,7 +77,9 @@
                                     class="fas fa-pen"></i></span></button>
                     </th>
                     <th>
-                        <button type="submit" id="delete" class="button is-danger"><a class="has-text-light" href="{{ url('/create/car_delete?car_id='. $car->id) }}" ><span class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
+                        <button type="submit" id="delete" class="button is-danger"><a class="has-text-light"
+                                                                                      href="{{ url('/create/car_delete?car_id='. $car->id) }}"><span
+                                    class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
                     </th>
                 </tr>
                 <!-- Modal Card -->
@@ -130,7 +135,6 @@
                                 </div>
                                 <footer class="modal-card-foot">
                                     <button type="submit" class="button is-primary">Enregistrer</button>
-                                    <button class="button">Cancel</button>
                                 </footer>
                             </form>
                             <!-- Content ... -->
@@ -138,11 +142,11 @@
                     </div>
                 </div>
             @endforeach
+            </tbody>
         </table>
-
         @error('update_name')
         <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
+            <span class="help is-danger">{{ $message }}</span>
         </div>
         @enderror
         @error('update_fuel_type')
@@ -152,14 +156,14 @@
         @enderror
         @error('update_mileage')
         <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
+            <span class="help is-danger">{{ $message }}</span>
         </div>
         @enderror
-                @if($message_updated != "")
+        @if($message_updated != "")
             <div class="card-footer-item">
-                    <span class="help is-success">{{ $message_updated }}</span>
+                <span class="help is-success">{{ $message_updated }}</span>
             </div>
-                @endif
+        @endif
     </div>
 @endsection
 
