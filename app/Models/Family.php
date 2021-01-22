@@ -12,7 +12,13 @@ class Family extends Model
     protected $fillable = [
         'name',
         'type_id',
+        'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 
     public function type()
     {
@@ -20,6 +26,6 @@ class Family extends Model
     }
     public function spents()
     {
-        return $this->hasMany('App\Models\Spent');
+        return $this->hasMany(Spent::class, 'family_id', 'id');
     }
 }

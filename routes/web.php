@@ -26,9 +26,7 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('auth')->name('home');
 
-Route::get('/create/spent/getFamilies/{id}', [SpentController::class, 'getFamilies'])->middleware('auth');
-
-Route::get('/create/spent', [SpentController::class, 'create'])->name('spent')->middleware('auth');
+Route::get('/create/spent/', [SpentController::class, 'create'])->name('spent')->middleware('auth');
 Route::post('/create/spent', [SpentController::class, 'store'])->name('store_spent')->middleware('auth');
 Route::post('/create/spent_update', [SpentController::class, 'update'])->name('update_spent')->middleware('auth');
 Route::get('/create/spent_update', [SpentController::class, 'create'])->middleware('auth');

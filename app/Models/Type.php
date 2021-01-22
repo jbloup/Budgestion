@@ -13,8 +13,19 @@ class Type extends Model
     protected $fillable = [
         'id',
         'name',
+        'category_id',
         'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
+    }
 
     public function families(): HasMany
     {

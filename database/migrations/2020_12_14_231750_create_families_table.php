@@ -16,7 +16,7 @@ class CreateFamiliesTable extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('type_id')->constrained();
             $table->timestamps();
         });

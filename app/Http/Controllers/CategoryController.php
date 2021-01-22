@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Type;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,8 +16,11 @@ class CategoryController extends Controller
     public function create()
     {
         return view('create/create_category',[
-            'categories' => DB::table('categories')->where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success' => "",
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_success_category' => "",
+            'message_success_type' => "",
+            'message_success_family' => "",
             'message_updated' => "",
         ]);
     }
@@ -40,8 +44,11 @@ class CategoryController extends Controller
         ]);
 
         return view('create/create_category',[
-            'categories' => DB::table('categories')->where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success' => "catégorie bien enregistrée",
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_success_category' => "catégorie bien enregistrée",
+            'message_success_type' => "",
+            'message_success_family' => "",
             'message_updated' => "",
 
         ]);
@@ -65,9 +72,12 @@ class CategoryController extends Controller
             );
 
         return view('create/create_category',[
-            'categories' => DB::table('categories')->where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'message_updated' => "modification bien enregistrée",
-            'message_success' => "",
+            'message_success_category' => "",
+            'message_success_type' => "",
+            'message_success_family' => "",
         ]);
     }
 
@@ -78,12 +88,15 @@ class CategoryController extends Controller
      */
     public function delete()
     {
-        DB::table('categories')->where('id', request('category_id'))->delete();
+        Category::where('id', request('category_id'))->delete();
 
         return view('create/create_category',[
-            'categories' => DB::table('categories')->where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'message_updated' => "",
-            'message_success' => "",
+            'message_success_category' => "",
+            'message_success_type' => "",
+            'message_success_family' => "",
         ]);
     }
 }

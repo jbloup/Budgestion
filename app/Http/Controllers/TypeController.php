@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Family;
 use App\Models\Type;
 use Illuminate\Contracts\Foundation\Application;
@@ -23,9 +24,11 @@ class TypeController extends Controller
     {
         $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
 
-        return view('create/create_type',[
+        return view('create/create_category',[
             'types' => $types,
-            'message_success' => "",
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_success_category' => "",
+            'message_success_type' => "",
             'message_success_family' => "",
             'message_updated' => "",
         ]);
@@ -44,15 +47,18 @@ class TypeController extends Controller
 
         Type::create([
            'name'=>request('type_name'),
+           'category_id'=>request('type_category_id'),
            'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
         $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
 
-        return view('create/create_type',[
+        return view('create/create_category',[
             'types' => $types,
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'message_success_family' => "",
-            'message_success' => "type bien enregistré",
+            'message_success_type' => "type bien enregistré",
+            'message_success_category' => "",
             'message_updated' => "",
         ]);
     }
@@ -69,15 +75,17 @@ class TypeController extends Controller
 
         Type::where('user_id', Auth::user()->getAuthIdentifier())
             ->where('id', request('type_id'))
-            ->update(['name' => request('update_name')]
+            ->update(['name' => request('update_name'), 'category_id'=>request('type_category_id'), ]
             );
 
         $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
 
-        return view('create/create_type',[
+        return view('create/create_category',[
             'types' => $types,
-            'message_updated' => "modification bien enregistrée",
-            'message_success' => "",
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_updated_type' => "modification bien enregistrée",
+            'message_success_category' => "",
+            'message_success_type' => "",
             'message_success_family' => "",
         ]);
     }
@@ -93,10 +101,12 @@ class TypeController extends Controller
 
         $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
 
-        return view('create/create_type',[
+        return view('create/create_category',[
             'types' => $types,
-            'message_updated' => "",
-            'message_success' => "",
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_updated_type' => "",
+            'message_success_category' => "",
+            'message_success_type' => "",
             'message_success_family' => "",
         ]);
     }

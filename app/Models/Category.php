@@ -18,8 +18,14 @@ class Category extends Model
         'description',
         'user_id',
     ];
-    public function spents()
+
+    public function user()
     {
-        return $this->hasMany('App\Models\Spent');
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function types()
+    {
+        return $this->hasMany(Type::class, 'category_id', 'id');
     }
 }

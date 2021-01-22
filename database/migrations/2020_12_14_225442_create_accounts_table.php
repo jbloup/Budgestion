@@ -19,6 +19,7 @@ class CreateAccountsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('amount');
+            $table->boolean('principal');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

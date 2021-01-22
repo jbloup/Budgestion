@@ -9,6 +9,10 @@ class Spent extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string[]
+     */
+
     protected $fillable = [
         'name',
         'description',
@@ -16,9 +20,7 @@ class Spent extends Model
         'date',
         'user_id',
         'account_id',
-        'category_id',
-        'type_id',
-        'families_id',
+        'family_id',
 
     ];
 
@@ -32,18 +34,13 @@ class Spent extends Model
         return $this->belongsTo('App\Models\Account');
     }
 
-    public function category()
-    {
-        return $this->belongsTo('App\Models\Category');
-    }
-
     public function family()
     {
-        return $this->belongsTo('App\Models\SubType');
+        return $this->belongsTo('App\Models\Family');
     }
 
     public function fuels()
     {
-        return $this->hasMany('App\Models\Fuel');
+        return $this->hasMany(Fuel::class, 'spent_id', 'id');
     }
 }
