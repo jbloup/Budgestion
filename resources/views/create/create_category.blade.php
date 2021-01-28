@@ -2,6 +2,18 @@
 
 @section('content')
     <!--Form Category-->
+    <section class="hero is-medium is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Primary bold title
+                </h1>
+                <h2 class="subtitle">
+                    Primary bold subtitle
+                </h2>
+            </div>
+        </div>
+    </section>
     <div class="card mb-3 p-3">
         <header class="card-header mb-6">
             <div class="card-header-title">
@@ -23,8 +35,8 @@
                                 @enderror
                             </div>
                             <div class="mb-5">
-                                <label for="email" class="label">Description catégorie</label>
-                                <textarea id="email" name="description" class="textarea height" value="{{ old('description') }}"
+                                <label for="description" class="label">Description catégorie</label>
+                                <textarea id="description" name="description" class="textarea" value="{{ old('description') }}"
                                           autocomplete="description" placeholder="Description ..."></textarea>
                                 @error('description')
                                 <span class="help is-danger">{{ $message }}</span>
@@ -51,7 +63,7 @@
                             <div class="mb-5">
                                 <label for="type_name" class="label">Nom du type</label>
                                 <input id="type_name" type="text" name="type_name" class="input mb-2" value="{{ old('type_name') }}"
-                                       autocomplete="name" placeholder="Nom type" autofocus>
+                                       autocomplete="name" placeholder="Nom type">
                                 @error('type_name')
                                 <span class="help is-danger">{{ $message }}</span>
                                 @enderror
@@ -67,7 +79,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-
                                     @error('type_category_id')
                                     <span class="help is-danger">{{ $message }}</span>
                                     @enderror
@@ -130,7 +141,29 @@
         </div>
     </div>
     <!-- Table -->
-    <div class="card">
+    <div class="card mb-3 p-3">
+        <header class="card-header mb-6">
+            <div class="card-header-title">
+                <h1 class="title">Catégories</h1>
+            </div>
+        </header>
+<div class="columns is-multiline">
+    @foreach($categories as $category)
+        <div class="column is-one-quarter">
+            <div class="card">
+                <header class="card-header">
+                    <div class="card-header-title">
+        <h1 class="title is-4">{{ $category->name }}<br><span class="content is-size-6 has-text-weight-light" >{{ $category->description }}</span></h1>
+
+                        <span class="tag">
+                    <button id="modalButton" class="button"
+                                onclick="document.getElementById({{ 1 . $category->id }}).style.display='block'"
+                                data-target="modal-ter" aria-haspopup="true"><span class="icon-text is-small "><span class="icon"><i
+                                    class="fas fa-pen"></i></span></span></button>
+                </span>
+                    </div>
+                </header>
+                <div class="card-content">
         <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
             <tr class="is-selected">
@@ -139,43 +172,119 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($types as $type)
+        @foreach($category->types as $type)
+            <tr>
+            <th>{{$type->name}}</th>
+                <th>
+                <button id="modalButton" class="button"
+                        onclick="document.getElementById({{ 2 . $type->id }}).style.display='block'"
+                        data-target="modal-ter" aria-haspopup="true"><span class="icon-text is-small "><span class="icon"><i
+                                class="fas fa-pen"></i></span></span></button>
+                </th>
+            </tr>
+            <!-- Modal Card Type -->
+            <div id="{{ 2 . $type->id }}" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Modification {{ $type->name }}</p>
+                        <button class="delete" aria-label="close"
+                                onclick="document.getElementById({{ 2 . $type->id }}).style.display='none'"></button>
+                    </header>
+                    <!-- Modal Form Type -->
+                    <form method="POST" action="{{route('update_type')}}">
+                        @csrf
+                        <section class="modal-card-body">
+                            <!-- Content ... -->
+                            <div class="card-content">
+                                <div class="mb-5">
+                                    <label for="update_type_name" class="label">Nom du type</label>
+                                    <input id="type_id" name="type_id" class="is-hidden" value="{{ $type->id }}">
+                                    <input id="update_type_name" type="text" name="update_type_name" class="input"
+                                           value="{{ $type->name }}"
+                                           placeholder="Nom du type" autofocus>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <div class="control">
+                                    <label for="update_type_category_id" class="label">Sous-type</label>
+                                    <div class="select">
+                                        <select id="update_type_category_id" name="update_type_category_id">
+                                            <option value="{{ $category->id }}">{{ $category->name}}</option>
+                                            @foreach($categories as $cat)
+                                                @if($cat->id != $category->id)
+                                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Content ... -->
+                        </section>
+                        <footer class="modal-card-foot">
+                            <button type="submit" class="button is-primary">Enregistrer</button>
+                            @if($type->families->count() == 0)
+                                <button type="submit" id="delete" class="button is-danger">
+                                    <a class="has-text-white" href="{{ url('/create/type_delete?type_id='. $type->id) }}">Supprimer</a></button>
+                            @endif
+                        </footer>
+                    </form>
+                    <!-- End Modal Form Type -->
+                </div>
+            </div>
+            <!-- End Modal Card Type -->
+            @foreach($type->families as $family)
                 <tr>
-                    <th>{{ $type->name }}</th>
+                <td>{{ $family->name }}</td>
                     <th>
-                        <button id="modalButton" class="button is-primary"
-                                onclick="document.getElementById({{ 2 . $type->id }}).style.display='block'"
-                                data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
-                                    class="fas fa-pen"></i></span></button>
+                        <button id="modalButton" class="button"
+                                onclick="document.getElementById({{ 3 . $family->id }}).style.display='block'"
+                                data-target="modal-ter" aria-haspopup="true"><span class="icon-text is-small "><span class="icon"><i
+                                        class="fas fa-pen"></i></span></span></button>
                     </th>
                 </tr>
-                <!-- Modal Card Type -->
-                <div id="{{ 2 . $type->id }}" class="modal">
+                <!-- Modal Card Family -->
+                <div id="{{ 3 . $family->id }}" class="modal">
                     <div class="modal-background"></div>
                     <div class="modal-card">
                         <header class="modal-card-head">
-                            <p class="modal-card-title">Modification {{ $type->name }}</p>
+                            <p class="modal-card-title">Modification {{ $family->name }}</p>
                             <button class="delete" aria-label="close"
-                                    onclick="document.getElementById({{ 2 . $type->id }}).style.display='none'"></button>
+                                    onclick="document.getElementById({{ 3 . $family->id }}).style.display='none'"></button>
                         </header>
                         <section class="modal-card-body">
                             <!-- Content ... -->
-                            <form method="POST" action="{{route('update_type')}}">
+                            <form method="POST" action="{{ route('update_family') }}">
                                 @csrf
                                 <div class="card-content">
                                     <div class="mb-5">
-                                        <label for="update_name" class="label">Nom du type</label>
-                                        <input id="type_id" name="type_id" class="is-hidden" value="{{ $type->id }}">
-                                        <input id="update_name" type="text" name="update_name" class="input"
-                                               value="{{ $type->name }}"
-                                               placeholder="Nom du type" autofocus>
+                                        <label for="update_name" class="label">Nom du sous-type</label>
+                                        <input id="family_id" name="family_id" class="is-hidden"
+                                               value="{{ $family->id }}">
+                                        <input id="update_family_name" type="text" name="update_family_name"
+                                               class="input"
+                                               value="{{ $family->name }}"
+                                               placeholder="Nom du sous-type" autofocus>
+                                    </div>
+                                    <div class="mb-5">
+                                        <div class="control">
+                                            <label for="update_family_type_id" class="label">Type</label>
+                                            <div class="select">
+                                                <select id="update_family_type_id" name="update_family_type_id">
+                                                    @foreach($types as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <footer class="modal-card-foot">
                                     <button type="submit" class="button is-primary">Enregistrer</button>
-                                    @if($type->families->count() == 0)
+                                    @if($family->spents->count() == 0)
                                         <button type="submit" id="delete" class="button is-danger">
-                                            <a class="has-text-white" href="{{ url('/create/type_delete?type_id='. $type->id) }}">Supprimer</a></button>
+                                            <a class="has-text-white" href="{{ url('/create/subtype_delete?delete_family_id='. $family->id) }}">Supprimer</a></button>
                                     @endif
                                 </footer>
                             </form>
@@ -183,70 +292,61 @@
                         </section>
                     </div>
                 </div>
-                <!-- End Modal Card Type -->
-                @foreach ($type->families as $family)
-                    <tr>
-                        <td>{{ $family->name }}</td>
-                        <th>
-                            <button id="modalButton" class="button is-primary"
-                                    onclick="document.getElementById({{ $family->id }}).style.display='block'"
-                                    data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
-                                        class="fas fa-pen"></i></span></button>
-                        </th>
-                    </tr>
-                    <!-- Modal Card Family -->
-                    <div id="{{ $family->id }}" class="modal">
-                        <div class="modal-background"></div>
-                        <div class="modal-card">
-                            <header class="modal-card-head">
-                                <p class="modal-card-title">Modification {{ $family->name }}</p>
-                                <button class="delete" aria-label="close"
-                                        onclick="document.getElementById({{ $family->id }}).style.display='none'"></button>
-                            </header>
-                            <section class="modal-card-body">
-                                <!-- Content ... -->
-                                <form method="POST" action="{{ route('update_family') }}">
-                                    @csrf
-                                    <div class="card-content">
-                                        <div class="mb-5">
-                                            <label for="update_name" class="label">Nom du sous-type</label>
-                                            <input id="family_id" name="family_id" class="is-hidden"
-                                                   value="{{ $family->id }}">
-                                            <input id="update_family_name" type="text" name="update_family_name"
-                                                   class="input"
-                                                   value="{{ $family->name }}"
-                                                   placeholder="Nom du sous-type" autofocus>
-                                        </div>
-                                        <div class="mb-5">
-                                            <div class="control">
-                                                <label for="update_family_type_id" class="label">Type</label>
-                                                <div class="select">
-                                                    <select id="update_family_type_id" name="update_family_type_id">
-                                                        @foreach($types as $type)
-                                                            <option value="{{ $type->id }}">{{ $type->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <footer class="modal-card-foot">
-                                        <button type="submit" class="button is-primary">Enregistrer</button>
-                                        @if($family->spents->count() == 0)
-                                            <button type="submit" id="delete" class="button is-danger">
-                                                <a class="has-text-white" href="{{ url('/create/subtype_delete?delete_family_id='. $family->id) }}">Supprimer</a></button>
-                                        @endif
-                                    </footer>
-                                </form>
-                                <!-- Content ... -->
-                            </section>
-                        </div>
-                    </div>
-                    <!-- End Modal Card Family -->
-                @endforeach
+                <!-- End Modal Card Family -->
             @endforeach
+        @endforeach
             </tbody>
         </table>
+                </div>
+                </div>
+            </div>
+        <!-- Modal Card Category -->
+        <div id="{{ 1 . $category->id }}" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Modification {{ $category->name }}</p>
+                    <button class="delete" aria-label="close"
+                            onclick="document.getElementById({{ 1 . $category->id }}).style.display='none'"></button>
+                </header>
+                <section class="modal-card-body">
+                    <!-- Content ... -->
+                    <form method="POST" action="{{route('update_category')}}">
+                        @csrf
+                        <div class="card-content">
+                            <div class="mb-5">
+                                <label for="update_name" class="label">Nom de la catégorie</label>
+                                <input id="category_id" name="category_id" class="is-hidden"
+                                       value="{{ $category->id }}">
+                                <input id="update_name" type="text" name="update_name" class="input"
+                                       value="{{ $category->name }}"
+                                       placeholder="Nom catégorie" autofocus>
+                            </div>
+                            <div class="mb-5">
+                                <label for="update_description" class="label">Description</label>
+                                <textarea id="update_description" name="update_description" class="textarea"
+                                          value="{{ $category->description }}"
+                                          placeholder="Description ...">{{ $category->description }}</textarea>
+                            </div>
+                        </div>
+                        <footer class="modal-card-foot">
+                            <button type="submit" class="button is-primary">Enregistrer</button>
+                            @if($category->types->count() == 0)
+                                <button type="submit" id="delete" class="button is-danger">
+                                    <a class="has-text-white" href="{{ url('/create/category_delete?category_id='. $category->id) }}">Supprimer</a></button>
+                            @endif
+                        </footer>
+                    </form>
+                    <!-- Content ... -->
+                </section>
+            </div>
+        </div>
+        <!-- End Modal Card Category -->
+    @endforeach
+    </div>
+    </div>
+    <!-- End Table -->
+
         @error('update_name')
         <div class="card-footer-item">
             <span class="help is-danger">{{ $message }}</span>
@@ -267,85 +367,5 @@
                 <span class="help is-success">{{ $message_updated }}</span>
             </div>
         @endif
-    </div>
-    </div>
-    <div class="card">
-        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-            <tr class="is-selected">
-                <th>Catégorie</th>
-                <th>Description</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($categories as $category)
-                <tr>
-                    <td>{{ $category->name }}</td>
-                    <td>{{ $category->description }}</td>
-                    <th>
-                        <button id="modalButton" class="button is-primary"
-                                onclick="document.getElementById({{ 3 . $category->id }}).style.display='block'"
-                                data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
-                                    class="fas fa-pen"></i></span></button>
-                    </th>
-                </tr>
-                <!-- Modal Card Category -->
-                <div id="{{ 3 . $category->id }}" class="modal">
-                    <div class="modal-background"></div>
-                    <div class="modal-card">
-                        <header class="modal-card-head">
-                            <p class="modal-card-title">Modification {{ $category->name }}</p>
-                            <button class="delete" aria-label="close"
-                                    onclick="document.getElementById({{ 3 . $category->id }}).style.display='none'"></button>
-                        </header>
-                        <section class="modal-card-body">
-                            <!-- Content ... -->
-                            <form method="POST" action="{{route('update_category')}}">
-                                @csrf
-                                <div class="card-content">
-                                    <div class="mb-5">
-                                        <label for="update_name" class="label">Nom de la catégorie</label>
-                                        <input id="category_id" name="category_id" class="is-hidden"
-                                               value="{{ $category->id }}">
-                                        <input id="update_name" type="text" name="update_name" class="input"
-                                               value="{{ $category->name }}"
-                                               placeholder="Nom catégorie" autofocus>
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="update_description" class="label">Description</label>
-                                        <textarea id="update_description" name="update_description" class="textarea"
-                                                  value="{{ $category->description }}"
-                                                  placeholder="Description ...">{{ $category->description }}</textarea>
-                                    </div>
-                                </div>
-                                <footer class="modal-card-foot">
-                                    <button type="submit" class="button is-primary">Enregistrer</button>
-                                </footer>
-                            </form>
-                            <!-- Content ... -->
-                        </section>
-                    </div>
-                </div>
-                <!-- End Modal Card Category -->
-            @endforeach
-            </tbody>
-        </table>
-        @error('name')
-        <div class="card-footer-item">
-            <span class="help is-danger">{{ $message }}</span>
-        </div>
-        @enderror
-        @error('description')
-        <div class="card-footer-item">
-            <span class="help is-danger">{{ $message }}</span>
-        </div>
-        @enderror
-        @if($message_updated != "")
-            <div class="card-footer-item">
-                <span class="help is-success">{{ $message_updated }}</span>
-            </div>
-        @endif
-    </div>
+
 @endsection

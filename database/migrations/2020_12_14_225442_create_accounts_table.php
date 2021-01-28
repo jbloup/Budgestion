@@ -18,8 +18,8 @@ class CreateAccountsTable extends Migration
             $table->bigInteger('number')->unique();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('amount');
-            $table->boolean('principal');
+            $table->decimal('amount', $precision = 10, $scale = 2);
+            $table->boolean('main');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

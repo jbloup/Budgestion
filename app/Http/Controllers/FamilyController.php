@@ -41,7 +41,6 @@ class FamilyController extends Controller
         $request->validate([
             'family_name' => 'required|string|max:255',
             'family_type_id' => 'required',
-
         ]);
 
         Family::create([
@@ -49,7 +48,6 @@ class FamilyController extends Controller
             'user_id' => Auth::user()->getAuthIdentifier(),
             'type_id'=> request('family_type_id')
         ]);
-
 
         return view('create/create_category',[
             'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),

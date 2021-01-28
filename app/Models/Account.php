@@ -9,6 +9,19 @@ class Account extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string[]
+     */
+
+    protected $fillable = [
+        'name',
+        'number',
+        'description',
+        'amount',
+        'main',
+        'user_id',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

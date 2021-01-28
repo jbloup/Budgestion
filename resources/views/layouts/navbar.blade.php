@@ -37,17 +37,21 @@
 
                 <div class="navbar-dropdown">
                     <a href="{{ url('create/category') }}" class="navbar-item">
-                        Créer catégorie
-                    </a>
-                    <a href="{{ url('create/type') }}" class="navbar-item">
-                        Créer type / sous-type
+                        Créer Nomenclature
                     </a>
                     <a href="{{ url('create/car') }}" class="navbar-item">
-                        Créer voiture
+                        Créer Voiture
+                    </a>
+                    <a href="{{ url('create/account') }}" class="navbar-item">
+                        Créer Compte
                     </a>
                     <hr class="navbar-divider">
                     <a href="{{ url('create/spent') }}" class="navbar-item">
                         Créer Dépense
+                    </a>
+                    <hr class="navbar-divider">
+                    <a href="" class="navbar-item">
+                        Créer Rentrée
                     </a>
                 </div>
             </div>

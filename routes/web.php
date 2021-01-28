@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FamilyController;
@@ -56,4 +57,8 @@ Route::post('/create/car_update', [CarController::class, 'update'])->name('updat
 Route::get('/create/car_update', [CarController::class, 'create'])->middleware('auth');
 Route::get('/create/car_delete', [CarController::class, 'delete'])->name('delete_car')->middleware('auth');
 
-
+Route::get('/create/account', [AccountController::class, 'create'])->middleware('auth');
+Route::post('/create/account', [AccountController::class, 'store'])->name('store_account')->middleware('auth');
+Route::post('/create/account_update', [AccountController::class, 'update'])->name('update_account')->middleware('auth');
+Route::get('/create/account_update', [AccountController::class, 'create'])->middleware('auth');
+Route::get('/create/account_delete', [AccountController::class, 'delete'])->name('delete_account')->middleware('auth');

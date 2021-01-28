@@ -17,7 +17,7 @@ class CreateSpentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('price');
+            $table->decimal('price', $precision = 10, $scale = 2);
             $table->date('date');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('account_id')->constrained();

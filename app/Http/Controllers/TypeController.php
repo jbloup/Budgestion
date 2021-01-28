@@ -22,10 +22,9 @@ class TypeController extends Controller
      */
     public function create()
     {
-        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
 
         return view('create/create_category',[
-            'types' => $types,
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'message_success_category' => "",
             'message_success_type' => "",
@@ -43,6 +42,7 @@ class TypeController extends Controller
     {
         $request->validate([
             'type_name' => 'required|string|max:255',
+            'type_category_id' => 'required|integer',
         ]);
 
         Type::create([
@@ -51,10 +51,8 @@ class TypeController extends Controller
            'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
-        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
-
         return view('create/create_category',[
-            'types' => $types,
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'message_success_family' => "",
             'message_success_type' => "type bien enregistré",
@@ -70,20 +68,19 @@ class TypeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'update_name' => 'required|string|max:255',
+            'update_type_name' => 'required|string|max:255',
+            'update_type_category_id' => 'required|integer',
         ]);
 
         Type::where('user_id', Auth::user()->getAuthIdentifier())
             ->where('id', request('type_id'))
-            ->update(['name' => request('update_name'), 'category_id'=>request('type_category_id'), ]
+            ->update(['name' => request('update_type_name'), 'category_id'=>request('update_type_category_id'), ]
             );
 
-        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
-
         return view('create/create_category',[
-            'types' => $types,
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated_type' => "modification bien enregistrée",
+            'message_updated' => "modification bien enregistrée",
             'message_success_category' => "",
             'message_success_type' => "",
             'message_success_family' => "",
@@ -99,12 +96,10 @@ class TypeController extends Controller
     {
         DB::table('types')->where('id', request('type_id'))->delete();
 
-        $types = Type::where('user_id', Auth::user()->getAuthIdentifier())->get();
-
         return view('create/create_category',[
-            'types' => $types,
+            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated_type' => "",
+            'message_updated' => "",
             'message_success_category' => "",
             'message_success_type' => "",
             'message_success_family' => "",

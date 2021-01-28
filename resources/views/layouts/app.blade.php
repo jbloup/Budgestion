@@ -10,16 +10,17 @@
 </head>
 <body style="min-height: 100vh">
 @include('layouts.navbar')
-<section class="section mb-6 pb-6">
-    @yield('content')
-</section>
-@yield('footer')
-<footer class="footer mt-6 p-5">
+
+@yield('content')
+
+<footer>
+    <div class="hero-foot">
     <div class="content has-text-centered">
         <p class="is-size-7">
             <strong>AppGestion</strong> by Jean-baptiste LOUP &copy; Copyright 2020 &middot
             <a href="#">About Me</a>
         </p>
+    </div>`
     </div>
 </footer>
 </body>

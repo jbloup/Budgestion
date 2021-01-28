@@ -36,7 +36,7 @@
                 </div>
                 <div class="mb-5">
                     <label for="mileage" class="label">Kilométrage voiture</label>
-                    <input id="mileage" type="text" name="mileage" class="input" value="{{ old('mileage') }}"
+                    <input id="mileage" type="number" name="mileage" class="input" value="{{ old('mileage') }}"
                            placeholder="Kilométrage">
                     @error('mileage')
                     <span class="help is-danger">{{ $message }}</span>

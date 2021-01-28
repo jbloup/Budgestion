@@ -26,9 +26,12 @@ class CategoryController extends Controller
     }
 
     /**
+     * Creeate a new category
+     *
      * @param Request $request
      * @return Application|Factory|View
      */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -55,10 +58,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a new type.
+     * Update a category
+     *
      * @param Request $request
      * @return Application|Factory|View
      */
+
     public function update(Request $request)
     {
         $request->validate([
@@ -82,10 +87,12 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a new type.
+     * Delete a category
+     *
      * @param
      * @return Application|Factory|View
      */
+
     public function delete()
     {
         Category::where('id', request('category_id'))->delete();

@@ -4,26 +4,129 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Account;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
+    /**
+     * Show the Form to create a new account
+     *
+     * @return Application|Factory|View
+     */
+
     public function create()
     {
-        request()->validate([
-            'name' => ['required', 'string'],
-            'number' => ['required', 'integer'],
-            'description' => ['string'],
-            'amount' => ['required', 'integer'],
-            'user_id' => ['required', 'integer']
+        return view('create/create_account',[
+            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_success' => "",
+            'message_updated' => "",
         ]);
-        $car = Account::create([
+    }
+
+    /**
+     * Create a new account
+     *
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'number' => 'unique:accounts,number|required|integer',
+            'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'main' => 'required'
+        ]);
+
+        if (request('main') == 1){
+            DB::table('accounts')->where('user_id', Auth::user()->getAuthIdentifier())->update(['main' => 0]);
+        }
+
+        Account::create([
             'name' => request('name'),
             'number' => request('number'),
             'description' => request('description'),
-            'amount' => request('amount'),
+            'amount' => number_format(request('amount'), 2, '.', ''),
+            'main' => request('main'),
             'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
+        return view('create/create_account',[
+            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_success' => "compte bancaire bien enregistrée",
+            'message_updated' => "",
+        ]);
+    }
+
+    /**
+     * Update a account
+     *
+     * @param Request $request
+     * @return Application|Factory|View
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+            'update_name' => 'required|string',
+            'update_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'update_main' => 'required'
+        ]);
+
+        if (request('update_main') == 1){
+            DB::table('accounts')->where('user_id', Auth::user()->getAuthIdentifier())->update(['main' => 0]);
+        }
+
+        $accountNumber = DB::table('accounts' )->select('number')->where('user_id', Auth::user()->getAuthIdentifier())->where('id', request('account_id'))->get();
+
+        if (request('update_number') != $accountNumber ){
+            Account::where('user_id', Auth::user()->getAuthIdentifier())
+                ->where('id', request('account_id'))
+                ->update([
+                    'name' => request('update_name'),
+                    'number' => request('update_number'),
+                    'description' => request('update_description'),
+                    'amount' => number_format(request('update_amount'), 2, '.', ''),
+                    'main' => request('update_main')
+                ]);
+
+        }else{
+            Account::where('user_id', Auth::user()->getAuthIdentifier())
+                ->where('id', request('account_id'))
+                ->update([
+                    'name' => request('update_name'),
+                    'description' => request('update_description'),
+                    'amount' => request('update_amount'),
+                    'main' => request('update_main')
+                ]);
+        }
+
+        return view('create/create_account',[
+            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_updated' => "modification bien enregistrée",
+            'message_success' => "",
+        ]);
+    }
+
+    /**
+     * Delete a account
+     *
+     * @return Application|Factory|View
+     */
+
+    public function delete()
+    {
+        DB::table('accounts')->where('id', request('account_id'))->delete();
+
+        return view('create/create_account',[
+            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'message_updated' => "",
+            'message_success' => "",
+        ]);
     }
 }
