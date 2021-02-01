@@ -1,19 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card mb-6">
+    <!--Form Car-->
+    <section class="hero is-medium is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Véhicule
+                </h1>
+                <h2 class="subtitle">
+                    Créer un nouveau véhicule.
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="section is-small">
+        <div class="container is-max-desktop">
         <form method="POST" action="{{route('store_car')}}">
             @csrf
-            <header class="card-header">
-                <div class="card-header-title">
-                    <h1 class="title">Complétez informations voiture</h1>
-                </div>
-            </header>
-            <div class="card-content">
+                    <h1 class="title">Complétez les informations</h1>
                 <div class="mb-5">
-                    <label for="name" class="label">Nom de la voiture</label>
+                    <label for="name" class="label">Nom du véhicule</label>
                     <input id="name" type="text" name="name" class="input" value="{{ old('name') }}"
-                           placeholder="Nom voiture" autofocus>
+                           placeholder="Nom véhicule" autofocus>
                     @error('name')
                     <span class="help is-danger">{{ $message }}</span>
                     @enderror
@@ -35,33 +44,49 @@
                     @enderror
                 </div>
                 <div class="mb-5">
-                    <label for="mileage" class="label">Kilométrage voiture</label>
+                    <label for="mileage" class="label">Kilométrage véhicule</label>
                     <input id="mileage" type="number" name="mileage" class="input" value="{{ old('mileage') }}"
                            placeholder="Kilométrage">
                     @error('mileage')
                     <span class="help is-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            </div>
-            <footer class="card-footer">
-                <div class="card-footer-item column">
-                    <button type="submit" class="button is-primary ">Créer une voiture</button>
+                    <button type="submit" class="button is-primary ">
+                        <span class="icon is-small">
+                                <i class="fas fa-car"></i>
+                                </span>
+                        <span>Créer un véhicule</span></button>
                     @if($message_success != "")
                         <span class="help is-success">{{ $message_success }}</span>
                     @endif
-                </div>
-            </footer>
         </form>
-    </div>
-    <div class="card">
+        </div>
+    </section>
+    <!-- End Form Car -->
+    <!-- Title Table -->
+    <section class="hero is-light">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Liste des véhicules
+                </h1>
+                <h2 class="subtitle">
+
+                </h2>
+            </div>
+        </div>
+    </section>
+    <!-- End Title Table -->
+    <!-- Table -->
+    <section class="section">
+    <div class="table-container">
         <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
             <tr class="is-selected">
-                <th>Voiture</th>
+                <th>Véhicule</th>
                 <th>Carburant</th>
                 <th>Kilométrage</th>
                 <th>Modifier</th>
-                <th>Supprimer</th>
             </tr>
             </thead>
             <tbody>
@@ -71,15 +96,10 @@
                     <td>{{ $car->fuel_type }}</td>
                     <td>{{ $car->mileage }}</td>
                     <th>
-                        <button id="modalButton" class="button is-primary"
+                        <button id="modalButton" class="button"
                                 onclick="document.getElementById({{ $car->id }}).style.display='block'"
                                 data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
                                     class="fas fa-pen"></i></span></button>
-                    </th>
-                    <th>
-                        <button type="submit" id="delete" class="button is-danger"><a class="has-text-light"
-                                                                                      href="{{ url('/create/car_delete?car_id='. $car->id) }}"><span
-                                    class="icon"><i class="fas fa-trash-alt"></i></span></a></button>
                     </th>
                 </tr>
                 <!-- Modal Card -->
@@ -97,11 +117,11 @@
                                 @csrf
                                 <div class="card-content">
                                     <div class="mb-5">
-                                        <label for="update_name" class="label">Nom de la voiture</label>
+                                        <label for="update_name" class="label">Nom du véhicule</label>
                                         <input id="car_id" name="car_id" class="is-hidden" value="{{ $car->id }}">
                                         <input id="update_name" type="text" name="update_name" class="input"
                                                value="{{ $car->name }}"
-                                               placeholder="Nom voiture" autofocus>
+                                               placeholder="Nom véhicule" autofocus>
                                     </div>
                                     <div class="mb-5">
                                         <label for="update_fuel_type" class="label">Type de carburant</label>
@@ -128,13 +148,17 @@
                                         </div>
                                     </div>
                                     <div class="mb-5">
-                                        <label for="update_mileage" class="label">Kilométrage voiture</label>
+                                        <label for="update_mileage" class="label">Kilométrage véhicule</label>
                                         <input id="update_mileage" type="text" name="update_mileage" class="input"
                                                value="{{ $car->mileage }}" placeholder="Kilométrage">
                                     </div>
                                 </div>
                                 <footer class="modal-card-foot">
                                     <button type="submit" class="button is-primary">Enregistrer</button>
+                                    @if($car->fuels->count() == 0)
+                                    <a class="has-text-white button is-danger" href="{{ url('/create/car_delete?car_id='. $car->id) }}">
+                                        <span>Supprimer</span></a>
+                                    @endif
                                 </footer>
                             </form>
                             <!-- Content ... -->
@@ -144,6 +168,9 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+    </section>
+    <!-- End Table -->
         @error('update_name')
         <div class="card-footer-item">
             <span class="help is-danger">{{ $message }}</span>
@@ -164,6 +191,5 @@
                 <span class="help is-success">{{ $message_updated }}</span>
             </div>
         @endif
-    </div>
 @endsection
 

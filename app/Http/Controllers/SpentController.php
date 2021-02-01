@@ -42,7 +42,7 @@ class SpentController extends Controller {
         $request->validate([
            'name' => 'required|string|max:255',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'date' => 'required|date|date_format:Y-m-d',
+            'date' => 'required|date|date_format:d-m-Y',
             'family_id' => 'required|integer',
             'account_id' => 'required|integer'
         ]);
@@ -51,7 +51,7 @@ class SpentController extends Controller {
                 'name' => request('name'),
                 'description' => request('description'),
                 'price' => request('price'),
-                'date' => request('date'),
+                'date' => date('Y-m-d', strtotime(request('date'))),
                 'user_id' => Auth::user()->getAuthIdentifier(),
                 'account_id' => request('account_id'),
                 'family_id' => request('family_id'),
@@ -77,7 +77,7 @@ class SpentController extends Controller {
         $request->validate([
             'update_spent_name' => 'required|string|max:255',
             'update_spent_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'update_spent_date' => 'required|date|date_format:Y-m-d',
+            'update_spent_date' => 'required|date|date_format:d-m-Y',
             'update_account_id' => 'required|integer',
             'update_family_id' => 'required|integer',
         ]);
@@ -87,7 +87,7 @@ class SpentController extends Controller {
                 'name' => request('update_spent_name'),
                 'description' => request('update_spent_description'),
                 'price' => request('update_spent_price'),
-                'date' => request('update_spent_date'),
+                'date' => date('Y-m-d', strtotime(request('update_spent_date'))),
                 'user_id' => Auth::user()->getAuthIdentifier(),
                 'account_id' => request('update_account_id'),
                 'family_id' => request('update_family_id'),

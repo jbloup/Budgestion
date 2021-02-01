@@ -1,17 +1,18 @@
 <header>
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item mx-3" href="{{ url('/') }}">
-            <span class="icon has-text-primary"><i class="fas fa-3x fa-table"></i></span>
-        </a>
+        <div class="media">
+                <figure class="image is-96x96">
+                    <img src="{{ asset('img/undraw_Savings_re_eq4w.png') }}" alt="Placeholder image">
+                </figure>
 
+        </div>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
-
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             @guest
@@ -26,7 +27,7 @@
                 Dépense Annuelle
             </a>
 
-            <a href="#" class="navbar-item">
+            <a href="{{ url('table/spent_per_month') }}" class="navbar-item">
                 Dépense Mensuelle
             </a>
 
@@ -37,21 +38,24 @@
 
                 <div class="navbar-dropdown">
                     <a href="{{ url('create/category') }}" class="navbar-item">
-                        Créer Nomenclature
+                        Nomenclature
                     </a>
                     <a href="{{ url('create/car') }}" class="navbar-item">
-                        Créer Voiture
+                        Véhicule
                     </a>
                     <a href="{{ url('create/account') }}" class="navbar-item">
-                        Créer Compte
+                        Compte
                     </a>
                     <hr class="navbar-divider">
                     <a href="{{ url('create/spent') }}" class="navbar-item">
-                        Créer Dépense
+                        Dépense
+                    </a>
+                    <a href="{{ url('create/fuel') }}" class="navbar-item">
+                        Dépense carburant
                     </a>
                     <hr class="navbar-divider">
                     <a href="" class="navbar-item">
-                        Créer Rentrée
+                        Revenu
                     </a>
                 </div>
             </div>

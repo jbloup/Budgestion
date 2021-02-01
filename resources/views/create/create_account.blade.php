@@ -1,15 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card mb-6">
+    <section class="hero is-medium is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Compte bancaire
+                </h1>
+                <h2 class="subtitle">
+                    Créer un nouveau compte bancaire.
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="section is-small">
+        <div class="container is-max-desktop">
         <form method="POST" action="{{route('store_account')}}">
             @csrf
-            <header class="card-header">
-                <div class="card-header-title">
-                    <h1 class="title">Complétez informations</h1>
-                </div>
-            </header>
-            <div class="card-content">
+                    <h1 class="title">Complétez les informations</h1>
             <div class="mb-5">
                 <label for="number" class="label">Numéro de compte bancaire</label>
                 <input id="number" type="text" name="number" class="input" value="{{ old('number') }}"
@@ -60,9 +68,6 @@
                 @enderror
             </div>
             </div>
-            </div>
-            <footer class="card-footer">
-                <div class="card-footer-item column">
                     <button type="submit" class="button is-primary">
                     <span class="icon is-small">
                     <i class="fas fa-file-invoice-dollar"></i>
@@ -72,11 +77,27 @@
                     @if($message_success != "")
                         <span class="help is-success">{{ $message_success }}</span>
                     @endif
-                </div>
-            </footer>
         </form>
     </div>
-    <div class="card">
+    </section>
+    <!-- End Form Account -->
+    <!-- Title Table -->
+    <section class="hero is-light">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Liste des comptes bancaires
+                </h1>
+                <h2 class="subtitle">
+
+                </h2>
+            </div>
+        </div>
+    </section>
+    <!-- End Title Table -->
+    <!-- Table -->
+    <section class="section">
+        <div class="table-container">
         <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
             <tr class="is-selected">
@@ -101,7 +122,7 @@
                     <td>{{ $account->description }}</td>
                     <td>{{ $account->amount }}</td>
                     <th>
-                        <button id="modalButton" class="button is-primary"
+                        <button id="modalButton" class="button"
                                 onclick="document.getElementById({{ $account->id }}).style.display='block'"
                                 data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
                                     class="fas fa-pen"></i></span></button>
@@ -121,7 +142,7 @@
                             <button class="delete" aria-label="close"
                                     onclick="document.getElementById({{ $account->id }}).style.display='none'"></button>
                         </header>
-                        <!-- Content ... -->
+                        <!-- Content  -->
                             <section class="modal-card-body">
                                 <div class="card-content">
                                     <form method="POST" action="{{route('update_account')}}">
@@ -180,13 +201,15 @@
                         </form>
                                 </div>
                             </section>
-                        <!-- Content ... -->
+                        <!-- End Content -->
                     </div>
                 </div>
+                <!-- End Modal Card -->
             @endforeach
             </tbody>
         </table>
-    </div>
+        </div>
+    </section>
     <!-- End Table -->
     <!-- message -->
     @error('update_name')

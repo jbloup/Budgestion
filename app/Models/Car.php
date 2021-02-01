@@ -27,6 +27,6 @@ class Car extends Model
 
     public function fuels()
     {
-        return $this->hasMany('App\Models\Fuel');
+        return $this->hasMany(Fuel::class, 'car_id', 'id');
     }
 }

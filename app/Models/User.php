@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasMany(Car::class, 'user_id', 'id');
     }
 
+    public function fuels()
+    {
+        return $this->hasMany(Fuel::class, 'user_id', 'id');
+    }
+
     public function categories()
     {
         return $this->hasMany(Category::class, 'user_id', 'id');

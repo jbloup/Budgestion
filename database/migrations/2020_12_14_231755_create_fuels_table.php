@@ -15,8 +15,10 @@ class CreateFuelsTable extends Migration
     {
         Schema::create('fuels', function (Blueprint $table) {
             $table->id();
-            $table->float('liter');
-            $table->foreignId('spent_id')->constrained();
+            $table->decimal('liter', $precision = 10, $scale = 2);
+            $table->decimal('price', $precision = 10, $scale = 2);
+            $table->date('date');
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('car_id')->constrained();
             $table->timestamps();
         });

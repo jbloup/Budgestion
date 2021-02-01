@@ -3,9 +3,15 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\FuelController;
 use App\Http\Controllers\SpentController;
+use App\Http\Controllers\TableController;
 use App\Http\Controllers\TypeController;
+use App\Models\User;
+use App\Providers\FortifyServiceProvider;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,11 +29,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('home');
-})->middleware('auth')->name('home');
+Route::get('/home', [Controller::class, 'home'])->name('home')->middleware('auth');
 
-Route::get('/create/spent/', [SpentController::class, 'create'])->name('spent')->middleware('auth');
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password',[
+        'users' => User::where('id', Auth::user()->getAuthIdentifier())->get(),]);
+});
+Route::post('/forgot-password', [FortifyServiceProvider::class, function(){return view('auth.forgot-password',[
+'users' => User::where('id', Auth::user()->getAuthIdentifier())->get(),]); }])->name('forgot-password')->middleware('auth');
+
+
+Route::get('/table/spent_per_month', [TableController::class, 'show'])->name('spent_per_month')->middleware('auth');
+
+Route::get('/create/spent', [SpentController::class, 'create'])->name('spent')->middleware('auth');
 Route::post('/create/spent', [SpentController::class, 'store'])->name('store_spent')->middleware('auth');
 Route::post('/create/spent_update', [SpentController::class, 'update'])->name('update_spent')->middleware('auth');
 Route::get('/create/spent_update', [SpentController::class, 'create'])->middleware('auth');
@@ -62,3 +76,9 @@ Route::post('/create/account', [AccountController::class, 'store'])->name('store
 Route::post('/create/account_update', [AccountController::class, 'update'])->name('update_account')->middleware('auth');
 Route::get('/create/account_update', [AccountController::class, 'create'])->middleware('auth');
 Route::get('/create/account_delete', [AccountController::class, 'delete'])->name('delete_account')->middleware('auth');
+
+Route::get('/create/fuel', [FuelController::class, 'create'])->name('fuel')->middleware('auth');
+Route::post('/create/fuel', [FuelController::class, 'store'])->name('store_fuel')->middleware('auth');
+Route::post('/create/fuel_update', [FuelController::class, 'update'])->name('update_fuel')->middleware('auth');
+Route::get('/create/fuel_update', [FuelController::class, 'create'])->middleware('auth');
+Route::get('/create/fuel_delete', [FuelController::class, 'delete'])->name('delete_fuel')->middleware('auth');

@@ -11,9 +11,11 @@
 <body style="min-height: 100vh">
 @include('layouts.navbar')
 
+
+
 @yield('content')
 
-<footer>
+<footer class="footer">
     <div class="hero-foot">
     <div class="content has-text-centered">
         <p class="is-size-7">
@@ -23,5 +25,6 @@
     </div>`
     </div>
 </footer>
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

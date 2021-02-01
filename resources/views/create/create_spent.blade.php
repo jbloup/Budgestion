@@ -1,15 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="spentd mb-6">
+    <!--Form Spent-->
+    <section class="hero is-medium is-primary is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Dépense
+                </h1>
+                <h2 class="subtitle">
+                    Créer une nouvelle dépense.
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="section is-small">
+        <div class="container is-max-desktop">
         <form method="POST" action="{{route('store_spent')}}">
             @csrf
-    <header class="spentd-header">
-        <div class="spentd-header-title">
-            <h1 class="title">Complétez informations dépense</h1>
-        </div>
-    </header>
-    <div class="spentd-content">
+            <h1 class="title">Complétez les informations</h1>
         <div class="mb-5">
             <label for="name" class="label">Désignation de la dépense</label>
             <input id="name" type="text" name="name" class="input" value="{{ old('name') }}"
@@ -36,7 +45,7 @@
         </div>
         <div class="mb-5">
             <label for="date" class="label">Date de la dépense</label>
-            <input id="date" type="date" name="date" class="input" value="{{ old('date') }}">
+            <input id="date" type="date" name="date" class="input" value="{{ old('date') }}" placeholder="JJ-MM-YYYY">
             @error('date')
             <span class="help is-danger">{{ $message }}</span>
             @enderror
@@ -55,7 +64,7 @@
                             </select>
                         </div>
                     </div>
-                    @error('family')
+                    @error('family_id')
                     <span class="help is-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -71,28 +80,43 @@
                                 @if($account->main == 1)
                                     | principal
                                 @endif
-
                             </option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            @error('account')
+            @error('account_id')
             <span class="help is-danger">{{ $message }}</span>
             @enderror
         </div>
-        <footer class="spentd-footer">
-            <div class="spentd-footer-item column">
-                <button type="submit" class="button is-primary ">Créer une dépense</button>
+                <button type="submit" class="button is-primary ">
+                    <span class="icon is-small">
+                                <i class="fas fa-money-bill-wave"></i>
+                                </span>
+                    <span>Créer une dépense</span></button>
                 @if($message_success != "")
                     <span class="help is-success">{{ $message_success }}</span>
                 @endif
-            </div>
-        </footer>
-    </div>
         </form>
     </div>
-    <div class="card">
+    </section>
+    <!-- End Form Spent -->
+    <!-- Title Table -->
+    <section class="hero is-light">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Liste des dépenses
+                </h1>
+                <h2 class="subtitle">
+                </h2>
+            </div>
+        </div>
+    </section>
+    <!-- End Title Table -->
+    <!-- Table -->
+    <section class="section">
+        <div class="table-container">
         <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                 <tr class="is-selected">
@@ -113,13 +137,13 @@
                 <td>{{ $spent->name }}</td>
                 <td>{{ $spent->description }}</td>
                 <td>{{ $spent->price }}</td>
-                <td>{{ $spent->date }}</td>
+                <td>{{ date('d-m-Y', strtotime($spent->date)) }}</td>
                 <td>{{ $spent->family->name }}</td>
                 <td>{{ $spent->family->type->name }}</td>
                 <td>{{ $spent->family->type->category->name }}</td>
                 <td>{{ $spent->account->name }}</td>
                 <th>
-                    <button id="modalButton" class="button is-primary"
+                    <button id="modalButton" class="button"
                             onclick="document.getElementById({{ $spent->id }}).style.display='block'"
                             data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
                                 class="fas fa-pen"></i></span></button>
@@ -160,7 +184,7 @@
                                 </div>
                                 <div class="mb-5">
                                     <label for="update_spentdate" class="label">Date de la dépense</label>
-                                    <input id="update_spent_date" type="date" name="update_spent_date" class="input" value="{{ $spent->date }}">
+                                    <input id="update_spent_date" type="date" name="update_spent_date" class="input" value="{{ date('d-m-Y', strtotime($spent->date)) }}">
                                 </div>
                                 <div class="mb-5">
                                     <div class="control">
@@ -195,10 +219,7 @@
                             </div>
                             <footer class="modal-card-foot">
                                 <button type="submit" class="button is-primary">Enregistrer</button>
-                                <!-- if fuels -->
-                                <button type="submit" id="delete" class="button is-danger">
-                                    <a class="has-text-white" href="{{ url('/create/spent_delete?spent_id='. $spent->id) }}">Supprimer</a></button>
-                                <!-- endif fuels -->
+                                    <a class="has-text-white button is-danger" href="{{ url('/create/spent_delete?spent_id='. $spent->id) }}">Supprimer</a>
                             </footer>
                         </form>
                         <!-- Content ... -->
@@ -210,6 +231,8 @@
             </tbody>
         </table>
     </div>
+    </section>
+    <!-- End Table -->
 
     <!-- Message Success -->
         @error('update_name')

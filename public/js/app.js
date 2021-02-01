@@ -19343,7 +19343,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! ./bulma */ "./resources/js/bulma.js");
+__webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
 
 /***/ }),
 
@@ -19379,10 +19379,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/bulma.js":
-/*!*******************************!*\
-  !*** ./resources/js/bulma.js ***!
-  \*******************************/
+/***/ "./resources/js/navbar.js":
+/*!********************************!*\
+  !*** ./resources/js/navbar.js ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
