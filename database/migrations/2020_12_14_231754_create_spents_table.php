@@ -16,12 +16,12 @@ class CreateSpentsTable extends Migration
         Schema::create('spents', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->unsignedBigInteger('price');
+            $table->text('description')->nullable();
+            $table->decimal('price', $precision = 10, $scale = 2);
+            $table->date('date');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('account_id')->constrained();
-            $table->foreignId('category_id')->constrained();
-            $table->foreignId('sub_type_id')->constrained();
+            $table->foreignId('family_id')->constrained();
             $table->timestamps();
         });
     }

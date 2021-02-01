@@ -15,10 +15,11 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('number');
+            $table->bigInteger('number')->unique();
             $table->string('name');
-            $table->text('description');
-            $table->unsignedBigInteger('amount');
+            $table->text('description')->nullable();
+            $table->decimal('amount', $precision = 10, $scale = 2);
+            $table->boolean('main');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -41,13 +42,39 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function accounts()
+    {
+        return $this->hasMany(Account::class, 'user_id', 'id');
+    }
+
+    public function cars()
+    {
+        return $this->hasMany(Car::class, 'user_id', 'id');
+    }
+
+    public function fuels()
+    {
+        return $this->hasMany(Fuel::class, 'user_id', 'id');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'user_id', 'id');
+    }
+
+    public function types()
+    {
+        return $this->hasMany(Type::class, 'user_id', 'id');
+    }
+
+    public function families(): HasMany
+    {
+        return $this->hasMany(Family::class, 'user_id', 'id');
+    }
+
     public function spents()
     {
         return $this->hasMany('App\Models\Spent');
     }
 
-    public function accounts()
-    {
-        return $this->hasMany('App\Models\Account');
-    }
 }

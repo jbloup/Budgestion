@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubTypesTable extends Migration
+class CreateFamiliesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSubTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_types', function (Blueprint $table) {
+        Schema::create('families', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('type_id')->constrained();
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ class CreateSubTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_types');
+        Schema::dropIfExists('families');
     }
 }
