@@ -40,6 +40,7 @@ class FuelController extends Controller
         $request->validate([
             'liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+            'mileage' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'date' => 'required|date|date_format:d-m-Y',
             'car_id' => 'required|integer',
         ]);
@@ -51,6 +52,9 @@ class FuelController extends Controller
             'user_id' => Auth::user()->getAuthIdentifier(),
             'car_id' => request('car_id'),
         ]);
+        
+        Car::where('id', request('car_id'))
+        ->update(['mileage' => request('mileage'),]);
 
         return view('create/create_fuel',[
             'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),

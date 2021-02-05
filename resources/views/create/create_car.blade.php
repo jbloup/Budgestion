@@ -16,7 +16,8 @@
     </section>
     <section class="section is-small">
         <div class="container is-max-desktop">
-        <form method="POST" action="{{route('store_car')}}">
+        <form method="POST" action="{{ route('create_car') }}">
+            @method('post')
             @csrf
                     <h1 class="title">Complétez les informations</h1>
                 <div class="mb-5">
@@ -56,10 +57,18 @@
                                 <i class="fas fa-car"></i>
                                 </span>
                         <span>Créer un véhicule</span></button>
-                    @if($message_success != "")
-                        <span class="help is-success">{{ $message_success }}</span>
-                    @endif
+            @if (session('create'))
+                <span class="help is-success">{{ session('create') }}</span>
+            @endif
         </form>
+            <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ route('import_car') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="import_file" />
+                <button class="btn btn-primary">Import File</button>
+            </form>
+            @if (session('import'))
+                    <span class="help is-success">{{ session('import') }}</span>
+            @endif
         </div>
     </section>
     <!-- End Form Car -->
@@ -105,7 +114,7 @@
                 <!-- Modal Card -->
                 <div id="{{ $car->id }}" class="modal">
                     <div class="modal-background"></div>
-                    <div class="modal-card">
+                    <footer class="modal-card">
                         <header class="modal-card-head">
                             <p class="modal-card-title">Modification {{ $car->name }}</p>
                             <button class="delete" aria-label="close"
@@ -113,12 +122,12 @@
                         </header>
                         <section class="modal-card-body">
                             <!-- Content ... -->
-                            <form method="POST" action="{{route('update_car')}}">
+                            <form method="POST" action="{{ url('/car', ['id' => $car->id]) }}">
+                                @method('put')
                                 @csrf
                                 <div class="card-content">
                                     <div class="mb-5">
                                         <label for="update_name" class="label">Nom du véhicule</label>
-                                        <input id="car_id" name="car_id" class="is-hidden" value="{{ $car->id }}">
                                         <input id="update_name" type="text" name="update_name" class="input"
                                                value="{{ $car->name }}"
                                                placeholder="Nom véhicule" autofocus>
@@ -153,18 +162,23 @@
                                                value="{{ $car->mileage }}" placeholder="Kilométrage">
                                     </div>
                                 </div>
-                                <footer class="modal-card-foot">
+
+
                                     <button type="submit" class="button is-primary">Enregistrer</button>
+                            </form>
+                            <footer class="modal-card-foot">
                                     @if($car->fuels->count() == 0)
-                                    <a class="has-text-white button is-danger" href="{{ url('/create/car_delete?car_id='. $car->id) }}">
-                                        <span>Supprimer</span></a>
+                                        <form action="{{ url('/car', ['id' => $car->id]) }}" method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
+                                        </form>
                                     @endif
                                 </footer>
-                            </form>
                             <!-- Content ... -->
                         </section>
                     </div>
-                </div>
+
             @endforeach
             </tbody>
         </table>
@@ -186,10 +200,11 @@
             <span class="help is-danger">{{ $message }}</span>
         </div>
         @enderror
-        @if($message_updated != "")
-            <div class="card-footer-item">
-                <span class="help is-success">{{ $message_updated }}</span>
-            </div>
-        @endif
+    @if (session('delete'))
+        <span class="help is-success">{{ session('delete') }}</span>
+    @endif
+    @if (session('update'))
+        <span class="help is-success">{{ session('update') }}</span>
+    @endif
 @endsection
 

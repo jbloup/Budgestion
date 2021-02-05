@@ -10,8 +10,11 @@ class Spent extends Model
     use HasFactory;
 
     /**
-     * @var string[]
+     * @var string
      */
+    protected $table = 'spents';
+
+    protected $guarded = array();
 
     protected $fillable = [
         'name',

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Spent;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TableController extends Controller
 {
-    public function show(){
+    public function view(){
 
-        return view('table/spent_per_month',[
+        return view('table/month',[
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
         ]);
     }
