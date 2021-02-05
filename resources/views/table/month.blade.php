@@ -14,6 +14,16 @@
         </div>
     </section>
     <section class="section is-small">
+@foreach($spents as $spent)
+
+
+    <h1>{{ $spent->family->type->category->name }}</h1>
+    <h2>{{ $spent->name }}</h2>
+    <h2>{{ date('d/m/Y', strtotime(str_replace('-', '/',$spent->date)) )}}</h2>
+
+
+        @endforeach
+
 
     </section>
 @endsection

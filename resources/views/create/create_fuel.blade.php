@@ -26,7 +26,8 @@
                     @error('liter')
                     <span class="help is-danger">{{ $message }}</span>
                     @enderror
-                </div>                <div class="mb-5">
+                </div>
+                <div class="mb-5">
                     <label for="price" class="label">Montant de la dépense de carburant</label>
                     <input id="price" type="number"  step=".01" name="price" class="input" value="{{ old('price') }}"
                            placeholder="Prix ...">
@@ -38,6 +39,14 @@
                     <label for="date" class="label">Date de la dépense de carburant</label>
                     <input id="date" type="date" name="date" class="input" value="{{ old('date') }}" placeholder="JJ-MM-YYYY">
                     @error('date')
+                    <span class="help is-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="mb-5">
+                    <label for="mileage" class="label">Actualisation kilométrage voiture</label>
+                    <input id="mileage" type="number"  step=".01" name="mileage" class="input" value="{{ old('mileage') }}"
+                           placeholder="kilomètres ...">
+                    @error('mileage')
                     <span class="help is-danger">{{ $message }}</span>
                     @enderror
                 </div>

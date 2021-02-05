@@ -27,7 +27,7 @@
                 Dépense Annuelle
             </a>
 
-            <a href="{{ url('table/spent_per_month') }}" class="navbar-item">
+            <a href="{{ route('month') }}" class="navbar-item">
                 Dépense Mensuelle
             </a>
 
@@ -40,14 +40,14 @@
                     <a href="{{ url('create/category') }}" class="navbar-item">
                         Nomenclature
                     </a>
-                    <a href="{{ url('create/car') }}" class="navbar-item">
+                    <a href="{{ route('car') }}" class="navbar-item">
                         Véhicule
                     </a>
                     <a href="{{ url('create/account') }}" class="navbar-item">
                         Compte
                     </a>
                     <hr class="navbar-divider">
-                    <a href="{{ url('create/spent') }}" class="navbar-item">
+                    <a href="{{ route('spent') }}" class="navbar-item">
                         Dépense
                     </a>
                     <a href="{{ url('create/fuel') }}" class="navbar-item">

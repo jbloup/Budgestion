@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SpentsImport;
 use App\Models\Account;
 use App\Models\Family;
 use App\Models\Spent;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SpentController extends Controller {
 
@@ -20,14 +23,12 @@ class SpentController extends Controller {
      * @return Application|Factory|View
      */
 
-    public function create()
+    public function view()
     {
         return view('create/create_spent',[
             'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
             'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
-            'message_success' => "",
-            'message_updated' => "",
         ]);
     }
 
@@ -35,9 +36,9 @@ class SpentController extends Controller {
      * Create a new spent
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
            'name' => 'required|string|max:255',
@@ -57,22 +58,17 @@ class SpentController extends Controller {
                 'family_id' => request('family_id'),
         ]);
 
-        return view('create/create_spent',[
-            'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
-            'message_success' => "dépense bien enregistrée",
-            'message_updated' => "",
-        ]);
+        return back()->with('create', 'dépense ajoutée');
     }
 
     /**
      * Update a spent
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'update_spent_name' => 'required|string|max:255',
@@ -82,7 +78,7 @@ class SpentController extends Controller {
             'update_family_id' => 'required|integer',
         ]);
 
-        Spent::where('id', request('spent_id'))
+        Spent::where('id', $id)
             ->update([
                 'name' => request('update_spent_name'),
                 'description' => request('update_spent_description'),
@@ -94,30 +90,31 @@ class SpentController extends Controller {
 
             ]);
 
-        return view('create/create_spent',[
-            'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
-            'message_updated' => "modification bien enregistrée",
-            'message_success' => "",
-        ]);
+        return back()->with('update', 'dépense modifiée');
     }
 
     /**
      * Delete a spent
      *
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
-    public function delete()
+    public function delete($id)
     {
-        DB::table('spents')->where('id', request('spent_id'))->delete();
+        DB::table('spents')->where('id', $id)->delete();
 
-        return view('create/create_spent',[
-            'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
-            'message_updated' => "",
-            'message_success' => "",
-        ]);
+        return back()->with('delete', 'dépense supprimée');
+    }
+
+    /**
+     * Import spents with excel file
+     *
+     * @return RedirectResponse
+     */
+    public function import()
+    {
+        Excel::import(new SpentsImport, request()->file('import_file'));
+
+        return back()->with('import', 'dépenses importées');
     }
 }
