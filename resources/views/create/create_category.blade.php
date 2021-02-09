@@ -244,7 +244,7 @@
                                                 </header>
                                                 <!-- Content -->
                                                 <div class="modal-card-body">
-                                                    <form action="{{ url('/type', ['id' => $type->id]) }}">
+                                                    <form action="{{ url('/type', ['id' => $type->id]) }}" method="post">
                                                         @csrf
                                                         @method('put')
                                                         <div class="card-content">
@@ -318,7 +318,7 @@
                                                     </header>
                                                     <!-- Content -->
                                                     <div class="modal-card-body">
-                                                        <form action="{{ url('/family', ['id' => $family->id]) }}">
+                                                        <form action="{{ url('/family', ['id' => $family->id]) }}" method="post">
                                                             @csrf
                                                             @method('put')
                                                             <div class="card-content">
@@ -390,7 +390,7 @@
                             </header>
                             <!-- Content -->
                             <div class="modal-card-body">
-                                <form action="{{ url('/category', ['id' => $category->id]) }}">
+                                <form action="{{ url('/category', ['id' => $category->id]) }}" method="post">
                                     @csrf
                                     @method('put')
                                     <div class="card-content">
