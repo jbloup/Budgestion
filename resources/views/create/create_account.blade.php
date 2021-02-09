@@ -15,8 +15,9 @@
     </section>
     <section class="section is-small">
         <div class="container is-max-desktop">
-        <form method="POST" action="{{route('store_account')}}">
+        <form method="POST" action="{{ route('create_account') }}">
             @csrf
+            @method('post')
                     <h1 class="title">Complétez les informations</h1>
             <div class="mb-5">
                 <label for="number" class="label">Numéro de compte bancaire</label>
@@ -74,10 +75,10 @@
                     </span>
                         <span>Créer un compte bancaire</span>
                     </button>
-                    @if($message_success != "")
-                        <span class="help is-success">{{ $message_success }}</span>
-                    @endif
         </form>
+            @if (session('create'))
+                <span class="help is-success">{{ session('create') }}</span>
+            @endif
     </div>
     </section>
     <!-- End Form Account -->
@@ -143,9 +144,10 @@
                                     onclick="document.getElementById({{ $account->id }}).style.display='none'"></button>
                         </header>
                         <!-- Content  -->
-                            <section class="modal-card-body">
+                            <div class="modal-card-body">
                                 <div class="card-content">
-                                    <form method="POST" action="{{route('update_account')}}">
+                                    <form method="POST" action="{{ url('/account', ['id' => $account->id]) }}">
+                                        @method('put')
                                         @csrf
                                         <div class="mb-5">
                                         <label for="update_number" class="label">Numéro de compte bancaire</label>
@@ -153,7 +155,6 @@
                                         </div>
                                     <div class="mb-5">
                                         <label for="update_name" class="label">Nom du compte bancaire</label>
-                                        <input id="account_id" name="account_id" class="is-hidden" value="{{ $account->id }}">
                                         <input id="update_name" type="text" name="update_name" class="input" value="{{ $account->name }}" placeholder="Nom compte bancaire" autofocus>
                                     </div>
                                     <div class="mb-5">
@@ -188,22 +189,22 @@
                                                 @endif
                                         </div>
                                     </div>
-                                    <footer class="modal-card-foot">
-                                        <button type="submit" class="button is-success">
-                                        <span class="icon">
-                                            <i class="fas fa-check"></i></span>
-                                            <span>Enregistrer</span>
-                                        </button>
-                                        <button type="submit" id="delete" class="button is-danger">
-                                            <a class="has-text-light" href="{{ url('/create/account_delete?account_id='. $account->id) }}">Supprimer</a>
-                                        </button>
-                                    </footer>
-                        </form>
+                                <button type="submit" class="button is-primary">Enregistrer</button>
+                            </form>
                                 </div>
-                            </section>
+                                <!-- Content ... -->
+                            </div>
+                                    <footer class="modal-card-foot">
+                                    @if($account->spents->count() == 0)
+                                        <form action="{{ url('/account', ['id' => $account->id]) }}" method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
+                                        </form>
+                                    @endif
+                                    </footer>
                         <!-- End Content -->
                     </div>
-                </div>
                 <!-- End Modal Card -->
             @endforeach
             </tbody>
@@ -232,10 +233,11 @@
         <span class="help is-danger">{{ $message }}</span>
     </div>
     @enderror
-    @if($message_updated != "")
-        <div class="card-footer-item">
-            <span class="help is-success">{{ $message_updated }}</span>
-        </div>
+    @if (session('delete'))
+        <span class="help is-success">{{ session('delete') }}</span>
+    @endif
+    @if (session('update'))
+        <span class="help is-success">{{ session('update') }}</span>
     @endif
     <!-- end message -->
 @endsection

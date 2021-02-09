@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    /**
+     * @var string
+     */
+    protected $table = 'categories';
+
+    protected $guarded = array();
+
     /**
      * The attributes that are mass assignable.
      *

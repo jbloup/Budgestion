@@ -28,13 +28,10 @@ class Controller extends BaseController
 
         foreach ($users as $user){
             $user_name = $user->name;
-    }
-        $date = '2020/12/21';
+        }
 
         return view('/home',[
             'user_name' => $user_name,
-            'date' => date('Y-m-d', strtotime(str_replace('/', '-', $date))),
-            'date_normale' => date('d-m-Y', strtotime(str_replace('/', '-', $date))),
         ]);
     }
 }

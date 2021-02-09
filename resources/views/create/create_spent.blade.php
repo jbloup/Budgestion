@@ -98,26 +98,6 @@
                 <span class="help is-success">{{ session('create') }}</span>
             @endif
         </form>
-            <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ route('import_spent') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="file has-name is-fullwidth">
-                    <label class="file-label">
-                        <span class="file-cta">
-                                <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">Choisissez un fichier</span>
-                            </span>
-                        <span class="file-name"></span>
-                        <input type="file" name="import_file">
-
-                    </label>
-                </div>
-                <button class="btn btn-primary">Import File</button>
-            </form>
-            @if (session('import'))
-                <span class="help is-success">{{ session('import') }}</span>
-            @endif
         </div>
     </div>
     </section>
@@ -179,8 +159,8 @@
                         <button class="delete" aria-label="close"
                                 onclick="document.getElementById({{ $spent->id }}).style.display='none'"></button>
                     </header>
-                    <section class="modal-card-body">
-                        <!-- Content ... -->
+                    <!-- Content ... -->
+                    <div class="modal-card-body">
                         <form method="POST" action="{{ url('/spent', ['id' => $spent->id]) }}">
                             @method('put')
                             @csrf
@@ -216,7 +196,7 @@
                                                 <option value="{{ $spent->family->id }}">{{ $spent->family->name}}</option>
                                                 @foreach($families as $family)
                                                     @if($family->id != $spent->family->id)
-                                                    <option value="{{ $family->id }}">{{ $family->name }}</option>
+                                                        <option value="{{ $family->id }}">{{ $family->name }}</option>
                                                     @endif
                                                 @endforeach
                                             </select>
@@ -228,30 +208,39 @@
                                         <label for="update_account_id" class="label">Compte Bancaire</label>
                                         <div class="select">
                                             <select id="update_account_id" name="update_account_id">
-                                                <option value="{{ $spent->account->id }}">{{ $spent->account->name}}</option>
+                                                <option value="{{ $spent->account->id }}">{{ $spent->account->number . " : " . $spent->account->name}}
+                                                    @if($spent->account->main == 1)
+                                                        | principal
+                                                    @endif
+                                                </option>
                                                 @foreach($accounts as $account)
                                                     @if($account->id != $spent->account->id)
-                                                    <option value="{{ $account->id }}">{{ $account->name }}</option>
+                                                        <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
+                                                            @if($account->main == 1)
+                                                                | principal
+                                                            @endif
+                                                        </option>
                                                     @endif
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                 </div>
+                                <button type="submit" class="button is-primary">Enregistrer</button>
                             </div>
-                            <button type="submit" class="button is-primary">Enregistrer</button>
                         </form>
-                            <footer class="modal-card-foot">
-                                <form action="{{ url('/spent', ['id' => $spent->id]) }}" method="post">
-                                    @method('delete')
-                                    @csrf
-                                    <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
-                                </form>
-                            </footer>
                         <!-- Content ... -->
-                    </section>
+                    </div>
+                    <footer class="modal-card-foot">
+                        <form action="{{ url('/spent', ['id' => $spent->id]) }}" method="post">
+                            @method('delete')
+                            @csrf
+                            <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
+                        </form>
+                    </footer>
                 </div>
             </div>
+
             <!-- End Modal Card Spent -->
                 @endforeach
             </tbody>
@@ -293,31 +282,5 @@
         <span class="help is-success">{{ session('delete') }}</span>
     @endif
     <!-- End Message Success -->
-    <div>
-        <input id="uploadInput" type="file" name="myFiles" multiple>
-        selected files: <span id="fileNum">0</span>;
-        total size: <span id="fileSize">0</span>
-    </div>
-    <div><input type="submit" value="Send file"></div>
-    <script>
-        function updateSize() {
-            let file_name = "",
-                oFiles = this.files,
-                nFiles = oFiles.length;
-            for (let nFileId = 0; nFileId < nFiles; nFileId++) {
-                nBytes += oFiles[nFileId].name;
-            }
-            let sOutput = nBytes + " bytes";
-            // optional code for multiples approximation
-            const aMultiples = ["KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
-            for (nMultiple = 0, nApprox = nBytes / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
-                sOutput = nApprox.toFixed(3) + " " + aMultiples[nMultiple] + " (" + nBytes + " bytes)";
-            }
-            // end of optional code
-            document.getElementById("fileName").innerHTML = file_name;
-        }
-
-        document.getElementById("uploadInput").addEventListener("change", updateSize, false);
-    </script>
 @endsection
 

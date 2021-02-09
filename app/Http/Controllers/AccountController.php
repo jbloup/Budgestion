@@ -7,6 +7,7 @@ use App\Models\Account;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,13 +19,11 @@ class AccountController extends Controller
      *
      * @return Application|Factory|View
      */
-
-    public function create()
+    public function view()
     {
+
         return view('create/create_account',[
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success' => "",
-            'message_updated' => "",
         ]);
     }
 
@@ -32,10 +31,9 @@ class AccountController extends Controller
      * Create a new account
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
-
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
@@ -45,7 +43,7 @@ class AccountController extends Controller
         ]);
 
         if (request('main') == 1){
-            DB::table('accounts')->where('user_id', Auth::user()->getAuthIdentifier())->update(['main' => 0]);
+            Account::where('user_id', Auth::user()->getAuthIdentifier())->update(['main' => 0]);
         }
 
         Account::create([
@@ -57,20 +55,17 @@ class AccountController extends Controller
             'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
-        return view('create/create_account',[
-            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success' => "compte bancaire bien enregistrée",
-            'message_updated' => "",
-        ]);
+        return back()->with('create', 'compte ajouté');
     }
 
     /**
      * Update a account
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'update_name' => 'required|string',
@@ -79,14 +74,13 @@ class AccountController extends Controller
         ]);
 
         if (request('update_main') == 1){
-            DB::table('accounts')->where('user_id', Auth::user()->getAuthIdentifier())->update(['main' => 0]);
+            Account::where('user_id', Auth::user()->getAuthIdentifier())->update(['main' => 0]);
         }
 
-        $accountNumber = DB::table('accounts' )->select('number')->where('user_id', Auth::user()->getAuthIdentifier())->where('id', request('account_id'))->get();
+        $accountNumber = DB::table('accounts' )->select('number')->where('user_id', Auth::user()->getAuthIdentifier())->where('id', $id)->get();
 
         if (request('update_number') != $accountNumber ){
-            Account::where('user_id', Auth::user()->getAuthIdentifier())
-                ->where('id', request('account_id'))
+            Account::where('id', $id)
                 ->update([
                     'name' => request('update_name'),
                     'number' => request('update_number'),
@@ -96,8 +90,7 @@ class AccountController extends Controller
                 ]);
 
         }else{
-            Account::where('user_id', Auth::user()->getAuthIdentifier())
-                ->where('id', request('account_id'))
+            Account::where('id', $id)
                 ->update([
                     'name' => request('update_name'),
                     'description' => request('update_description'),
@@ -106,27 +99,20 @@ class AccountController extends Controller
                 ]);
         }
 
-        return view('create/create_account',[
-            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "modification bien enregistrée",
-            'message_success' => "",
-        ]);
+        return back()->with('update', 'compte modifié');
     }
 
     /**
      * Delete a account
      *
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
 
-    public function delete()
+    public function delete($id)
     {
-        DB::table('accounts')->where('id', request('account_id'))->delete();
+        Account::where('id', $id)->delete();
 
-        return view('create/create_account',[
-            'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "",
-            'message_success' => "",
-        ]);
+        return back()->with('delete', 'compte supprimé');
     }
 }

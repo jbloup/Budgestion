@@ -9,7 +9,15 @@ class Family extends Model
 {
     use HasFactory;
 
+    /**
+     * @var string
+     */
+    protected $table = 'families';
+
+    protected $guarded = array();
+
     protected $fillable = [
+        'id',
         'name',
         'type_id',
         'user_id',
@@ -22,7 +30,7 @@ class Family extends Model
 
     public function type()
     {
-        return $this->belongsTo('App\Models\Type');
+        return $this->belongsTo(Type::class)->withDefault();
     }
     public function spents()
     {

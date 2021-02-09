@@ -26,4 +26,8 @@ class Account extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function spents()
+    {
+        return $this->hasMany(Spent::class, 'account_id', 'id');
+    }
 }

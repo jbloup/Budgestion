@@ -19,24 +19,20 @@ class FamilyController extends Controller
      * Show the form to create a new type.
      *
      */
-    public function create()
+    public function view()
     {
 
         return view('create/create_category',[
             'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-            'message_updated' => "",
         ]);
     }
 
     /**
      * @param Request $request
-     * @return Application|Factory|View
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
             'family_name' => 'required|string|max:255',
@@ -49,56 +45,36 @@ class FamilyController extends Controller
             'type_id'=> request('family_type_id')
         ]);
 
-        return view('create/create_category',[
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "sous-type bien enregistré",
-            'message_updated' => "",
-        ]);
+        return back()->with('create', 'Sous-type ajouté');
     }
 
     /**
      * @param Request $request
-     * @return Application|Factory|View
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'update_family_name' => 'required|string|max:255',
             'update_family_type_id' => 'required',
         ]);
 
-        Family::where('id', request('family_id'))
+        Family::where('id', $id)
             ->update(['name' => request('update_family_name'), 'type_id' => request('update_family_type_id')]
             );
 
-        return view('create/create_category',[
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "modification bien enregistrée",
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-        ]);
+        return back()->with('update', 'Sous-type modifié');
     }
 
     /**
-     * @return Application|Factory|View
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete()
+    public function delete($id)
     {
-        DB::table('families')->where('id', request('delete_family_id'))->delete();
+        Family::where('id', $id)->delete();
 
-
-        return view('create/create_category',[
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "",
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-        ]);
+        return back()->with('delete', 'Sous-type supprimé');
     }
 }

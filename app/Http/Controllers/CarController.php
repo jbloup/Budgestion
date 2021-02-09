@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CarController extends Controller
@@ -20,7 +19,6 @@ class CarController extends Controller
      *
      * @return Application|Factory|View
      */
-
     public function view()
     {
         return view('create/create_car',[
@@ -87,7 +85,7 @@ class CarController extends Controller
      */
     public function delete($id)
     {
-        DB::table('cars')->where('id', $id)->delete();
+        Car::where('id', $id)->delete();
 
         return back()->with('delete', 'véhicule supprimé');
     }

@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Type extends Model
 {
     use HasFactory;
+    /**
+     * @var string
+     */
+    protected $table = 'types';
+
+    protected $guarded = array();
 
     protected $fillable = [
         'id',
@@ -24,10 +30,10 @@ class Type extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category');
+        return $this->belongsTo(Category::class)->withDefault();
     }
 
-    public function families(): HasMany
+    public function families()
     {
         return $this->hasMany(Family::class, 'type_id', 'id');
     }
