@@ -8,22 +8,66 @@
                     Dépenses Mensuelles
                 </h1>
                 <h2 class="subtitle">
-                    Liste des dépenses par mois et par catégorie.
+                    Liste des dépenses du mois de {{ $month }}.
                 </h2>
             </div>
         </div>
     </section>
     <section class="section is-small">
-@foreach($spents as $spent)
+    @foreach($categories as $category)
+        <h1>   {{ $category->name }}</h1>
+    <div class="table-container">
+        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+            <tr class="is-selected">
+                <th>Type / Sous-type</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Date</th>
+                <th>Compte Bancaire</th>
+                <th>Total</th>
+            </tr>
+            </thead>
 
 
-    <h1>{{ $spent->family->type->category->name }}</h1>
-    <h2>{{ $spent->name }}</h2>
-    <h2>{{ date('d/m/Y', strtotime(str_replace('-', '/',$spent->date)) )}}</h2>
+                    @foreach($category->types as $type)
+                <tr>
+                    <th>{{ $type->name }}</th>
+
+                </tr>
+                        @foreach($type->families as $family)
+                            <tr>
+                            @foreach($family->spents as $spent)
+                                    @if( $spent->date >= date('Y-m') )
+                                    <td>{{ $family->name }}</td>
+                                    <td>{{ $spent->name }}</td>
+                                    <td>{{ $spent->description }}</td>
+                                    <td>{{ $spent->price }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($spent->date)) }}</td>
+                                    <td>{{ $spent->account->name }}</td>
+                                    <td>{{ $spent->account->name }}</td>
+                                    @endif
+                            </tr>
+                            @endforeach
+
+{{--                    <td>{{ $category->type->family->spent->description }}</td>
+                    <td>{{ $category->type->family->spent->price }}</td>
+                    <td>{{ date('d-m-Y', strtotime($category->type->family->spent->date)) }}</td>
+                    <td>{{ $category->type->family->name }}</td>
+                    <td>{{ $category->type->name }}</td>
+                    <td>{{ $category->name }}</td>
+                    <td>{{ $category->type->family->spent->account->name }}</td>--}}
 
 
-        @endforeach
+                        @endforeach
+
+                    @endforeach
 
 
+
+        </table>
+    </div>
+    @endforeach
     </section>
 @endsection

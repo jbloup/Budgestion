@@ -7,21 +7,18 @@ use App\Models\Type;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function create()
+    public function view()
     {
         return view('create/create_category',[
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-            'message_updated' => "",
         ]);
     }
 
@@ -29,10 +26,9 @@ class CategoryController extends Controller
      * Creeate a new category
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
-
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -46,25 +42,17 @@ class CategoryController extends Controller
 
         ]);
 
-        return view('create/create_category',[
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success_category' => "catégorie bien enregistrée",
-            'message_success_type' => "",
-            'message_success_family' => "",
-            'message_updated' => "",
-
-        ]);
+        return back()->with('create', 'catégorie ajoutée');
     }
 
     /**
      * Update a category
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
-
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'update_name' => 'required|string|max:255',
@@ -72,38 +60,23 @@ class CategoryController extends Controller
         ]);
 
         Category::where('user_id', Auth::user()->getAuthIdentifier())
-            ->where('id', request('category_id'))
+            ->where('id', $id)
             ->update(['name' => request('update_name'), 'description' => request('update_description')]
             );
 
-        return view('create/create_category',[
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "modification bien enregistrée",
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-        ]);
+        return back()->with('update', 'catégorie modifiée');
     }
 
     /**
      * Delete a category
      *
      * @param
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
-
-    public function delete()
+    public function delete($id)
     {
-        Category::where('id', request('category_id'))->delete();
+        Category::where('id', $id)->delete();
 
-        return view('create/create_category',[
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "",
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-        ]);
+        return back()->with('delete', 'catégorie supprimée');
     }
 }

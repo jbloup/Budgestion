@@ -67,14 +67,13 @@ class User extends Authenticatable
         return $this->hasMany(Type::class, 'user_id', 'id');
     }
 
-    public function families(): HasMany
+    public function families()
     {
         return $this->hasMany(Family::class, 'user_id', 'id');
     }
 
     public function spents()
     {
-        return $this->hasMany('App\Models\Spent');
+        return $this->hasMany(Spent::class, 'user_id', 'id');
     }
-
 }

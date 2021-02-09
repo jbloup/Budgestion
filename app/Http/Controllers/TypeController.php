@@ -3,16 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Family;
 use App\Models\Type;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 
 class TypeController extends Controller
 {
@@ -20,25 +14,21 @@ class TypeController extends Controller
      * Show the form to create a new type.
      *
      */
-    public function create()
+    public function view()
     {
 
         return view('create/create_category',[
             'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-            'message_updated' => "",
         ]);
     }
 
     /**
      * Store a new type.
      * @param Request $request
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
             'type_name' => 'required|string|max:255',
@@ -51,21 +41,16 @@ class TypeController extends Controller
            'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
-        return view('create/create_category',[
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success_family' => "",
-            'message_success_type' => "type bien enregistré",
-            'message_success_category' => "",
-            'message_updated' => "",
-        ]);
+        return back()->with('create', 'Type ajouté');
     }
+
     /**
      * Store a new type.
      * @param Request $request
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'update_type_name' => 'required|string|max:255',
@@ -73,37 +58,23 @@ class TypeController extends Controller
         ]);
 
         Type::where('user_id', Auth::user()->getAuthIdentifier())
-            ->where('id', request('type_id'))
+            ->where('id', $id)
             ->update(['name' => request('update_type_name'), 'category_id'=>request('update_type_category_id'), ]
             );
 
-        return view('create/create_category',[
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "modification bien enregistrée",
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-        ]);
+        return back()->with('update', 'Type modifié');
     }
 
     /**
      * Store a new type.
      * @param
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
-    public function delete()
+    public function delete($id)
     {
-        DB::table('types')->where('id', request('type_id'))->delete();
+        Type::where('id', $id)->delete();
 
-        return view('create/create_category',[
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "",
-            'message_success_category' => "",
-            'message_success_type' => "",
-            'message_success_family' => "",
-        ]);
+        return back()->with('delete', 'Type supprimé');
     }
 }
 

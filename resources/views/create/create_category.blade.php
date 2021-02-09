@@ -24,8 +24,9 @@
                                 Catégorie
                             </p>
                         </header>
-                        <form method="POST" action="{{route('store_category')}}">
+                        <form method="POST" action="{{ route('create_category') }}">
                             @csrf
+                            @method('post')
                             <div class="card-content">
                                 <div class="mb-5">
                                     <label for="name" class="label">Nom de la catégorie</label>
@@ -54,9 +55,6 @@
                                 </span>
                                         <span>Créer une catégorie</span>
                                     </button>
-                                    @if($message_success_category != "")
-                                        <span class="help is-success">{{ $message_success_category }}</span>
-                                    @endif
                                 </div>
                             </footer>
                         </form>
@@ -70,8 +68,9 @@
                                 Type
                             </p>
                         </header>
-                        <form method="POST" action="{{ route('store_type') }}">
+                        <form method="POST" action="{{ route('create_type') }}">
                             @csrf
+                            @method('post')
                             <div class="card-content">
                                 <div class="mb-5">
                                     <label for="type_name" class="label">Nom du type</label>
@@ -107,9 +106,6 @@
                                 </span>
                                         <span>Créer une type</span>
                                     </button>
-                                    @if($message_success_type != "")
-                                        <span class="help is-success">{{ $message_success_type }}</span>
-                                    @endif
                                 </div>
                             </footer>
                         </form>
@@ -123,8 +119,9 @@
                                 Sous-type
                             </p>
                         </header>
-                        <form method="POST" action="{{ route('store_family') }}">
+                        <form method="POST" action="{{ route('create_family') }}">
                             @csrf
+                            @method('post')
                             <div class="card-content">
                                 <div class="mb-5">
                                     <label for="family_name" class="label">Nom du sous-type</label>
@@ -159,15 +156,15 @@
                                         </span>
                                         <span>Créer un Sous-Type</span>
                                     </button>
-                                    @if($message_success_family != "")
-                                        <span class="help is-success">{{ $message_success_family }}</span>
-                                    @endif
                                 </div>
                             </footer>
                         </form>
                     </div>
                 </div>
             </div>
+            @if (session('create'))
+                <span class="help is-success">{{ session('create') }}</span>
+            @endif
         </div>
         <!-- Title Table -->
     </section>
@@ -184,7 +181,7 @@
     </section>
     <!-- End Title Table -->
     <!-- Table -->
-    <section class="section">
+    <div class="section">
         <div class="container">
             <div class="columns is-multiline">
                 @foreach($categories as $category)
@@ -245,52 +242,57 @@
                                                     <button class="delete" aria-label="close"
                                                             onclick="document.getElementById({{ 2 . $type->id }}).style.display='none'"></button>
                                                 </header>
-                                                <!-- Modal Form Type -->
-                                                <form method="POST" action="{{route('update_type')}}">
-                                                    @csrf
-                                                    <section class="modal-card-body">
-                                                        <!-- Content ... -->
+                                                <!-- Content -->
+                                                <div class="modal-card-body">
+                                                    <form action="{{ url('/type', ['id' => $type->id]) }}">
+                                                        @csrf
+                                                        @method('put')
                                                         <div class="card-content">
                                                             <div class="mb-5">
                                                                 <label for="update_type_name" class="label">Nom du
                                                                     type</label>
-                                                                <input id="type_id" name="type_id" class="is-hidden"
-                                                                       value="{{ $type->id }}">
                                                                 <input id="update_type_name" type="text"
                                                                        name="update_type_name" class="input"
                                                                        value="{{ $type->name }}"
                                                                        placeholder="Nom du type" autofocus>
                                                             </div>
-                                                        </div>
-                                                        <div class="mb-5">
-                                                            <div class="control">
-                                                                <label for="update_type_category_id" class="label">Sous-type</label>
-                                                                <div class="select">
-                                                                    <select id="update_type_category_id"
-                                                                            name="update_type_category_id">
-                                                                        <option
-                                                                            value="{{ $category->id }}">{{ $category->name}}</option>
-                                                                        @foreach($categories as $cat)
-                                                                            @if($cat->id != $category->id)
-                                                                                <option
-                                                                                    value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
+                                                            <div class="mb-5">
+                                                                <div class="control">
+                                                                    <label for="update_type_category_id" class="label">Sous-type</label>
+                                                                    <div class="select">
+                                                                        <select id="update_type_category_id"
+                                                                                name="update_type_category_id">
+                                                                            <option
+                                                                                value="{{ $category->id }}">{{ $category->name}}</option>
+                                                                            @foreach($categories as $cat)
+                                                                                @if($cat->id != $category->id)
+                                                                                    <option
+                                                                                        value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
                                                                 </div>
                                                             </div>
+
+                                                            <button type="submit" class="button is-primary">
+                                                                Enregistrer
+                                                            </button>
                                                         </div>
-                                                        <!-- End Content ... -->
-                                                    </section>
-                                                    <footer class="modal-card-foot">
-                                                        <button type="submit" class="button is-primary">Enregistrer
-                                                        </button>
-                                                        @if($type->families->count() == 0)
-                                                                <a class="has-text-white button is-danger" href="{{ url('/create/type_delete?type_id='. $type->id) }}">Supprimer</a>
-                                                        @endif
-                                                    </footer>
-                                                </form>
-                                                <!-- End Modal Form Type -->
+                                                    </form>
+                                                </div>
+                                                <!-- End Content ... -->
+                                                <footer class="modal-card-foot">
+                                                    @if($type->families->count() == 0)
+                                                        <form action="{{ url('/type', ['id' => $type->id]) }}"
+                                                              method="post">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button class=" button is-danger" type="submit"><span>Supprimer</span>
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                </footer>
                                             </div>
                                         </div>
                                         <!-- End Modal Card Type -->
@@ -314,17 +316,15 @@
                                                         <button class="delete" aria-label="close"
                                                                 onclick="document.getElementById({{ 3 . $family->id }}).style.display='none'"></button>
                                                     </header>
-                                                    <section class="modal-card-body">
-                                                        <!-- Content ... -->
-                                                        <form method="POST" action="{{ route('update_family') }}">
+                                                    <!-- Content -->
+                                                    <div class="modal-card-body">
+                                                        <form action="{{ url('/family', ['id' => $family->id]) }}">
                                                             @csrf
+                                                            @method('put')
                                                             <div class="card-content">
                                                                 <div class="mb-5">
                                                                     <label for="update_name" class="label">Nom du
                                                                         sous-type</label>
-                                                                    <input id="family_id" name="family_id"
-                                                                           class="is-hidden"
-                                                                           value="{{ $family->id }}">
                                                                     <input id="update_family_name" type="text"
                                                                            name="update_family_name"
                                                                            class="input"
@@ -338,7 +338,8 @@
                                                                         <div class="select">
                                                                             <select id="update_family_type_id"
                                                                                     name="update_family_type_id">
-                                                                                <option value="{{ $type->id }}">{{ $type->name}}</option>
+                                                                                <option
+                                                                                    value="{{ $type->id }}">{{ $type->name}}</option>
                                                                                 @foreach($types as $typ)
                                                                                     @if($typ->id != $type->id)
                                                                                         <option
@@ -349,22 +350,28 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <footer class="modal-card-foot">
+
                                                                 <button type="submit" class="button is-primary">
                                                                     Enregistrer
                                                                 </button>
-                                                                @if($family->spents->count() == 0)
-                                                                    <a class="has-text-white button is-danger"
-                                                                           href="{{ url('/create/subtype_delete?delete_family_id='. $family->id) }}">Supprimer</a>
-                                                                @endif
-                                                            </footer>
+                                                            </div>
                                                         </form>
-                                                        <!-- Content ... -->
-                                                    </section>
+                                                    </div>
+                                                    <!-- End Content ... -->
+                                                    <footer class="modal-card-foot">
+                                                        @if($family->spents->count() == 0)
+                                                            <form action="{{ url('/subtype', ['id' => $family->id]) }}"
+                                                                  method="post">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <button class=" button is-danger" type="submit"><span>Supprimer</span>
+                                                                </button>
+                                                            </form>
+                                                        @endif
+                                                    </footer>
                                                 </div>
                                             </div>
-                                            <!-- End Modal Card Family -->
+                                            <!-- End Modal Family Card -->
                                         @endforeach
                                     @endforeach
                                     </tbody>
@@ -372,7 +379,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Modal Card Category -->
+                    <!-- Modal Category Card -->
                     <div id="{{ 1 . $category->id }}" class="modal">
                         <div class="modal-background"></div>
                         <div class="modal-card">
@@ -381,15 +388,14 @@
                                 <button class="delete" aria-label="close"
                                         onclick="document.getElementById({{ 1 . $category->id }}).style.display='none'"></button>
                             </header>
-                            <section class="modal-card-body">
-                                <!-- Content ... -->
-                                <form method="POST" action="{{route('update_category')}}">
+                            <!-- Content -->
+                            <div class="modal-card-body">
+                                <form action="{{ url('/category', ['id' => $category->id]) }}">
                                     @csrf
+                                    @method('put')
                                     <div class="card-content">
                                         <div class="mb-5">
                                             <label for="update_name" class="label">Nom de la catégorie</label>
-                                            <input id="category_id" name="category_id" class="is-hidden"
-                                                   value="{{ $category->id }}">
                                             <input id="update_name" type="text" name="update_name" class="input"
                                                    value="{{ $category->name }}"
                                                    placeholder="Nom catégorie" autofocus>
@@ -400,44 +406,49 @@
                                                       value="{{ $category->description }}"
                                                       placeholder="Description ...">{{ $category->description }}</textarea>
                                         </div>
-                                    </div>
-                                    <footer class="modal-card-foot">
+
                                         <button type="submit" class="button is-primary">Enregistrer</button>
-                                        @if($category->types->count() == 0)
-                                                <a class="has-text-white button is-danger" href="{{ url('/create/category_delete?category_id='. $category->id) }}">Supprimer</a>
-                                        @endif
-                                    </footer>
+                                    </div>
                                 </form>
-                                <!-- Content ... -->
-                            </section>
+                            </div>
+                            <!-- End Content ... -->
+                            <footer class="modal-card-foot">
+                                @if($category->types->count() == 0)
+                                    <form action="{{ url('/category', ['id' => $category->id]) }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
+                                    </form>
+                                @endif
+                            </footer>
                         </div>
                     </div>
-                    <!-- End Modal Card Category -->
+                    <!-- End Modal Category Card -->
                 @endforeach
             </div>
         </div>
-    </section>
-    <!-- End Table -->
+        </section>
+        <!-- End Table -->
 
-    @error('update_name')
-    <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
-    </div>
-    @enderror
-    @error('update_family_name')
-    <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
-    </div>
-    @enderror
-    @error('update_family_type_id')
-    <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
-    </div>
-    @enderror
-    @if($message_updated != "")
+        @error('update_name')
         <div class="card-footer-item">
-            <span class="help is-success">{{ $message_updated }}</span>
+            <span class="help is-danger">{{ $message }}</span>
         </div>
+        @enderror
+        @error('update_family_name')
+        <div class="card-footer-item">
+            <span class="help is-danger">{{ $message }}</span>
+        </div>
+        @enderror
+        @error('update_family_type_id')
+        <div class="card-footer-item">
+            <span class="help is-danger">{{ $message }}</span>
+        </div>
+        @enderror
+        @if (session('delete'))
+            <span class="help is-success">{{ session('delete') }}</span>
+        @endif
+        @if (session('update'))
+            <span class="help is-success">{{ session('update') }}</span>
     @endif
-
 @endsection

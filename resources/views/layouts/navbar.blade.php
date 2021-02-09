@@ -23,7 +23,7 @@
                 <a href="{{ route('home') }}" class="navbar-item">
                     Home
                 </a>
-            <a href="#" class="navbar-item">
+            <a href="{{ route('year') }}" class="navbar-item">
                 Dépense Annuelle
             </a>
 
@@ -37,20 +37,20 @@
                 </a>
 
                 <div class="navbar-dropdown">
-                    <a href="{{ url('create/category') }}" class="navbar-item">
+                    <a href="{{ route('category') }}" class="navbar-item">
                         Nomenclature
                     </a>
                     <a href="{{ route('car') }}" class="navbar-item">
                         Véhicule
                     </a>
-                    <a href="{{ url('create/account') }}" class="navbar-item">
+                    <a href="{{ route('account') }}" class="navbar-item">
                         Compte
                     </a>
                     <hr class="navbar-divider">
                     <a href="{{ route('spent') }}" class="navbar-item">
                         Dépense
                     </a>
-                    <a href="{{ url('create/fuel') }}" class="navbar-item">
+                    <a href="{{ route('fuel') }}" class="navbar-item">
                         Dépense carburant
                     </a>
                     <hr class="navbar-divider">

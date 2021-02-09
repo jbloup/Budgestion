@@ -7,6 +7,7 @@ use App\Models\Fuel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,13 +20,11 @@ class FuelController extends Controller
      * @return Application|Factory|View
      */
 
-    public function create()
+    public function view()
     {
         return view('create/create_fuel',[
             'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
             'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success' => "",
-            'message_updated' => "",
         ]);
     }
 
@@ -33,9 +32,9 @@ class FuelController extends Controller
      * Create a new fuel
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->validate([
             'liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -52,25 +51,21 @@ class FuelController extends Controller
             'user_id' => Auth::user()->getAuthIdentifier(),
             'car_id' => request('car_id'),
         ]);
-        
+
         Car::where('id', request('car_id'))
         ->update(['mileage' => request('mileage'),]);
 
-        return view('create/create_fuel',[
-            'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_success' => "dépense de carbburant bien enregistrée",
-            'message_updated' => "",
-        ]);
+        return back()->with('create', 'dépense de carburant modifiée');
     }
 
     /**
      * Update a fuel
      *
      * @param Request $request
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'update_fuel_liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -79,7 +74,7 @@ class FuelController extends Controller
             'update_car_id' => 'required|integer',
         ]);
 
-        Fuel::where('id', request('fuel_id'))
+        Fuel::where('id', $id)
             ->update([
                 'liter' => request('update_fuel_liter'),
                 'price' => request('update_fuel_price'),
@@ -89,28 +84,19 @@ class FuelController extends Controller
 
             ]);
 
-        return view('create/create_fuel',[
-            'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "modification bien enregistrée",
-            'message_success' => "",
-        ]);
+        return back()->with('update', 'dépense de carburant modifiée');
     }
 
     /**
      * Delete a fuel
      *
-     * @return Application|Factory|View
+     * @param $id
+     * @return RedirectResponse
      */
-    public function delete()
+    public function delete($id)
     {
-        DB::table('fuels')->where('id', request('fuel_id'))->delete();
+        Fuel::where('id', $id)->delete();
 
-        return view('create/create_fuel',[
-            'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'message_updated' => "",
-            'message_success' => "",
-        ]);
+        return back()->with('delete', 'dépense supprimée');
     }
 }

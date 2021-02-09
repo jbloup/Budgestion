@@ -33,7 +33,28 @@ Route::get('/', function () {
 Route::get('/home', [Controller::class, 'home'])->name('home')->middleware('auth');
 
 
-Route::get('/table/month', [TableController::class, 'view'])->name('month')->middleware('auth');
+Route::get('/table/month', [TableController::class, 'month'])->name('month')->middleware('auth');
+Route::get('/table/year', [TableController::class, 'year'])->name('year')->middleware('auth');
+
+Route::get('/category', [CategoryController::class, 'view'])->name('category')->middleware('auth');
+Route::post('/category', [CategoryController::class, 'create'])->name('create_category')->middleware('auth');
+Route::put('/category/{id}', [CategoryController::class, 'update'])->name('update_category')->middleware('auth');
+Route::delete('/category/{id}', [CategoryController::class, 'delete'])->name('delete_category')->middleware('auth');
+
+Route::get('/type', [TypeController::class, 'view'])->name('type')->middleware('auth');
+Route::post('/type', [TypeController::class, 'create'])->name('create_type')->middleware('auth');
+Route::put('/type/{id}', [TypeController::class, 'update'])->name('update_type')->middleware('auth');
+Route::delete('/type/{id}', [TypeController::class, 'delete'])->name('delete_type')->middleware('auth');
+
+Route::get('/subtype', [FamilyController::class, 'view'])->name('family')->middleware('auth');
+Route::post('/subtype', [FamilyController::class, 'create'])->name('create_family')->middleware('auth');
+Route::put('/subtype/{id}', [FamilyController::class, 'update'])->name('update_family')->middleware('auth');
+Route::delete('/subtype/{id}', [FamilyController::class, 'delete'])->name('delete_family')->middleware('auth');
+
+Route::get('/account', [AccountController::class, 'view'])->name('account')->middleware('auth');
+Route::post('/account', [AccountController::class, 'create'])->name('create_account')->middleware('auth');
+Route::put('/account/{id}', [AccountController::class, 'update'])->name('update_account')->middleware('auth');
+Route::delete('/account/{id}', [AccountController::class, 'delete'])->name('delete_account')->middleware('auth');
 
 Route::get('/spent', [SpentController::class, 'view'])->name('spent')->middleware('auth');
 Route::post('/spent', [SpentController::class, 'create'])->name('create_spent')->middleware('auth');
@@ -41,41 +62,16 @@ Route::post('/spent/import', [SpentController::class, 'import'])->name('import_s
 Route::put('/spent/{i}', [SpentController::class, 'update'])->name('update_spent')->middleware('auth');
 Route::delete('/spent/{i}', [SpentController::class, 'delete'])->name('delete_spent')->middleware('auth');
 
-Route::get('/create/category', [CategoryController::class, 'create'])->middleware('auth');
-Route::post('/create/category', [CategoryController::class, 'create'])->name('create_category')->middleware('auth');
-Route::post('/create/category_update', [CategoryController::class, 'update'])->name('update_category')->middleware('auth');
-Route::get('/create/category_update', [CategoryController::class, 'create'])->middleware('auth');
-Route::get('/create/category_delete', [CategoryController::class, 'delete'])->name('delete_category')->middleware('auth');
-
-Route::get('/create/type', [TypeController::class, 'create'])->middleware('auth');
-Route::post('/create/type', [TypeController::class, 'create'])->name('create_type')->middleware('auth');
-Route::post('/create/type_update', [TypeController::class, 'update'])->name('update_type')->middleware('auth');
-Route::get('/create/type_update', [TypeController::class, 'create'])->middleware('auth');
-Route::get('/create/type_delete', [TypeController::class, 'delete'])->name('delete_type')->middleware('auth');
-
-Route::get('/create/subtype', [FamilyController::class, 'create'])->middleware('auth');
-Route::post('/create/subtype', [FamilyController::class, 'create'])->name('create_family')->middleware('auth');
-Route::post('/create/subtype_update', [FamilyController::class, 'update'])->name('update_family')->middleware('auth');
-Route::get('/create/subtype_update', [FamilyController::class, 'create'])->middleware('auth');
-Route::get('/create/subtype_delete', [FamilyController::class, 'delete'])->name('delete_family')->middleware('auth');
-
 Route::get('/car', [CarController::class, 'view'])->name('car')->middleware('auth');
 Route::post('/car', [CarController::class, 'create'])->name('create_car')->middleware('auth');
 Route::post('/car/import', [CarController::class, 'import'])->name('import_car')->middleware('auth');
 Route::put('/car/{id}', [CarController::class, 'update'])->name('update_car')->middleware('auth');
 Route::delete('/car/{id}', [CarController::class, 'delete'])->name('delete_car')->middleware('auth');
 
-Route::get('/create/account', [AccountController::class, 'create'])->middleware('auth');
-Route::post('/create/account', [AccountController::class, 'create'])->name('create_account')->middleware('auth');
-Route::post('/create/account_update', [AccountController::class, 'update'])->name('update_account')->middleware('auth');
-Route::get('/create/account_update', [AccountController::class, 'create'])->middleware('auth');
-Route::get('/create/account_delete', [AccountController::class, 'delete'])->name('delete_account')->middleware('auth');
-
-Route::get('/create/fuel', [FuelController::class, 'create'])->name('fuel')->middleware('auth');
-Route::post('/create/fuel', [FuelController::class, 'create'])->name('create_fuel')->middleware('auth');
-Route::post('/create/fuel_update', [FuelController::class, 'update'])->name('update_fuel')->middleware('auth');
-Route::get('/create/fuel_update', [FuelController::class, 'create'])->middleware('auth');
-Route::get('/create/fuel_delete', [FuelController::class, 'delete'])->name('delete_fuel')->middleware('auth');
+Route::get('/fuel', [FuelController::class, 'view'])->name('fuel')->middleware('auth');
+Route::post('/fuel', [FuelController::class, 'create'])->name('create_fuel')->middleware('auth');
+Route::put('/fuel/{id}', [FuelController::class, 'update'])->name('update_fuel')->middleware('auth');
+Route::delete('/fuel/{id}', [FuelController::class, 'delete'])->name('delete_fuel')->middleware('auth');
 
 
 

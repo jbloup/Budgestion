@@ -16,7 +16,7 @@
     </section>
     <section class="section is-small">
         <div class="container is-max-desktop">
-            <form method="POST" action="{{route('store_fuel')}}">
+            <form method="POST" action="{{ route('create_fuel') }}">
                 @csrf
                 <h1 class="title">Complétez les informations</h1>
                 <div class="mb-5">
@@ -75,8 +75,8 @@
                                 <i class="fas fa-gas-pump"></i>
                                 </span>
                     <span>Créer une dépense de carburant</span></button>
-                @if($message_success != "")
-                    <span class="help is-success">{{ $message_success }}</span>
+                @if (session('create'))
+                    <span class="help is-success">{{ session('create') }}</span>
                 @endif
             </form>
         </div>
@@ -127,23 +127,21 @@
                         <div class="modal-background"></div>
                         <div class="modal-card">
                             <header class="modal-card-head">
-                                <p class="modal-card-title">Modification {{ $fuel->car->name . " du " .  date('d-m-Y', strtotime($fuel->date)) }}</p>
+                                <p class="modal-card-title">Modification {{ $fuel->name }}</p>
                                 <button class="delete" aria-label="close"
                                         onclick="document.getElementById({{ $fuel->id }}).style.display='none'"></button>
                             </header>
-                            <section class="modal-card-body">
-                                <!-- Content ... -->
-                                <form method="POST" action="{{ route('update_fuel') }}">
+                            <!-- Content ... -->
+                            <div class="modal-card-body">
+                                <form method="POST" action="{{ url('/fuel', ['id' => $fuel->id]) }}">
+                                    @method('put')
                                     @csrf
                                     <div class="card-content">
                                         <div class="mb-5">
-                                            <input id="fuel_id" name="fuel_id" class="is-hidden"
-                                                   value="{{ $fuel->id }}">
-                                            <div class="mb-5">
-                                                <label for="update_fuel_liter" class="label">Quantité de carburant</label>
-                                                <input id="update_fuel_liter" type="number"  step=".01" name="update_fuel_liter" class="input" value="{{ $fuel->liter }}"
-                                                       placeholder="liter...">
-                                            </div>
+                                            <label for="update_fuel_liter" class="label">Quantité de carburant</label>
+                                            <input id="update_fuel_liter" type="number"  step=".01" name="update_fuel_liter" class="input" value="{{ $fuel->liter }}"
+                                                   placeholder="liter...">
+                                        </div>
                                         <div class="mb-5">
                                             <label for="update_fuel_price" class="label">Montant de la dépense de carburant</label>
                                             <input id="update_fuel_price" type="number"  step=".01" name="update_fuel_price" class="input" value="{{ $fuel->price }}"
@@ -168,15 +166,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    <footer class="modal-card-foot">
                                         <button type="submit" class="button is-primary">Enregistrer</button>
-                                        <a class="has-text-white button is-danger" href="{{ url('/create/fuel_delete?fuel_id='. $fuel->id) }}">Supprimer</a>
-                                    </footer>
+                                    </div>
                                 </form>
                                 <!-- Content ... -->
-                            </section>
+                            </div>
+                            <footer class="modal-card-foot">
+                                <form action="{{ url('/fuel', ['id' => $fuel->id]) }}" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
+                                </form>
+                            </footer>
                         </div>
                     </div>
+
                     <!-- End Modal Card Spent -->
                 @endforeach
                 </tbody>
@@ -206,10 +210,11 @@
         <span class="help is-danger">{{ $message }}</span>
     </div>
     @enderror
-    @if($message_updated != "")
-        <div class="card-footer-item">
-            <span class="help is-success">{{ $message_updated }}</span>
-        </div>
+    @if (session('update'))
+        <span class="help is-success">{{ session('update') }}</span>
+    @endif
+    @if (session('delete'))
+        <span class="help is-success">{{ session('delete') }}</span>
     @endif
     <!-- End Message Success -->
 
