@@ -14,5 +14,6 @@
         </div>
     </section>
     <section class="section is-small">
+
     </section>
 @endsection

@@ -29,8 +29,6 @@
                 <th>Total</th>
             </tr>
             </thead>
-
-
                     @foreach($category->types as $type)
                 <tr>
                     <th>{{ $type->name }}</th>

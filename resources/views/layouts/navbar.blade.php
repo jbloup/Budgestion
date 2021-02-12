@@ -54,7 +54,7 @@
                         Dépense carburant
                     </a>
                     <hr class="navbar-divider">
-                    <a href="" class="navbar-item">
+                    <a href="#" class="navbar-item">
                         Revenu
                     </a>
                 </div>

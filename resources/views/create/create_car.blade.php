@@ -191,6 +191,7 @@
             <span class="help is-danger">{{ $message }}</span>
         </div>
         @enderror
+
     @if (session('delete'))
         <span class="help is-success">{{ session('delete') }}</span>
     @endif

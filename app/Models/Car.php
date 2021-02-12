@@ -12,7 +12,6 @@ class Car extends Model
     /**
      * @var string[]
      */
-
     protected $fillable = [
         'name',
         'fuel_type',

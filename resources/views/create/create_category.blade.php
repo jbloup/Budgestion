@@ -181,7 +181,7 @@
     </section>
     <!-- End Title Table -->
     <!-- Table -->
-    <div class="section">
+    <section class="section">
         <div class="container">
             <div class="columns is-multiline">
                 @foreach($categories as $category)
