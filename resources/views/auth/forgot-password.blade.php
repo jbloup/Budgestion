@@ -2,27 +2,35 @@
 
 @section('content')
     <section class="section is-medium">
-        <form method="POST" action="{{ route('forgot-password') }}" class="modal-card">
+        <div class="columns">
+            <div class="column"></div>
+            <div class="column is-one-quarter">
+                <div class="field">
+        <form method="POST" action="{{ route('password.email') }}">
+            <h1 class="title is-4">Compléter vos informations</h1>
             @csrf
-            @foreach($users as $user)
-                <input class="is-hidden" name="email" value="{{ $user->email }}">
-            @endforeach
+            @method('post')
             <div class="field">
-                <label for="password" class="label">Mot de passe</label>
-                <input id="password" type="password" name="password" class="input" value="{{ old('password') }}"
-                       autocomplete="password" placeholder="Votre mot de passe" autofocus>
-                @error('password')
+                <label for="email" class="label">Votre Email</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" autocomplete="email" placeholder="Votre email" autofocus>
+                    <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+                </span>
+                </div>
+                @error('email')
                 <span class="help is-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="field">
-                <label for="password_confirmation" class="label">Confirmation du mot de passe</label>
-                <input id="password_confirmation" type="password" name="password_confirmation" class="input"
-                       value="{{ old('password_confirmation') }}" autocomplete="password_confirmation"
-                       placeholder="Retapez votre mot de passe" autofocus>
-            </div>
-            <button type="submit" class="button is-primary">Réinitialisé mot de passe</button>
+            <button type="submit" class="button is-primary is-fullwidth">Réinitialisé mot de passe</button>
         </form>
+                    @if (session('status'))
+                        <span class="help is-success">{{ session('status') }}</span>
+                    @endif
+                </div>
+            </div>
+            <div class="column"></div>
+        </div>
     </section>
 @endsection
 
