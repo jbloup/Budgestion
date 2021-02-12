@@ -32,6 +32,7 @@ class Family extends Model
     {
         return $this->belongsTo(Type::class)->withDefault();
     }
+
     public function spents()
     {
         return $this->hasMany(Spent::class, 'family_id', 'id');

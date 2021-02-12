@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Account;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

@@ -43,7 +43,7 @@ class SpentController extends Controller {
         $request->validate([
            'name' => 'required|string|max:255',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'date' => 'required|date|date_format:d-m-Y',
+            'date' => 'required|date',
             'family_id' => 'required|integer',
             'account_id' => 'required|integer'
         ]);

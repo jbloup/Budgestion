@@ -10,11 +10,9 @@
     <title>Budgestion</title>
 </head>
 <body style="min-height: 100vh">
-
 @include('layouts.navbar')
 
 @yield('content')
-
 <footer class="footer">
     <div class="hero-foot">
     <div class="content has-text-centered">

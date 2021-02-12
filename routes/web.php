@@ -12,12 +12,7 @@ use App\Http\Controllers\SpentController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +28,6 @@ use Illuminate\Support\Str;
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::get('/forgot-password', [PasswordController::class, 'viewForgot'])->name('password.email')->middleware('guest');
 Route::post('/forgot-password', [PasswordController::class, 'forgotPassword'])->name('password.email')->middleware('guest');

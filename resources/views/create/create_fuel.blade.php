@@ -148,7 +148,7 @@
                                                    placeholder="Prix ...">
                                         </div>
                                         <div class="mb-5">
-                                            <label for="update_fueldate" class="label">Date de la dépense de carburant</label>
+                                            <label for="update_fuel_date" class="label">Date de la dépense de carburant</label>
                                             <input id="update_fuel_date" type="date" name="update_fuel_date" class="input" value="{{ date('d-m-Y', strtotime($fuel->date)) }}">
                                         </div>
                                         <div class="mb-5">

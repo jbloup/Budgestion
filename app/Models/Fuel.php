@@ -12,7 +12,6 @@ class Fuel extends Model
     /**
      * @var string[]
      */
-
     protected $fillable = [
 
         'liter',

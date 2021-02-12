@@ -8,7 +8,6 @@
             Bienvenue {{ $user_name }}
         </p>
         <p class="subtitle" >{{ date('d-m-Y') }}</p>
-{{--        <a href="{{ url('/forgot-password') }}">réinitialiser mot de passe</a>--}}
     </div>
     </div>
 </section>
