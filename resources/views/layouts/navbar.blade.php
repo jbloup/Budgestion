@@ -65,6 +65,16 @@
             <div class="navbar-item">
                 <div class="buttons">
                     @guest
+                        @else
+                        <a href="{{ route('profil') }}" class="button is-light">
+                            <span class="icon-text">
+                            <span class="icon">
+                           <i class="fas fa-users-cog"></i>
+                            </span>
+                            </span>
+                        </a>
+                    @endguest
+                    @guest
                     <a href="{{ route('register') }}" class="button is-primary">
                         <strong>S'enregistrer</strong>
                     </a>

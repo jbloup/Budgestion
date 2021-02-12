@@ -40,7 +40,7 @@ class FuelController extends Controller
             'liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'mileage' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'date' => 'required|date|date_format:d-m-Y',
+            'date' => 'required|date',
             'car_id' => 'required|integer',
         ]);
 
@@ -70,7 +70,7 @@ class FuelController extends Controller
         $request->validate([
             'update_fuel_liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_fuel_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
-            'update_fuel_date' => 'required|date|date_format:d-m-Y',
+            'update_fuel_date' => 'required|date',
             'update_car_id' => 'required|integer',
         ]);
 
