@@ -24,7 +24,7 @@
                                 Catégorie
                             </p>
                         </header>
-                        <form method="POST" action="{{ route('create_category') }}">
+                        <form method="POST" action="{{ route('create.category') }}">
                             @csrf
                             @method('post')
                             <div class="card-content">
@@ -68,7 +68,7 @@
                                 Type
                             </p>
                         </header>
-                        <form method="POST" action="{{ route('create_type') }}">
+                        <form method="POST" action="{{ route('create.type') }}">
                             @csrf
                             @method('post')
                             <div class="card-content">
@@ -119,7 +119,7 @@
                                 Sous-type
                             </p>
                         </header>
-                        <form method="POST" action="{{ route('create_family') }}">
+                        <form method="POST" action="{{ route('create.family') }}">
                             @csrf
                             @method('post')
                             <div class="card-content">

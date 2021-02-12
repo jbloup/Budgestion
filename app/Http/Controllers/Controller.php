@@ -35,4 +35,12 @@ class Controller extends BaseController
             'user_name' => $user_name,
         ]);
     }
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function welcome() {
+
+        return view('welcome');
+    }
 }

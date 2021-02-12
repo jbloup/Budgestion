@@ -16,7 +16,7 @@
     </section>
     <section class="section is-small">
         <div class="container is-max-desktop">
-        <form method="POST" action="{{route('create_spent')}}">
+        <form method="POST" action="{{route('create.spent')}}">
             @csrf
             <h1 class="title">Complétez les informations</h1>
         <div class="mb-5">
