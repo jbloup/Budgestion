@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Gestion</title>
+    <title>Budgestion</title>
 </head>
 <body style="min-height: 100vh">
 
