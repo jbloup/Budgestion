@@ -75,7 +75,7 @@
                     </span>
                         <span>Créer un compte bancaire</span>
                     </button>
-        </form>
+            </form>
             @if (session('create'))
                 <span class="help is-success">{{ session('create') }}</span>
             @endif
