@@ -15,7 +15,7 @@
     </section>
     <section class="section is-small">
         <div class="container is-max-desktop">
-        <form method="POST" action="{{ route('create_account') }}">
+        <form method="POST" action="{{ route('create.account') }}">
             @csrf
             @method('post')
                     <h1 class="title">Complétez les informations</h1>

@@ -19,7 +19,7 @@ class PasswordController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function viewForgot()
+    public function forgot()
     {
 
         return view('auth.forgot-password');
@@ -47,7 +47,7 @@ class PasswordController extends Controller
      * @param $token
      * @return Application|Factory|View
      */
-    public function viewReset($token)
+    public function reset($token)
     {
 
         return view('auth.reset-password', ['token' => $token]);
