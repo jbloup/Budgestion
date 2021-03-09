@@ -21,7 +21,7 @@ class FuelController extends Controller
 
     public function view()
     {
-        return view('create/create_fuel',[
+        return view('create.fuel',[
             'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
             'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);

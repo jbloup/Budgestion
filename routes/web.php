@@ -37,8 +37,11 @@ Route::get('/profil', [UserController::class, 'view'])->name('profil')->middlewa
 
 Route::get('/home', [Controller::class, 'home'])->name('home')->middleware('auth');
 
-Route::get('/table/month', [TableController::class, 'month'])->name('month')->middleware('auth');
-Route::get('/table/year', [TableController::class, 'year'])->name('year')->middleware('auth');
+Route::get('/month', [TableController::class, 'month'])->name('month.view')->middleware('auth');
+Route::post('/month', [TableController::class, 'month'])->name('month')->middleware('auth');
+
+Route::get('year', [TableController::class, 'year'])->name('year.view')->middleware('auth');
+Route::post('year', [TableController::class, 'year'])->name('year')->middleware('auth');
 
 Route::get('/category', [CategoryController::class, 'view'])->name('category')->middleware('auth');
 Route::post('/category', [CategoryController::class, 'create'])->name('create.category')->middleware('auth');

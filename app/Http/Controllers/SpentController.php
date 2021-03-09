@@ -15,17 +15,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
-class SpentController extends Controller {
-
+class SpentController extends Controller
+{
     /**
      * Show the form to create a new spent
      *
      * @return Application|Factory|View
      */
-
     public function view()
     {
-        return view('create/create_spent',[
+        return view('create.spent',[
             'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
             'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),

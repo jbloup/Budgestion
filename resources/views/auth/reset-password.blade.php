@@ -25,17 +25,27 @@
             </div>
             <div class="field mb-5">
                 <label for="password" class="label">Mot de passe</label>
+                <p class="control has-icons-left">
                 <input id="password" type="password" name="password" class="input" value="{{ old('password') }}"
                        autocomplete="password" placeholder="Votre mot de passe">
+                <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+                </span>
+                </p>
                 @error('password')
                 <span class="help is-danger">{{ $message }}</span>
                 @enderror
             </div>
             <div class="field mb-5">
                 <label for="password_confirmation" class="label">Confirmation du mot de passe</label>
+                <p class="control has-icons-left">
                 <input id="password_confirmation" type="password" name="password_confirmation" class="input"
                        value="{{ old('password_confirmation') }}" autocomplete="password_confirmation"
                        placeholder="Retapez votre mot de passe">
+                <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+                </span>
+                </p>
             </div>
             <button type="submit" class="button is-primary is-fullwidth">Réinitialiser mot de passe</button>
         </form>

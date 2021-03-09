@@ -214,7 +214,7 @@
                             </header>
                             <div class="card-content">
                                 <table
-                                    class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                                    class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                                     <thead>
                                     <tr class="is-selected">
                                         <th>Type / Sous-Type</th>

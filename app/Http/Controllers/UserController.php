@@ -21,7 +21,7 @@ class UserController extends Controller
 
         foreach ($users as $user)
 
-        return view('auth/profil',[
+        return view('auth.profil',[
             'user' => $user,
         ]);
     }

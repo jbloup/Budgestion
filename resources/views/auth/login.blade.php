@@ -15,7 +15,7 @@
             <div class="control has-icons-left has-icons-right">
                 <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" autocomplete="email" placeholder="Votre email" autofocus>
                 <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-envelope"></i>
                 </span>
             </div>
             @error('email')
@@ -27,7 +27,7 @@
             <div class="control has-icons-left has-icons-right">
                 <input id="password" type="password" name="password" class="input" value="{{ old('password') }}" autocomplete="password" placeholder="Votre mot de passe">
                 <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-lock"></i>
                 </span>
             </div>
             @error('password')
@@ -36,7 +36,6 @@
         </div>
         <div class="field mb-5">
         <button type="submit" class="button is-primary is-fullwidth">Se connecter</button>
-
             </div>
         <div class="field">
         <a href="{{ route('password.email') }}" class="button is-small is-light is-fullwidth">Mot de passe oublié ?</a>
