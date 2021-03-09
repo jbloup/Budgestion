@@ -84,8 +84,15 @@ class TableController extends Controller
         $tabTotalCarYear = null;
         $tabTotalCar = null;
 
+        $tabTotalLiterCarMonth = null;
+        $tabTotalLiterCarYear = null;
+        $tabTotalLiterCar = null;
+
         $tabTotalMonth = null;
         $tabTotalVehicleMonth = null;
+        $tabTotalLiterVehicleMonth = null;
+
+        $tabTotalFuelAndCategoryMonth = null;
 
         if(request('year') == null){
             $year = date('Y');
@@ -95,8 +102,6 @@ class TableController extends Controller
             $date = date('Y-m', mktime(0, 0, 0, 1, 1, $year));
             $year2 = date('Y', strtotime('+1 year', strtotime($date)));
         }
-
-
 
         for($i=1;$i<=12;$i++) {
             $date = date('Y-m', mktime(0, 0, 0, $i, 1, $year));
@@ -150,15 +155,22 @@ class TableController extends Controller
             $totalVehicleMonth = 0;
             $totalVehicleYear = 0;
 
+            $totalLiterVehicleMonth = 0;
+            $totalLiterVehicleYear = 0;
+
             foreach ($cars as $car){
                 $totalFuelMonth = 0;
+                $totalLiterFuelMonth = 0;
                 $totalFuelYear = 0;
+                $totalLiterFuelYear = 0;
                 foreach ($car->fuels as $fuel){
                     if(($fuel->date >= $date) && ($fuel->date < $date2)){
                         $totalFuelMonth +=  $fuel->price;
+                        $totalLiterFuelMonth += $fuel->liter;
                     }
                     if(($fuel->date > $year) && ($fuel->date < $year2)){
                         $totalFuelYear +=  $fuel->price;
+                        $totalLiterFuelYear += $fuel->liter;
                     }
                 }
                 $tabTotalCar[$car->id] = $totalFuelMonth;
@@ -169,7 +181,20 @@ class TableController extends Controller
                 $totalVehicleYear += $totalFuelYear;
                 $totalVehicleMonth += $totalFuelMonth;
                 $tabTotalVehicleMonth[$i] = $totalVehicleMonth;
+
+
+                $tabTotalLiterCar[$car->id] = $totalLiterFuelMonth;
+                $tabTotalLiterCarMonth[$i] = $tabTotalLiterCar;
+
+                $tabTotalLiterCarYear[$car->id] = $totalLiterFuelYear;
+
+                $totalLiterVehicleYear += $totalLiterFuelYear;
+                $totalLiterVehicleMonth += $totalLiterFuelMonth;
+                $tabTotalLiterVehicleMonth[$i] = $totalLiterVehicleMonth;
             }
+
+            $tabTotalFuelAndCategoryMonth[$i] = $tabTotalMonth[$i] + $tabTotalVehicleMonth[$i];
+            $totalFuelAndCategoryYear = $totalYear + $totalVehicleYear;
         }
 
         return view('table.year',[
@@ -179,9 +204,12 @@ class TableController extends Controller
             'year2' => $year2,
             'totalYear' => $totalYear,
             'totalVehicleYear' => $totalVehicleYear,
-
+            'totalLiterVehicleYear' => $totalLiterVehicleYear,
+            'totalFuelAndCategoryYear' => $totalFuelAndCategoryYear,
             'tabTotalMonth' => $tabTotalMonth,
             'tabTotalVehicleMonth' => $tabTotalVehicleMonth,
+            'tabTotalFuelAndCategoryMonth' => $tabTotalFuelAndCategoryMonth,
+            'tabTotalLiterVehicleMonth' => $tabTotalLiterVehicleMonth,
             'tabTotalFamilyMonth' =>  $tabTotalFamilyMonth,
             'tabTotalFamilyYear' =>  $tabTotalFamilyYear,
             'tabTotalTypeMonth' =>  $tabTotalTypeMonth,
@@ -189,7 +217,9 @@ class TableController extends Controller
             'tabTotalCategoryMonth' =>  $tabTotalCategoryMonth,
             'tabTotalCategoryYear' =>  $tabTotalCategoryYear,
             'tabTotalCarMonth' =>  $tabTotalCarMonth,
+            'tabTotalLiterCarMonth' =>  $tabTotalLiterCarMonth,
             'tabTotalCarYear' =>  $tabTotalCarYear,
+            'tabTotalLiterCarYear' =>  $tabTotalLiterCarYear,
         ]);
     }
 }

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="" />
+    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/category.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/spent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/spent.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/table/year.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/table/year.blade.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -302,7 +310,8 @@
       <workItem from="1614934488686" duration="5139000" />
       <workItem from="1614947088067" duration="6984000" />
       <workItem from="1615197074678" duration="11941000" />
-      <workItem from="1615297675584" duration="1050000" />
+      <workItem from="1615297675584" duration="1348000" />
+      <workItem from="1615299267358" duration="5731000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1607702225491</created>

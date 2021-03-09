@@ -274,7 +274,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                             <button type="submit" class="button is-primary">
                                                                 Enregistrer
                                                             </button>
@@ -318,7 +317,7 @@
                                                     </header>
                                                     <!-- Content -->
                                                     <div class="modal-card-body">
-                                                        <form action="{{ url('/family', ['id' => $family->id]) }}" method="post">
+                                                        <form action="{{ url('/subtype', ['id' => $family->id]) }}" method="post">
                                                             @csrf
                                                             @method('put')
                                                             <div class="card-content">

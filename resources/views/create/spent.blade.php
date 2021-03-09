@@ -125,9 +125,9 @@
                     <th>Description</th>
                     <th>Prix</th>
                     <th>Date</th>
-                    <th>Categorie</th>
-                    <th>Type</th>
                     <th>Tous-type</th>
+                    <th>Type</th>
+                    <th>Categorie</th>
                     <th>Compte Bancaire</th>
                     <th>Modifier</th>
                 </tr>
