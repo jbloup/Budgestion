@@ -15,7 +15,7 @@
                 <div class="control has-icons-left has-icons-right">
                     <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" autocomplete="email" placeholder="Votre email" autofocus>
                     <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-envelope"></i>
                 </span>
                 </div>
                 @error('email')

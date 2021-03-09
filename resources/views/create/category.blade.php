@@ -214,7 +214,7 @@
                             </header>
                             <div class="card-content">
                                 <table
-                                    class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                                    class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                                     <thead>
                                     <tr class="is-selected">
                                         <th>Type / Sous-Type</th>
@@ -274,7 +274,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                             <button type="submit" class="button is-primary">
                                                                 Enregistrer
                                                             </button>
@@ -318,7 +317,7 @@
                                                     </header>
                                                     <!-- Content -->
                                                     <div class="modal-card-body">
-                                                        <form action="{{ url('/family', ['id' => $family->id]) }}" method="post">
+                                                        <form action="{{ url('/subtype', ['id' => $family->id]) }}" method="post">
                                                             @csrf
                                                             @method('put')
                                                             <div class="card-content">

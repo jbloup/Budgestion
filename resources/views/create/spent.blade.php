@@ -118,16 +118,16 @@
     <!-- Table -->
     <section class="section">
         <div class="table-container">
-        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                 <thead>
                 <tr class="is-selected">
                     <th>Nom</th>
                     <th>Description</th>
                     <th>Prix</th>
                     <th>Date</th>
-                    <th>Categorie</th>
-                    <th>Type</th>
                     <th>Tous-type</th>
+                    <th>Type</th>
+                    <th>Categorie</th>
                     <th>Compte Bancaire</th>
                     <th>Modifier</th>
                 </tr>

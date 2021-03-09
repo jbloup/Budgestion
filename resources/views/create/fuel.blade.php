@@ -98,7 +98,7 @@
     <!-- Table -->
     <section class="section">
         <div class="table-container">
-            <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                 <thead>
                 <tr class="is-selected">
                     <th>Véhicule</th>

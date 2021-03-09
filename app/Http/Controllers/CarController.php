@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
-
 class CarController extends Controller
 {
     /**
@@ -22,7 +21,7 @@ class CarController extends Controller
      */
     public function view()
     {
-        return view('create/create_car',[
+        return view('create.car',[
             'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);
     }

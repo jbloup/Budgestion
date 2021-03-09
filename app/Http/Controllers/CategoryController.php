@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Type;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    /**
+     * @return Application|Factory|View
+     */
     public function view()
     {
-        return view('create/create_category',[
+        return view('create.category',[
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);

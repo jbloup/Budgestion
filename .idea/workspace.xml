@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PasswordController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/create_account.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_account.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/create_car.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_car.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/create_category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_category.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/create_fuel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_fuel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/create_spent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/create_spent.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/category.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/spent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/spent.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/table/year.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/table/year.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,6 +193,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="PHP" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -295,6 +294,24 @@
       <workItem from="1612950333447" duration="12282000" />
       <workItem from="1613054087071" duration="14059000" />
       <workItem from="1613118606451" duration="7159000" />
+      <workItem from="1613221841127" duration="214000" />
+      <workItem from="1613394668505" duration="19808000" />
+      <workItem from="1613463105828" duration="16149000" />
+      <workItem from="1613551901580" duration="325000" />
+      <workItem from="1613845952185" duration="227000" />
+      <workItem from="1614330343716" duration="3526000" />
+      <workItem from="1614414930057" duration="1006000" />
+      <workItem from="1614444252837" duration="475000" />
+      <workItem from="1614444733073" duration="111000" />
+      <workItem from="1614525882596" duration="490000" />
+      <workItem from="1614701774633" duration="114000" />
+      <workItem from="1614701901440" duration="214000" />
+      <workItem from="1614703184570" duration="338000" />
+      <workItem from="1614934488686" duration="5139000" />
+      <workItem from="1614947088067" duration="6984000" />
+      <workItem from="1615197074678" duration="11941000" />
+      <workItem from="1615297675584" duration="1348000" />
+      <workItem from="1615299267358" duration="5731000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1607702225491</created>
