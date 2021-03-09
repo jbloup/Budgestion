@@ -21,7 +21,7 @@ class AccountController extends Controller
     public function view()
     {
 
-        return view('create/create_account',[
+        return view('create.account',[
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);
     }

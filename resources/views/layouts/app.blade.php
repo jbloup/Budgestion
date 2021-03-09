@@ -17,7 +17,7 @@
     <div class="hero-foot">
     <div class="content has-text-centered">
         <p class="is-size-7">
-            <strong>AppGestion</strong> by Jean-baptiste LOUP &copy; Copyright 2020 &middot
+            <strong>Budgestion</strong> by Jean-baptiste LOUP &copy; Copyright 2020 &middot
             <a href="https://www.jbloup.fr">About Me</a>
         </p>
     </div>

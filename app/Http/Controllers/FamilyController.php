@@ -17,7 +17,7 @@ class FamilyController extends Controller
     public function view()
     {
 
-        return view('create/create_category',[
+        return view('create.category',[
             'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);

@@ -21,7 +21,7 @@
                     <h1 class="title">Complétez les informations</h1>
             <div class="mb-5">
                 <label for="number" class="label">Numéro de compte bancaire</label>
-                <input id="number" type="text" name="number" class="input" value="{{ old('number') }}"
+                <input id="number" type="number" name="number" class="input" value="{{ old('number') }}"
                        placeholder="Numéro de compte" autofocus>
                 @error('number')
                 <span class="help is-danger">{{ $message }}</span>
@@ -99,7 +99,7 @@
     <!-- Table -->
     <section class="section">
         <div class="table-container">
-        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth  has-text-centered">
             <thead>
             <tr class="is-selected">
                 <th>Numéro</th>
