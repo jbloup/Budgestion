@@ -3,6 +3,8 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EarningController;
+use App\Http\Controllers\KindController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelController;
@@ -58,10 +60,20 @@ Route::post('/subtype', [FamilyController::class, 'create'])->name('create.famil
 Route::put('/subtype/{id}', [FamilyController::class, 'update'])->middleware('auth');
 Route::delete('/subtype/{id}', [FamilyController::class, 'delete'])->middleware('auth');
 
+Route::get('/kind', [KindController::class, 'view'])->name('kind')->middleware('auth');
+Route::post('/kind', [KindController::class, 'create'])->name('create.kind')->middleware('auth');
+Route::put('/kind/{id}', [KindController::class, 'update'])->middleware('auth');
+Route::delete('/kind/{id}', [KindController::class, 'delete'])->middleware('auth');
+
 Route::get('/account', [AccountController::class, 'view'])->name('account')->middleware('auth');
 Route::post('/account', [AccountController::class, 'create'])->name('create.account')->middleware('auth');
 Route::put('/account/{id}', [AccountController::class, 'update'])->middleware('auth');
 Route::delete('/account/{id}', [AccountController::class, 'delete'])->middleware('auth');
+
+Route::get('/earning', [EarningController::class, 'view'])->name('earning')->middleware('auth');
+Route::post('/earning', [EarningController::class, 'create'])->name('create.earning')->middleware('auth');
+Route::put('/earning/{id}', [EarningController::class, 'update'])->middleware('auth');
+Route::delete('/earning/{id}', [EarningController::class, 'delete'])->middleware('auth');
 
 Route::get('/spent', [SpentController::class, 'view'])->name('spent')->middleware('auth');
 Route::post('/spent', [SpentController::class, 'create'])->name('create.spent')->middleware('auth');

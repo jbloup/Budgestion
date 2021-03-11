@@ -2,13 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/AppGestion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AppGestion.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FuelController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FuelController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Fuel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Fuel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_231755_create_fuels_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_231755_create_fuels_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/category.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/earning.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/earning.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/create/fuel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/fuel.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/spent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/spent.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/table/year.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/table/year.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +49,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feat/user-profil" />
+        <entry key="$PROJECT_DIR$" value="feat/table" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -311,7 +323,10 @@
       <workItem from="1614947088067" duration="6984000" />
       <workItem from="1615197074678" duration="11941000" />
       <workItem from="1615297675584" duration="1348000" />
-      <workItem from="1615299267358" duration="5731000" />
+      <workItem from="1615299267358" duration="7269000" />
+      <workItem from="1615372539797" duration="1833000" />
+      <workItem from="1615394793838" duration="163000" />
+      <workItem from="1615468191478" duration="9911000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1607702225491</created>
@@ -446,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613131728082</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="[feat]adding(table/year):&#10;&#10;- Modify table/year">
+      <created>1615315615403</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1615315615403</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -482,7 +504,8 @@
     <MESSAGE value="[feat]user(config):&#10;- Add forgot-password.blade.php&#10;- Add reset-password.blade.php&#10;- Add profil.blade.php&#10;- Modify login.blade.php &amp; register.blade.php&#10;- Modify date input validation Fuels controller and blade&#10;- Refactoring web.php + add PasswordController and function" />
     <MESSAGE value="[feat]user(adding):&#10;- Modify User Model &amp; Controller&#10;- Modify Home &amp; Year blade" />
     <MESSAGE value="[fix]refactoring(git):&#10;&#10;- Modify All" />
-    <option name="LAST_COMMIT_MESSAGE" value="[fix]refactoring(git):&#10;&#10;- Modify All" />
+    <MESSAGE value="[feat]adding(table/year):&#10;&#10;- Modify table/year" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat]adding(table/year):&#10;&#10;- Modify table/year" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

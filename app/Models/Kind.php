@@ -5,20 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fuel extends Model
+class Kind extends Model
 {
     use HasFactory;
 
     /**
-     * @var string[]
+     * @var string
      */
-    protected $fillable = [
+    protected $table = 'kinds';
 
-        'liter',
-        'price',
-        'date',
-        'mileage',
-        'car_id',
+    protected $guarded = array();
+
+    protected $fillable = [
+        'id',
+        'name',
+        'description',
         'user_id',
     ];
 
@@ -27,8 +28,8 @@ class Fuel extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function car()
+    public function earnings()
     {
-        return $this->belongsTo('App\Models\Car');
+        return $this->hasMany(Earning::class, 'kind_id', 'id');
     }
 }

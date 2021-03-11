@@ -47,6 +47,7 @@ class FuelController extends Controller
             'liter' => request('liter'),
             'price' => request('price'),
             'date' => date('Y-m-d', strtotime(request('date'))),
+            'mileage' => request('mileage'),
             'user_id' => Auth::user()->getAuthIdentifier(),
             'car_id' => request('car_id'),
         ]);
@@ -70,6 +71,7 @@ class FuelController extends Controller
             'update_fuel_liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_fuel_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_fuel_date' => 'required|date',
+            'update_fuel_mileage' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_car_id' => 'required|integer',
         ]);
 
@@ -78,10 +80,14 @@ class FuelController extends Controller
                 'liter' => request('update_fuel_liter'),
                 'price' => request('update_fuel_price'),
                 'date' => date('Y-m-d', strtotime(request('update_fuel_date'))),
+                'mileage' => request('mileage'),
                 'user_id' => Auth::user()->getAuthIdentifier(),
                 'car_id' => request('update_car_id'),
 
             ]);
+
+        Car::where('id', request('car_id'))
+            ->update(['mileage' => request('mileage'),]);
 
         return back()->with('update', 'dépense de carburant modifiée');
     }

@@ -37,7 +37,13 @@
                 </div>
                 <div class="mb-5">
                     <label for="date" class="label">Date de la dépense de carburant</label>
-                    <input id="date" type="date" name="date" class="input" value="{{ old('date') }}" placeholder="JJ/MM/YYYY">
+                    <input id="date" type="date" name="date" class="input"
+                           @if(old('date'))
+                                value="{{ old('date') }}"
+                           @else
+                               value="{{ date('d-m-Y') }}"
+                           @endif
+                           placeholder="JJ-MM-YYYY">
                     @error('date')
                     <span class="help is-danger">{{ $message }}</span>
                     @enderror
@@ -105,6 +111,7 @@
                     <th>Litre</th>
                     <th>Prix</th>
                     <th>Date</th>
+                    <th>Kilométrage</th>
                     <th>Modifier</th>
                 </tr>
                 </thead>
@@ -115,6 +122,7 @@
                         <td>{{ $fuel->liter }}</td>
                         <td>{{ $fuel->price }}</td>
                         <td>{{ date('d-m-Y', strtotime($fuel->date)) }}</td>
+                        <td>{{ number_format($fuel->mileage, 0, ',', ' ') . ' km' }}</td>
                         <th>
                             <button id="modalButton" class="button"
                                     onclick="document.getElementById({{ $fuel->id }}).style.display='block'"
@@ -150,6 +158,11 @@
                                         <div class="mb-5">
                                             <label for="update_fuel_date" class="label">Date de la dépense de carburant</label>
                                             <input id="update_fuel_date" type="date" name="update_fuel_date" class="input" value="{{ date('d-m-Y', strtotime($fuel->date)) }}">
+                                        </div>
+                                        <div class="mb-5">
+                                            <label for="update_fuel_mileage" class="label">Kilométrage véhicule</label>
+                                            <input id="update_fuel_mileage" type="text" name="update_fuel_mileage" class="input"
+                                                   value="{{ $fuel->mileage }}" placeholder="Kilométrage">
                                         </div>
                                         <div class="mb-5">
                                             <div class="control">

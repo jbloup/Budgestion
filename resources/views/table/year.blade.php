@@ -110,6 +110,7 @@
             </div>
         </div>
     </section>
+    <div class="is-divider subtitle" data-content="Catégorie"></div>
     <section class="section is-small">
         <div class="container is-fluid">
             @foreach($categories as $category)
@@ -178,6 +179,7 @@
             @endforeach
         </div>
     </section>
+    <div class="is-divider" data-content="Carburant"></div>
     <section class="section is-small">
         <div class="container is-fluid">
             <div class="notification">
@@ -201,7 +203,7 @@
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                         <thead>
                         <tr>
-                            <th>Carburant</th>
+                            <th>Carburant €</th>
                             @for($i=1;$i<=12;$i++)
                                 @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
                                     <th class="is-selected">{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
@@ -238,14 +240,11 @@
                         </tfoot>
                     </table>
                 </div>
-
-
-
                 <div class="table-container">
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                         <thead>
                         <tr>
-                            <th>Carburant</th>
+                            <th>Carburant L</th>
                             @for($i=1;$i<=12;$i++)
                                 @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
                                     <th class="is-selected">{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>

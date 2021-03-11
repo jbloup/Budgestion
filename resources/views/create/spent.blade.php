@@ -45,7 +45,13 @@
         </div>
         <div class="mb-5">
             <label for="date" class="label">Date de la dépense</label>
-            <input id="date" type="date" name="date" class="input" value="{{ old('date') }}" placeholder="JJ/MM/YYYY">
+            <input id="date" type="date" name="date" class="input"
+                   @if(old('date'))
+                   value="{{ old('date') }}"
+                   @else
+                   value="{{ date('d-m-Y') }}"
+                   @endif
+                   placeholder="JJ-MM-YYYY">
             @error('date')
             <span class="help is-danger">{{ $message }}</span>
             @enderror
@@ -125,8 +131,8 @@
                     <th>Description</th>
                     <th>Prix</th>
                     <th>Date</th>
-                    <th>Tous-type</th>
-                    <th>Type</th>
+                    <th>Sous-famille</th>
+                    <th>Famille</th>
                     <th>Categorie</th>
                     <th>Compte Bancaire</th>
                     <th>Modifier</th>

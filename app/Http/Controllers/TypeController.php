@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Kind;
 use App\Models\Type;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class TypeController extends Controller
     {
 
         return view('create.category',[
+            'kinds' => Kind::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);

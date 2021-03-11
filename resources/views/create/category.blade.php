@@ -16,6 +16,7 @@
     </section>
     <section class="section is-small">
         <div class="container">
+            <!-- Form Category -->
             <div class="columns">
                 <div class="column">
                     <div class="card mb-3">
@@ -104,7 +105,7 @@
                                     <span class="icon is-small">
                                     <i class="fas fa-sitemap"></i>
                                 </span>
-                                        <span>Créer une type</span>
+                                        <span>Créer un type</span>
                                     </button>
                                 </div>
                             </footer>
@@ -154,13 +155,58 @@
                                         <span class="icon is-small">
                                             <i class="fas fa-sitemap"></i>
                                         </span>
-                                        <span>Créer un Sous-Type</span>
+                                        <span>Créer un sous-type</span>
                                     </button>
                                 </div>
                             </footer>
                         </form>
                     </div>
                 </div>
+                <!-- Form Kind -->
+                <div class="column">
+                    <div class="card mb-3">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Type de Revenu
+                            </p>
+                        </header>
+                        <form method="POST" action="{{ route('create.kind') }}">
+                            @csrf
+                            @method('post')
+                            <div class="card-content">
+                                <div class="mb-5">
+                                    <label for="kind_name" class="label">Nom du Type de Revenu</label>
+                                    <input id="kind_name" type="text" name="kind_name" class="input" value="{{ old('kind_name') }}"
+                                           autocomplete="kind_name"
+                                           placeholder="Nom Type Revenu" autofocus>
+                                    @error('kind_name')
+                                    <span class="help is-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="mb-5">
+                                    <label for="kind_description" class="label">Description Type Revenu</label>
+                                    <textarea id="kind_description" name="kind_description" class="textarea"
+                                              value="{{ old('kind_description') }}"
+                                              autocomplete="kind_description" placeholder="Description ..."></textarea>
+                                    @error('kind_description')
+                                    <span class="help is-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <div class="card-footer-item column">
+                                    <button type="submit" class="button is-primary">
+                                    <span class="icon is-small">
+                                <i class="fas fa-sitemap"></i>
+                                </span>
+                                        <span>Créer Type Revenu</span>
+                                    </button>
+                                </div>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+                <!-- end form kind -->
             </div>
             @if (session('create'))
                 <span class="help is-success">{{ session('create') }}</span>
@@ -217,7 +263,7 @@
                                     class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                                     <thead>
                                     <tr class="is-selected">
-                                        <th>Type / Sous-Type</th>
+                                        <th>Type / Sous-type</th>
                                         <th>Modifier</th>
                                     </tr>
                                     </thead>
@@ -424,8 +470,88 @@
                     </div>
                     <!-- End Modal Category Card -->
                 @endforeach
+                <div class="column">
+
+                    <div class="card-content">
+                        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
+                            <thead>
+                            <tr class="is-selected">
+                                <th>Type de Revenu</th>
+                                <th>Modifier</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($kinds as $kind)
+                                <tr>
+                                    <th>{{$kind->name}}</th>
+                                    <th>
+                                        <button id="modalButton" class="button"
+                                                onclick="document.getElementById({{ 4 . $kind->id }}).style.display='block'"
+                                                data-target="modal-ter" aria-haspopup="true"><span
+                                                class="icon-text is-small "><span class="icon"><i
+                                                        class="fas fa-pen"></i></span></span></button>
+                                    </th>
+                                </tr>
+                                <!-- Modal Card Kind -->
+                                <div id="{{ 4 . $kind->id }}" class="modal">
+                                    <div class="modal-background"></div>
+                                    <div class="modal-card">
+                                        <header class="modal-card-head">
+                                            <p class="modal-card-title">Modification {{ $kind->name }}</p>
+                                            <button class="delete" aria-label="close"
+                                                    onclick="document.getElementById({{ 4 . $kind->id }}).style.display='none'"></button>
+                                        </header>
+                                        <!-- Content -->
+                                        <div class="modal-card-body">
+                                            <form action="{{ url('/kind', ['id' => $kind->id]) }}" method="post">
+                                                @csrf
+                                                @method('put')
+                                                <div class="card-content">
+                                                    <div class="mb-5">
+                                                        <label for="update_kind_name" class="label">Nom du
+                                                            type</label>
+                                                        <input id="update_kind_name" type="text"
+                                                               name="update_kind_name" class="input"
+                                                               value="{{ $kind->name }}"
+                                                               placeholder="Nom du type de revenu" autofocus>
+                                                    </div>
+                                                    <div class="mb-5">
+                                                        <label for="update_kind_description" class="label">Description</label>
+                                                        <textarea id="update_kind_description" name="update_kind_description" class="textarea"
+                                                                  value="{{ $kind->description }}"
+                                                                  placeholder="Description ...">{{ $kind->description }}</textarea>
+                                                    </div>
+                                                    <button type="submit" class="button is-primary">
+                                                        Enregistrer
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                                                <!-- End Content ... -->
+                                                                <footer class="modal-card-foot">
+                                                                    @if($kind->earnings->count() == 0)
+                                                                        <form action="{{ url('/kind', ['id' => $kind->id]) }}"
+                                                                              method="post">
+                                                                            @method('delete')
+                                                                            @csrf
+                                                                            <button class=" button is-danger" type="submit"><span>Supprimer</span>
+                                                                            </button>
+                                                                        </form>
+                                                                    @endif
+                                                                </footer>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End Modal Card Kind -->
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+                </div>
             </div>
         </div>
+
         </section>
         <!-- End Table -->
 

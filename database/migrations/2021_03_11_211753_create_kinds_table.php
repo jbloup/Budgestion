@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFuelsTable extends Migration
+class CreateKindsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateFuelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fuels', function (Blueprint $table) {
+        Schema::create('kinds', function (Blueprint $table) {
             $table->id();
-            $table->decimal('liter', $precision = 10, $scale = 2);
-            $table->decimal('price', $precision = 10, $scale = 2);
-            $table->date('date');
-            $table->unsignedBigInteger('mileage');
+            $table->string('name');
+            $table->string('description');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('car_id')->constrained();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateFuelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fuels');
+        Schema::dropIfExists('kinds');
     }
 }
