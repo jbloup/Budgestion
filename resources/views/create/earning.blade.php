@@ -1,280 +1,237 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 @section('content')
-    <!--Form Spent-->
-    <section class="hero is-medium is-primary is-bold">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Dépense
-                </h1>
-                <h2 class="subtitle">
-                    Créer une nouvelle revenu.
-                </h2>
-            </div>
-        </div>
-    </section>
-    <section class="section is-small">
-        <div class="container is-max-desktop">
-            <form method="POST" action="{{route('create.earning')}}">
-                @csrf
-                <h1 class="title">Complétez les informations</h1>
-                <div class="mb-5">
-                    <label for="name" class="label">Désignation du revenu</label>
-                    <input id="name" type="text" name="name" class="input" value="{{ old('name') }}"
-                           placeholder="Nom revenu" autofocus>
-                    @error('name')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Lateral nav -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3 mt-5">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#earning">
+                                Revenus
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#ListEarning">
+                                Liste revenus
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="mb-5">
-                    <label for="description" class="label">Description du revenu</label>
-                    <textarea id="description" name="description" class="textarea" value="{{ old('description') }}"
-                              placeholder="Description revenu ..."></textarea>
-                    @error('description')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
+            </nav>
+            <!-- End lateral nav -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 id="earning" class="h2 mt-5">Revenus</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Import</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-5">
-                    <label for="amount" class="label">Montant du revenu</label>
-                    <input id="amount" type="number"  step=".01" name="amount" class="input" value="{{ old('amount') }}"
-                           placeholder="Prix ...">
-                    @error('amount')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="mb-5">
-                    <label for="date" class="label">Date du revenu</label>
-                    <input id="date" type="date" name="date" class="input"
-                           @if(old('date'))
-                           value="{{ old('date') }}"
-                           @else
-                           value="{{ date('d-m-Y') }}"
-                           @endif
-                           placeholder="JJ-MM-YYYY">
-                    @error('date')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="field-body">
-                    <div class="fied">
-                        <div class="mb-5">
-                            <label for="kind_id" class="label">Type de revenu</label>
-                            <div class="control">
-                                <div class="select">
-                                    <select class="select" id="kind_id" name="kind_id">
+                <!-- Earning Form -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="POST" action="{{route('create.earning')}}" class="needs-validation form-control" novalidate>
+                            @csrf
+                            <div class="row pt-3 mb-3">
+                                <div class="col">
+                                    <label for="name" class="form-label">Désignation du revenu</label>
+                                    <input id="name" type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Nom revenu" required>
+                                    <div class="invalid-feedback">
+                                        @error('name')
+                                        {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="description" class="form-label">Description du revenu</label>
+                                    <textarea id="description" name="description" class="form-control" value="{{ old('description') }}" placeholder="Description revenu ..."></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="amount" class="form-label">Montant du revenu</label>
+                                    <input id="amount" type="number"  step=".01" name="amount" class="form-control" value="{{ old('amount') }}" placeholder="Prix ..." required>
+                                    @error('amount')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col">
+                                    <label for="date" class="form-label">Date du revenu</label>
+                                    <input id="date" type="date" name="date" class="form-control"
+                                           @if(old('date'))
+                                           value="{{ old('date') }}"
+                                           @else
+                                           value="{{ date('d-m-Y') }}"
+                                           @endif
+                                           placeholder="JJ-MM-YYYY" required>
+                                    @error('date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="family_id" class="form-label">Type de revenu</label>
+                                    <select class="form-select" id="family_id" name="family_id" required>
                                         <option value="">type de revenu ...</option>
-                                        @foreach($kinds as $kind)
-                                            <option value="{{ $kind->id }}">{{ $kind->name }}</option>
+                                        @foreach($families as $family)
+                                            <option value="{{ $family->id }}">{{ $family->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('family_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col">
+                                    <label for="account_id" class="form-label">Compte bancaire</label>
+                                    <select class="form-select" id="account_id" name="account_id" required>
+                                        @foreach($accounts as $account)
+                                            <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
+                                                @if($account->main == 1)
+                                                    | principal
+                                                @endif
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            @error('kind_id')
-                            <span class="help is-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary" type="submit">Créer revenu</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- End Form -->
+                    <div class="col-md-6">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porta ante metus, quis dictum ipsum cursus ac. Cras vel dapibus justo. Nam porttitor, lorem id tempus mollis, est nibh porttitor enim, vitae posuere magna massa ac nunc. Vestibulum sed ex et eros pharetra dignissim at aliquam turpis. Mauris facilisis sem odio, ac dictum justo pellentesque eget. Nunc erat sem, sagittis eu rhoncus sed, convallis sed erat. Aenean lobortis enim non sollicitudin rhoncus. Fusce pulvinar eleifend nibh quis pulvinar. In gravida nisi nunc, et feugiat metus pellentesque at. Duis pretium, quam eu convallis aliquam, quam est sollicitudin justo, sit amet molestie ipsum augue sed ante.
+
+                            Mauris accumsan a quam quis sollicitudin. Duis posuere elit quam. Aliquam quam nibh, tincidunt vitae risus et, mollis convallis tellus. Integer eros est, commodo at bibendum at, facilisis ut mi. Praesent tortor ex, pharetra eu massa ullamcorper, dapibus lacinia lectus. Nullam interdum venenatis ipsum vitae pulvinar. Duis sodales nisl et augue varius, sed pretium dolor iaculis. Morbi tempus sollicitudin magna, ac condimentum orci porttitor non. Pellentesque convallis imperdiet urna, vitae tempor turpis convallis et. Duis eget odio elit. Nullam nec ullamcorper nisi, vel tincidunt ligula. Mauris semper mauris metus, et facilisis dui congue quis. Vestibulum tempor quam a enim ultrices, sit amet euismod nulla tempor.</p>
                     </div>
                 </div>
-                <div class="mb-5">
-                    <label for="account_id" class="label">Compte bancaire</label>
-                    <div class="control">
-                        <div class="select">
-                            <select class="select" id="account_id" name="account_id">
-                                @foreach($accounts as $account)
-                                    <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
-                                        @if($account->main == 1)
-                                            | principal
-                                        @endif
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    @error('account_id')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2 id="ListEarning">Liste des revenus</h2>
                 </div>
-                <button type="submit" class="button is-primary ">
-                    <span class="icon is-small">
-                                <i class="fas fa-money-bill-wave"></i>
-                                </span>
-                    <span>Créer une revenu</span></button>
-                @if (session('create'))
-                    <span class="help is-success">{{ session('create') }}</span>
-                @endif
-            </form>
-        </div>
-        </div>
-    </section>
-    <!-- End Form Spent -->
-    <!-- Title Table -->
-    <section class="hero is-light">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Liste des revenus
-                </h1>
-                <h2 class="subtitle">
-                </h2>
-            </div>
-        </div>
-    </section>
-    <!-- End Title Table -->
-    <!-- Table -->
-    <section class="section">
-        <div class="table-container">
-            <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
-                <thead>
-                <tr class="is-selected">
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Montant</th>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Compte Bancaire</th>
-                    <th>Modifier</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($earnings as $earning)
-                    <tr>
-                        <td>{{ $earning->name }}</td>
-                        <td>{{ $earning->description }}</td>
-                        <td>{{ $earning->amount }}</td>
-                        <td>{{ date('d-m-Y', strtotime($earning->date)) }}</td>
-                        <td>{{ $earning->kind->name }}</td>
-                        <td>{{ $earning->account->name }}</td>
-                        <th>
-                            <button id="modalButton" class="button"
-                                    onclick="document.getElementById({{ $earning->id }}).style.display='block'"
-                                    data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
-                                        class="fas fa-pen"></i></span></button>
-                        </th>
-                    </tr>
-                    <!-- Modal Card Spent -->
-                    <div id="{{ $earning->id }}" class="modal">
-                        <div class="modal-background"></div>
-                        <div class="modal-card">
-                            <header class="modal-card-head">
-                                <p class="modal-card-title">Modification {{ $earning->name }}</p>
-                                <button class="delete" aria-label="close"
-                                        onclick="document.getElementById({{ $earning->id }}).style.display='none'"></button>
-                            </header>
-                            <!-- Content ... -->
-                            <div class="modal-card-body">
+                <!-- Earning Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Compte Bancaire</th>
+                            <th>Modifier</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($earnings as $earning)
+                            <tr id="{{ 1 . $earning->id }}">
+                                <td>{{ $earning->name }}</td>
+                                <td>{{ $earning->description }}</td>
+                                <td>{{ $earning->amount }}</td>
+                                <td>{{ date('d-m-Y', strtotime($earning->date)) }}</td>
+                                <td>{{ $earning->family->name }}</td>
+                                <td>{{ $earning->account->name }}</td>
+                                <td><button class="btn" onclick="document.getElementById({{  2 . $earning->id }}).className =' '; document.getElementById({{  1 . $earning->id }}).className =' d-none'">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr id="{{ 2 . $earning->id }}" class="d-none">
                                 <form method="POST" action="{{ url('/earning', ['id' => $earning->id]) }}">
                                     @method('put')
                                     @csrf
-                                    <div class="card-content">
-                                        <div class="mb-5">
-                                            <label for="update_earning_name" class="label">Nom du revenu</label>
-                                            <input id="earning_id" name="earning_id" class="is-hidden"
-                                                   value="{{ $earning->id }}">
-                                            <input id="update_earning_name" type="text" name="update_earning_name"
-                                                   class="input"
-                                                   value="{{ $earning->name }}"
-                                                   placeholder="Nom du revenu" autofocus>
+                                    <td><input id="update_earning_name" type="text" name="update_earning_name" class="form-control" value="{{ $earning->name }}" placeholder="Nom du revenu" required></td>
+                                    <td><input id="update_earning_description" name="update_earning_description" class="form-control" value="{{ $earning->description }}" placeholder="Description revenu ..."></td>
+                                    <td><input id="update_earning_amount" type="number"  step=".01" name="update_earning_amount" class="form-control" value="{{ $earning->amount }}" placeholder="Prix ..." required></td>
+                                    <td><input id="update_earning_date" type="date" name="update_earning_date" class="form-control" value="{{ date('d-m-Y', strtotime($earning->date)) }}" required></td>
+                                    <td><select id="update_family_id" name="update_family_id" class="form-select">
+                                            <option value="{{ $earning->family->id }}">{{ $earning->family->name}}</option>
+                                            @foreach($families as $family)
+                                                @if($family->id != $earning->family->id)
+                                                    <option value="{{ $family->id }}">{{ $family->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="update_account_id" name="update_account_id" class="form-select">
+                                            <option value="{{ $earning->account->id }}">{{ $earning->account->number . " : " . $earning->account->name}}
+                                                @if($earning->account->main == 1)
+                                                    | principal
+                                                @endif
+                                            </option>
+                                            @foreach($accounts as $account)
+                                                @if($account->id != $earning->account->id)
+                                                    <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
+                                                        @if($account->main == 1)
+                                                            | principal
+                                                        @endif
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-success" type="submit" onclick="document.getElementById({{  1 . $earning->id }}).className =' '; document.getElementById({{  2 . $earning->id }}).className =' d-none'">
+                                                <i class="far fa-check-circle"></i>
+                                            </button>
+                                            <form action="{{ url('/earning', ['id' => $earning->id]) }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn btn-danger" type="submit">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                            <button type="button" class="btn btn-light" onclick="document.getElementById({{  1 . $earning->id }}).className =' '; document.getElementById({{  2 . $earning->id }}).className =' d-none'">
+                                                <i class="far fa-times-circle"></i>
+                                            </button>
                                         </div>
-                                        <div class="mb-5">
-                                            <label for="update_earning_description" class="label">Description du revenu</label>
-                                            <textarea id="update_earning_description" name="update_earning_description" class="textarea" value="{{ $earning->description }}"
-                                                      placeholder="Description revenu ..."></textarea>
-                                        </div>
-                                        <div class="mb-5">
-                                            <label for="update_earning_amount" class="label">Montant du revenu</label>
-                                            <input id="update_earning_amount" type="number"  step=".01" name="update_earning_amount" class="input" value="{{ $earning->amount }}"
-                                                   placeholder="Prix ...">
-                                        </div>
-                                        <div class="mb-5">
-                                            <label for="update_earningdate" class="label">Date du revenu</label>
-                                            <input id="update_earning_date" type="date" name="update_earning_date" class="input" value="{{ date('d-m-Y', strtotime($earning->date)) }}">
-                                        </div>
-                                        <div class="mb-5">
-                                            <div class="control">
-                                                <label for="update_kind_id" class="label">Type revenu</label>
-                                                <div class="select">
-                                                    <select id="update_kind_id" name="update_kind_id">
-                                                        <option value="{{ $earning->kind->id }}">{{ $earning->kind->name}}</option>
-                                                        @foreach($kinds as $kind)
-                                                            @if($kind->id != $earning->kind->id)
-                                                                <option value="{{ $kind->id }}">{{ $kind->name }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-5">
-                                            <div class="control">
-                                                <label for="update_account_id" class="label">Compte Bancaire</label>
-                                                <div class="select">
-                                                    <select id="update_account_id" name="update_account_id">
-                                                        <option value="{{ $earning->account->id }}">{{ $earning->account->number . " : " . $earning->account->name}}
-                                                            @if($earning->account->main == 1)
-                                                                | principal
-                                                            @endif
-                                                        </option>
-                                                        @foreach($accounts as $account)
-                                                            @if($account->id != $earning->account->id)
-                                                                <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
-                                                                    @if($account->main == 1)
-                                                                        | principal
-                                                                    @endif
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="button is-primary">Enregistrer</button>
-                                    </div>
+                                    </td>
                                 </form>
-                                <!-- Content ... -->
-                            </div>
-                            <footer class="modal-card-foot">
-                                <form action="{{ url('/earning', ['id' => $earning->id]) }}" method="post">
-                                    @method('delete')
-                                    @csrf
-                                    <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
-                                </form>
-                            </footer>
-                        </div>
-                    </div>
-
-                    <!-- End Modal Card Spent -->
-                @endforeach
-                </tbody>
-            </table>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </main>
         </div>
-    </section>
-    <!-- End Table -->
-
+    </div>
     <!-- Message Success -->
     @error('update_name')
     <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
+        <div class="invalid-feedback">{{ $message }}</div>
     </div>
     @enderror
     @error('update_amount')
     <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
+        <div class="invalid-feedback">{{ $message }}</div>
     </div>
     @enderror
     @error('update_date')
     <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
+        <div class="invalid-feedback">{{ $message }}</div>
     </div>
     @enderror
-    @error('update_kind')
+    @error('update_family')
     <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
+        <div class="invalid-feedback">{{ $message }}</div>
     </div>
     @enderror
     @error('update_account')
     <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
+        <div class="invalid-feedback">{{ $message }}</div>
     </div>
     @enderror
     @if (session('update'))

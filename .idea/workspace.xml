@@ -5,22 +5,22 @@
       <change beforePath="$PROJECT_DIR$/.idea/AppGestion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AppGestion.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EarningController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EarningController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FuelController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FuelController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/KindController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Fuel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Fuel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_231755_create_fuels_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_231755_create_fuels_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Earning.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Earning.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Kind.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_225457_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_225457_create_categories_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_11_211753_create_kinds_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_11_211754_create_earnings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_11_211754_create_earnings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/navbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/category.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/earning.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/earning.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/fuel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/fuel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/spent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/spent.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/table/year.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/table/year.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,8 +205,8 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/img" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/layout" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -219,10 +219,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/layout" />
+      <recent name="$PROJECT_DIR$/public/css" />
       <recent name="$PROJECT_DIR$/public/img" />
       <recent name="$PROJECT_DIR$/resources/img" />
       <recent name="$PROJECT_DIR$/public" />
-      <recent name="$PROJECT_DIR$/resources/lang" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/js" />
@@ -326,7 +327,11 @@
       <workItem from="1615299267358" duration="7269000" />
       <workItem from="1615372539797" duration="1833000" />
       <workItem from="1615394793838" duration="163000" />
-      <workItem from="1615468191478" duration="9911000" />
+      <workItem from="1615468191478" duration="10087000" />
+      <workItem from="1615541377299" duration="6244000" />
+      <workItem from="1615621677274" duration="5866000" />
+      <workItem from="1615828079320" duration="1670000" />
+      <workItem from="1615885851984" duration="15443000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1607702225491</created>
@@ -468,7 +473,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615315615403</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="[feat]earning-refund(earning/kind):&#10;&#10;- Adding Migration/Controller/Model/blade Kind&#10;- Adding Migration/Controller/Model/blade Earning&#10;- Modify Category Blade &#10;- Add fuel's mileage">
+      <created>1615504682801</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1615504682801</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,7 +517,8 @@
     <MESSAGE value="[feat]user(adding):&#10;- Modify User Model &amp; Controller&#10;- Modify Home &amp; Year blade" />
     <MESSAGE value="[fix]refactoring(git):&#10;&#10;- Modify All" />
     <MESSAGE value="[feat]adding(table/year):&#10;&#10;- Modify table/year" />
-    <option name="LAST_COMMIT_MESSAGE" value="[feat]adding(table/year):&#10;&#10;- Modify table/year" />
+    <MESSAGE value="[feat]earning-refund(earning/kind):&#10;&#10;- Adding Migration/Controller/Model/blade Kind&#10;- Adding Migration/Controller/Model/blade Earning&#10;- Modify Category Blade &#10;- Add fuel's mileage" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat]earning-refund(earning/kind):&#10;&#10;- Adding Migration/Controller/Model/blade Kind&#10;- Adding Migration/Controller/Model/blade Earning&#10;- Modify Category Blade &#10;- Add fuel's mileage" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

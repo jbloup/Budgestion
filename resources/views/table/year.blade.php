@@ -50,6 +50,7 @@
                         </div>
                     </form>
                 </div>
+                @if($spents != null)
                 <div class="table-container">
                     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
                         <thead>
@@ -80,7 +81,6 @@
                             </tr>
                         @endforeach
                         </tbody>
-
                         <tr>
                             <th>Total</th>
                             @for($i=1;$i<=12;$i++)
@@ -88,7 +88,7 @@
                             @endfor
                             <th>{{ number_format($totalYear, 2, ',', ' ') . ' €' }}</th>
                         </tr>
-
+                            @if($fuels)
                         <tr>
                             <td>Carburant</td>
                             @for($i=1;$i<=12;$i++)
@@ -105,13 +105,16 @@
                             <th>{{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }}</th>
                         </tr>
                         </tfoot>
+                                @endif
                     </table>
                 </div>
+                @endif
             </div>
         </div>
     </section>
     <div class="is-divider subtitle" data-content="Catégorie"></div>
     <section class="section is-small">
+        @if($spents != null)
         <div class="container is-fluid">
             @foreach($categories as $category)
                 <div class="notification">
@@ -178,9 +181,25 @@
                 </div>
             @endforeach
         </div>
+        @else
+            <div class="container is-flex is-justify-content-center">
+                <div class="box p-0">
+                <article class="message is-info">
+                    <div class="message-body">
+                        <p>
+                        Attention !<br>
+                        Pour avoir le bilan annuel de vos dépenses,<br> vous devez dans un premier temps créer au moins une dépense.<br>
+                        Créez votre première dépense <a href="{{ route('spent') }}">ici</a>.
+                        </p>
+                    </div>
+                </article>
+                </div>
+            </div>
+        @endif
     </section>
     <div class="is-divider" data-content="Carburant"></div>
     <section class="section is-small">
+        @if($fuels)
         <div class="container is-fluid">
             <div class="notification">
                 <nav class="level">
@@ -283,5 +302,6 @@
                 </div>
             </div>
         </div>
+        @endif
     </section>
 @endsection

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Earning;
-use App\Models\Kind;
+use App\Models\Family;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -24,7 +24,7 @@ class EarningController extends Controller
     {
         return view('create.earning',[
             'earnings' => Earning::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'kinds' => Kind::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
         ]);
     }
@@ -41,7 +41,7 @@ class EarningController extends Controller
             'name' => 'required|string|max:255',
             'amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'date' => 'required|date',
-            'kind_id' => 'required|integer',
+            'family_id' => 'required|integer',
             'account_id' => 'required|integer'
         ]);
 
@@ -52,7 +52,7 @@ class EarningController extends Controller
             'date' => date('Y-m-d', strtotime(request('date'))),
             'user_id' => Auth::user()->getAuthIdentifier(),
             'account_id' => request('account_id'),
-            'kind_id' => request('kind_id'),
+            'family_id' => request('family_id'),
         ]);
 
         return back()->with('create', 'dépense ajoutée');
@@ -72,7 +72,7 @@ class EarningController extends Controller
             'update_earning_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_earning_date' => 'required|date|date_format:d-m-Y',
             'update_account_id' => 'required|integer',
-            'update_kind_id' => 'required|integer',
+            'update_family_id' => 'required|integer',
         ]);
 
         Earning::where('id', $id)
@@ -83,7 +83,7 @@ class EarningController extends Controller
                 'date' => date('Y-m-d', strtotime(request('update_earning_date'))),
                 'user_id' => Auth::user()->getAuthIdentifier(),
                 'account_id' => request('update_account_id'),
-                'kind_id' => request('update_kind_id'),
+                'family_id' => request('update_family_id'),
 
             ]);
 

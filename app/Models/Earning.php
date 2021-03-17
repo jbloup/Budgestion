@@ -23,7 +23,7 @@ class Earning extends Model
         'date',
         'user_id',
         'account_id',
-        'kind_id',
+        'family_id',
 
     ];
 
@@ -37,8 +37,8 @@ class Earning extends Model
         return $this->belongsTo('App\Models\Account');
     }
 
-    public function kind()
+    public function family()
     {
-        return $this->belongsTo('App\Models\Kind');
+        return $this->belongsTo('App\Models\Family');
     }
 }

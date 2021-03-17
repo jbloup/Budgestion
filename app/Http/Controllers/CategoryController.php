@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Kind;
-use App\Models\Type;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,9 +18,7 @@ class CategoryController extends Controller
     public function view()
     {
         return view('create.category',[
-            'kinds' => Kind::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);
     }
 
@@ -36,12 +32,12 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255'
+            'kind' => 'required|string|max:255'
         ]);
 
         Category::create([
             'name' => request('name'),
-            'description' => request('description'),
+            'kind' => request('kind'),
             'user_id' => Auth::user()->getAuthIdentifier()
 
         ]);
@@ -60,12 +56,12 @@ class CategoryController extends Controller
     {
         $request->validate([
             'update_name' => 'required|string|max:255',
-            'update_description' => 'required|string|max:255',
+            'update_kind' => 'required|string|max:255',
         ]);
 
         Category::where('user_id', Auth::user()->getAuthIdentifier())
             ->where('id', $id)
-            ->update(['name' => request('update_name'), 'description' => request('update_description')]
+            ->update(['name' => request('update_name'), 'kind' => request('update_kind')]
             );
 
         return back()->with('update', 'catégorie modifiée');

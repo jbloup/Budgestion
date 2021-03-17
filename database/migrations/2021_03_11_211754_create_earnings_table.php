@@ -21,7 +21,7 @@ class CreateEarningsTable extends Migration
             $table->date('date');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('account_id')->constrained();
-            $table->foreignId('kind_id')->constrained();
+            $table->foreignId('family_id')->constrained();
             $table->timestamps();
         });
     }

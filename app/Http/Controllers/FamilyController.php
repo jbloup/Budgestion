@@ -19,8 +19,6 @@ class FamilyController extends Controller
     {
 
         return view('create.category',[
-            'kinds' => Kind::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);
     }

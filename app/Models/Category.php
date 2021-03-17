@@ -24,7 +24,7 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
-        'description',
+        'kind',
         'user_id',
     ];
 
