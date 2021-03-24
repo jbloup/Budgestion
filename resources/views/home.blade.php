@@ -5,10 +5,16 @@
     <div class="hero-body">
         <div class="">
         <p class="title">
-            Bienvenue {{ $user_name }}
+
         </p>
-        <p class="subtitle" >{{ date('d-m-Y') }}</p>
+        <p class="subtitle" ></p>
     </div>
+    </div>
+</section>
+<section class="jumbotron text-center mt-5">
+    <div class="container mt-5">
+        <h1 class="jumbotron-heading">Bienvenue {{ $user_name }}</h1>
+        <p class="lead text-muted">{{ date('d-m-Y') }}</p>
     </div>
 </section>
 @endsection

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Earning;
-use App\Models\Family;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 
 class EarningController extends Controller
 {
@@ -24,7 +26,7 @@ class EarningController extends Controller
     {
         return view('create.earning',[
             'earnings' => Earning::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'earning')->get(),
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
         ]);
     }
@@ -55,7 +57,7 @@ class EarningController extends Controller
             'family_id' => request('family_id'),
         ]);
 
-        return back()->with('create', 'dépense ajoutée');
+        return back()->with('toast_success', 'Dépense ajoutée !');
     }
 
     /**
@@ -67,13 +69,17 @@ class EarningController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'update_earning_name' => 'required|string|max:255',
             'update_earning_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_earning_date' => 'required|date|date_format:d-m-Y',
             'update_account_id' => 'required|integer',
             'update_family_id' => 'required|integer',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
 
         Earning::where('id', $id)
             ->update([
@@ -87,7 +93,7 @@ class EarningController extends Controller
 
             ]);
 
-        return back()->with('update', 'dépense modifiée');
+        return back()->with('toast_success', 'Dépense modifiée !');
     }
 
     /**
@@ -100,6 +106,6 @@ class EarningController extends Controller
     {
         DB::table('earnings')->where('id', $id)->delete();
 
-        return back()->with('delete', 'dépense supprimée');
+        return back()->with('toast_success', 'Dépense supprimée !');
     }
 }

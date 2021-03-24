@@ -60,11 +60,6 @@ Route::post('/subtype', [FamilyController::class, 'create'])->name('create.famil
 Route::put('/subtype/{id}', [FamilyController::class, 'update'])->middleware('auth');
 Route::delete('/subtype/{id}', [FamilyController::class, 'delete'])->middleware('auth');
 
-Route::get('/kind', [KindController::class, 'view'])->name('kind')->middleware('auth');
-Route::post('/kind', [KindController::class, 'create'])->name('create.kind')->middleware('auth');
-Route::put('/kind/{id}', [KindController::class, 'update'])->middleware('auth');
-Route::delete('/kind/{id}', [KindController::class, 'delete'])->middleware('auth');
-
 Route::get('/account', [AccountController::class, 'view'])->name('account')->middleware('auth');
 Route::post('/account', [AccountController::class, 'create'])->name('create.account')->middleware('auth');
 Route::put('/account/{id}', [AccountController::class, 'update'])->middleware('auth');

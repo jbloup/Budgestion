@@ -3,24 +3,29 @@
   <component name="ChangeListManager">
     <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/AppGestion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AppGestion.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EarningController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EarningController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FamilyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/KindController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TableController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TypeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Earning.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Earning.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Kind.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_14_225457_create_categories_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_14_225457_create_categories_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_11_211753_create_kinds_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_11_211754_create_earnings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_11_211754_create_earnings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/category.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/forgot-password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/forgot-password.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/reset-password.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/reset-password.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/create/earning.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/earning.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/table/year.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/table/year.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout/app.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbar.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,6 +189,7 @@
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
       <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
       <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/realrashid/sweet-alert" />
     </include_path>
   </component>
   <component name="ProjectId" id="1lW99nSFXSiag7P6NVlSqd69wMH" />
@@ -206,7 +212,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade&#10;PHP" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/auth" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -219,18 +225,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/auth" />
       <recent name="$PROJECT_DIR$/resources/views/layout" />
       <recent name="$PROJECT_DIR$/public/css" />
       <recent name="$PROJECT_DIR$/public/img" />
       <recent name="$PROJECT_DIR$/resources/img" />
-      <recent name="$PROJECT_DIR$/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/layouts" />
+      <recent name="$PROJECT_DIR$/resources/views/layout-old" />
+      <recent name="$PROJECT_DIR$/resources/views/dashboard" />
       <recent name="$PROJECT_DIR$/resources/js" />
       <recent name="$PROJECT_DIR$/resources/img" />
-      <recent name="$PROJECT_DIR$/resources/views/create" />
-      <recent name="$PROJECT_DIR$/database/migrations" />
-      <recent name="$PROJECT_DIR$/depo" />
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.phpunit.xml">
@@ -331,7 +337,10 @@
       <workItem from="1615541377299" duration="6244000" />
       <workItem from="1615621677274" duration="5866000" />
       <workItem from="1615828079320" duration="1670000" />
-      <workItem from="1615885851984" duration="15443000" />
+      <workItem from="1615885851984" duration="15818000" />
+      <workItem from="1615976135641" duration="1157000" />
+      <workItem from="1616060603514" duration="9868000" />
+      <workItem from="1616419067175" duration="13398000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1607702225491</created>
@@ -480,7 +489,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615504682801</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="[feat]earning-refund(earning/family):&#10;&#10;- Modify earning/category&#10;- Adding Bootstrap and earning blade">
+      <created>1615941199038</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1615941199038</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -518,7 +534,8 @@
     <MESSAGE value="[fix]refactoring(git):&#10;&#10;- Modify All" />
     <MESSAGE value="[feat]adding(table/year):&#10;&#10;- Modify table/year" />
     <MESSAGE value="[feat]earning-refund(earning/kind):&#10;&#10;- Adding Migration/Controller/Model/blade Kind&#10;- Adding Migration/Controller/Model/blade Earning&#10;- Modify Category Blade &#10;- Add fuel's mileage" />
-    <option name="LAST_COMMIT_MESSAGE" value="[feat]earning-refund(earning/kind):&#10;&#10;- Adding Migration/Controller/Model/blade Kind&#10;- Adding Migration/Controller/Model/blade Earning&#10;- Modify Category Blade &#10;- Add fuel's mileage" />
+    <MESSAGE value="[feat]earning-refund(earning/family):&#10;&#10;- Modify earning/category&#10;- Adding Bootstrap and earning blade" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat]earning-refund(earning/family):&#10;&#10;- Modify earning/category&#10;- Adding Bootstrap and earning blade" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

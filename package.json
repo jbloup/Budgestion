@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "bulma": "^0.9.2",
-        "bulma-extensions": "^6.2.7"
+        "bulma-extensions": "^6.2.7",
+        "sweetalert": "^2.1.2"
     }
 }

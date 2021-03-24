@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Category;
-use App\Models\Fuel;
-use App\Models\Spent;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
