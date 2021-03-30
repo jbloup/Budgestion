@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Category;
+use App\Models\Fuel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,10 +19,16 @@ class TableController extends Controller
     public function month(){
         setlocale(LC_TIME, "fr_FR");
 
+        $fuels = Fuel::where('user_id', Auth::user()->getAuthIdentifier())->get();
         $categories = Category::where('user_id', Auth::user()->getAuthIdentifier())->get();
+        $spentCategories = Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'spent')->get();
+        $earningCategories = Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'earning')->get();
         $categoryTotals = null;
         $typeTotals = null;
-        $total = 0;
+        $spentTotal = 0;
+        $earningTotal = 0;
+        $fuelTotal = 0;
+        $fuelTotalLiter = 0;
 
         if(request('month') == null && request('year') == null){
             $date = date('Y-m');
@@ -29,6 +36,13 @@ class TableController extends Controller
         }else{
             $date = date('Y-m', mktime(0, 0, 0, request('month'), 1, request('year')));
             $date2 = date('Y-m', strtotime('+1 month', strtotime($date)));
+        }
+
+        foreach ($fuels as $fuel) {
+            if (($fuel->date >= $date) && ($fuel->date < $date2)) {
+                $fuelTotal += $fuel->price;
+                $fuelTotalLiter += $fuel->liter;
+            }
         }
 
         foreach ($categories as $category){
@@ -40,6 +54,10 @@ class TableController extends Controller
                         if(($spent->date >= $date) && ($spent->date < $date2)){
                             $typeTotal +=  $spent->price;
                         }
+                    foreach ($family->earnings as $earning)
+                        if(($earning->date >= $date) && ($earning->date < $date2)){
+                            $typeTotal +=  $earning->amount;
+                        }
                 }
                 $typeTotals[$type->id] = $typeTotal;
                 $categoryTotal += $typeTotal;
@@ -47,16 +65,28 @@ class TableController extends Controller
             $categoryTotals[$category->id] = $categoryTotal;
         }
 
-        foreach ($categoryTotals as $catTotal){
-            $total += $catTotal;
+        foreach ($spentCategories as $category){
+            $spentTotal += $categoryTotals[$category->id];
         }
 
+        foreach ($earningCategories as $category){
+            $earningTotal += $categoryTotals[$category->id];
+        }
+
+        $total= $earningTotal - $spentTotal;
+
         return view('table.month',[
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'spentCategories' => $spentCategories,
+            'earningCategories' => $earningCategories,
+            'fuels' => $fuels,
             'date' => $date,
             'date2' => $date2,
             'categoryTotals' => $categoryTotals,
             'typeTotals' => $typeTotals,
+            'fuelTotal' => number_format($fuelTotal, 2, ',', ' '),
+            'fuelTotalLiter' => $fuelTotalLiter,
+            'spentTotal' => number_format($spentTotal, 2, ',', ' '),
+            'earningTotal' => number_format($earningTotal, 2, ',', ' '),
             'total' => number_format($total, 2, ',', ' '),
         ]);
     }

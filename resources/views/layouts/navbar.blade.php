@@ -36,15 +36,14 @@
                                 <li><a class="dropdown-item" href="{{ route('earning') }}">Revenu</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="{{ route('profil') }}" class="nav-link">
+                                Profil
+                            </a>
+                        </li>
                         @endguest
                     </ul>
                     <div class="d-flex">
-                        @guest
-                        @else
-                            <a class="btn btn-outline-light mx-3" href="{{ route('profil') }}">
-                                <i class="fas fa-users-cog"></i>
-                            </a>
-                        @endguest
                         @guest
                             <a class="btn btn-outline-light mx-3" href="{{ route('register') }}">
                                 <strong>S'enregistrer</strong>

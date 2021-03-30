@@ -214,10 +214,10 @@
                                                 @csrf
                                                 <p class="border-bottom pb-3 mb-4">Voulez vous supprimer le revenu : {{ $earning->name }} ?</p>
                                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button class="btn btn-primary me-md-2" type="submit">
-                                                    Oui
-                                                </button>
-                                                <button class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                                                    <button class="btn btn-primary me-md-2" type="submit">
+                                                        Oui
+                                                    </button>
+                                                    <button class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
                                                 </div>
                                             </form>
                                         </div>

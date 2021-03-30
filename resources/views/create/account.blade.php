@@ -48,14 +48,14 @@
                                     @enderror
                                 </div>
                             </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label for="number" class="form-label">Numéro de compte bancaire</label>
-                                        <input id="number" type="number" name="number" class="form-control" value="{{ old('number') }}" placeholder="Numéro de compte" aria-describedby="validationNumber" required>
-                                        @error('number')
-                                        <div id="validationNumber" class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="number" class="form-label">Numéro de compte bancaire</label>
+                                    <input id="number" type="number" name="number" class="form-control" value="{{ old('number') }}" placeholder="Numéro de compte" aria-describedby="validationNumber" required>
+                                    @error('number')
+                                    <div id="validationNumber" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="col">
                                     <label for="amount" class="form-label">Montant du compte bancaire</label>
                                     <input id="amount" type="number" step=".01" name="amount" class="form-control" value="{{ old('amount') }}" placeholder="Montant du compte .." aria-describedby="validationAmount" required>
@@ -68,16 +68,16 @@
                                 <div class="col">
                                     <label class="form-label">Compte principal</label>
                                     <div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="main" id="main1" value="1">
-                                        <label class="form-check-label" for="main1">oui</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="main" id="main1" value="1">
+                                            <label class="form-check-label" for="main1">oui</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="main" id="main2" value="0" checked>
+                                            <label class="form-check-label" for="main2">non</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="main" id="main2" value="0" checked>
-                                        <label class="form-check-label" for="main2">non</label>
-                                    </div>
-                                    </div>
-                            </div>
+                                </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
@@ -124,9 +124,9 @@
                                 <td>{{ $account->amount }}</td>
                                 <td>
                                     @if($account->main == 1)
-                                    Oui
+                                        Oui
                                     @else
-                                    Non
+                                        Non
                                     @endif
                                 </td>
                                 <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'enabled' }}').className =' d-none'">
@@ -152,7 +152,7 @@
                                                     <input class="form-check-input" type="radio" name="update_main" id="update_main2" value="0" checked>
                                                     <label class="form-check-label" for="main2">non</label>
                                                 </div>
-                                        @else
+                                            @else
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="update_main" id="update_main1" value="1" checked>
                                                     <label class="form-check-label" for="main1">oui</label>

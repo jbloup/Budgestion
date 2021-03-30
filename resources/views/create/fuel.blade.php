@@ -109,7 +109,7 @@
                         <thead>
                         <tr>
                             <th>Véhicule</th>
-                            <th>Litre</th>
+                            <th>Litres</th>
                             <th>Prix</th>
                             <th>Date</th>
                             <th>Kilométrage</th>

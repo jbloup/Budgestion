@@ -25,7 +25,7 @@ class EarningController extends Controller
     public function view()
     {
         return view('create.earning',[
-            'earnings' => Earning::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
+            'earnings' => Earning::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->limit(50)->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'earning')->get(),
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
         ]);

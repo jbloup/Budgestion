@@ -20,6 +20,7 @@
     "dependencies": {
         "bulma": "^0.9.2",
         "bulma-extensions": "^6.2.7",
+        "feather-icons": "^4.28.0",
         "sweetalert": "^2.1.2"
     }
 }

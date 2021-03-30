@@ -26,7 +26,7 @@ class SpentController extends Controller
     public function view()
     {
         return view('create.spent',[
-            'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
+            'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->limit(50)->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'spent')->get(),
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
         ]);
