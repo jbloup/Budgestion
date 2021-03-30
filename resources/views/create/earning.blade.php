@@ -138,20 +138,20 @@
                         </thead>
                         <tbody>
                         @foreach($earnings as $earning)
-                            <tr id="{{ 1 . $earning->id }}">
+                            <tr id="{{ str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}">
                                 <td>{{ $earning->name }}</td>
                                 <td>{{ $earning->description }}</td>
                                 <td>{{ $earning->amount . ' €' }}</td>
                                 <td>{{ date('d-m-Y', strtotime($earning->date)) }}</td>
                                 <td>{{ $earning->family->name }}</td>
                                 <td>{{ $earning->account->name }}</td>
-                                <td><button class="btn" onclick="document.getElementById({{  2 . $earning->id }}).className =' '; document.getElementById({{  1 . $earning->id }}).className =' d-none'">
+                                <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}').className =' d-none'">
                                         <i class="fas fa-pen"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr id="{{ 2 . $earning->id }}" class="d-none">
-                                <form id="form-update-earning" method="POST" action="{{ url('/earning', ['id' => $earning->id]) }}">
+                            <tr id="{{ str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}" class="d-none">
+                                <form id="{{ str_replace(' ', '', $earning->name) . $earning->id . 'update' }}" method="POST" action="{{ url('/earning', ['id' => $earning->id]) }}">
                                     @method('put')
                                     @csrf
                                     <td><input id="update_earning_name" type="text" name="update_earning_name" class="form-control" value="{{ $earning->name }}" placeholder="Nom du revenu" required></td>
@@ -159,7 +159,7 @@
                                     <td><input id="update_earning_amount" type="number"  step=".01" name="update_earning_amount" class="form-control" value="{{ $earning->amount }}" placeholder="Prix ..." required></td>
                                     <td><input id="update_earning_date" type="date" name="update_earning_date" class="form-control" value="{{ date('d-m-Y', strtotime($earning->date)) }}" required></td>
                                     <td><select id="update_family_id" name="update_family_id" class="form-select">
-                                            <option value="{{ $earning->family->id }}">{{ $category->name . ' / ' . $type->name . ' / ' . $earning->family->name}}</option>
+                                            <option value="{{ $earning->family->id }}">{{ $earning->family->type->category->name . ' / ' . $earning->family->type->name . ' / ' . $earning->family->name}}</option>
                                             @foreach($categories as $category)
                                                 @foreach($category->types as $type)
                                                     @foreach($type->families as $family)
@@ -192,27 +192,27 @@
                                 </form>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-success" type="submit" onclick="document.getElementById({{  1 . $earning->id }}).className =' '; document.getElementById({{  2 . $earning->id }}).className =' d-none'; document.getElementById('form-update-earning').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ str_replace(' ', '', $earning->name) . $earning->id . 'update' }}').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '',$earning->name) . $earning->id }}">
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '',$earning->name) . $earning->id . 'delete' }}">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-light" onclick="document.getElementById({{  1 . $earning->id }}).className =' '; document.getElementById({{  2 . $earning->id }}).className =' d-none'">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}').className =' d-none'">
                                             <i class="far fa-times-circle"></i>
                                         </button>
                                     </div>
                                 </td>
                             </tr>
                             <!-- Modal -->
-                            <div class="modal fade" id="{{ str_replace(' ', '',$earning->name) . $earning->id }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$earning->name) . $earning->id . 'label' }}" aria-hidden="true">
+                            <div class="modal fade" id="{{ str_replace(' ', '',$earning->name) . $earning->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$earning->name) . $earning->id . 'label' }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-body">
                                             <form action="{{ url('/earning', ['id' => $earning->id]) }}" method="post">
                                                 @method('delete')
                                                 @csrf
-                                                <p class="text-center">Voulez vous supprimer le revenu : {{ $earning->name }} ?</p>
+                                                <p class="border-bottom pb-3 mb-4">Voulez vous supprimer le revenu : {{ $earning->name }} ?</p>
                                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                                 <button class="btn btn-primary me-md-2" type="submit">
                                                     Oui

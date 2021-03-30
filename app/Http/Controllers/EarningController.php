@@ -57,7 +57,7 @@ class EarningController extends Controller
             'family_id' => request('family_id'),
         ]);
 
-        return back()->with('toast_success', 'Dépense ajoutée !');
+        return back()->with('toast_success', 'Revenu ajouté !');
     }
 
     /**
@@ -93,7 +93,7 @@ class EarningController extends Controller
 
             ]);
 
-        return back()->with('toast_success', 'Dépense modifiée !');
+        return back()->with('toast_success', 'Revenu modifié !');
     }
 
     /**
@@ -106,6 +106,6 @@ class EarningController extends Controller
     {
         DB::table('earnings')->where('id', $id)->delete();
 
-        return back()->with('toast_success', 'Dépense supprimée !');
+        return back()->with('toast_success', 'Revenu supprimé !');
     }
 }

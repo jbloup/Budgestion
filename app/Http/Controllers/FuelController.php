@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class FuelController extends Controller
 {
@@ -55,7 +56,7 @@ class FuelController extends Controller
         Car::where('id', request('car_id'))
         ->update(['mileage' => request('mileage'),]);
 
-        return back()->with('create', 'dépense de carburant modifiée');
+        return back()->with('toast_success', 'dépense de carburant modifiée');
     }
 
     /**
@@ -67,7 +68,7 @@ class FuelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'update_fuel_liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_fuel_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_fuel_date' => 'required|date',
@@ -75,21 +76,25 @@ class FuelController extends Controller
             'update_car_id' => 'required|integer',
         ]);
 
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+
         Fuel::where('id', $id)
             ->update([
                 'liter' => request('update_fuel_liter'),
                 'price' => request('update_fuel_price'),
                 'date' => date('Y-m-d', strtotime(request('update_fuel_date'))),
-                'mileage' => request('mileage'),
+                'mileage' => request('update_fuel_mileage'),
                 'user_id' => Auth::user()->getAuthIdentifier(),
                 'car_id' => request('update_car_id'),
 
             ]);
 
         Car::where('id', request('car_id'))
-            ->update(['mileage' => request('mileage'),]);
+            ->update(['mileage' => request('update_fuel_mileage'),]);
 
-        return back()->with('update', 'dépense de carburant modifiée');
+        return back()->with('toast_success', 'dépense de carburant modifiée');
     }
 
     /**
@@ -102,6 +107,6 @@ class FuelController extends Controller
     {
         Fuel::where('id', $id)->delete();
 
-        return back()->with('delete', 'dépense supprimée');
+        return back()->with('toast_success', 'Dépense de carburant supprimée !');
     }
 }

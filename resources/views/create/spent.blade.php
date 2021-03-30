@@ -1,292 +1,235 @@
 @extends('layouts.app')
 
 @section('content')
-    <!--Form Spent-->
-    <section class="hero is-medium is-primary is-bold">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Dépense
-                </h1>
-                <h2 class="subtitle">
-                    Créer une nouvelle dépense.
-                </h2>
-            </div>
-        </div>
-    </section>
-    <section class="section is-small">
-        <div class="container is-max-desktop">
-        <form method="POST" action="{{route('create.spent')}}">
-            @csrf
-            <h1 class="title">Complétez les informations</h1>
-        <div class="mb-5">
-            <label for="name" class="label">Désignation de la dépense</label>
-            <input id="name" type="text" name="name" class="input" value="{{ old('name') }}"
-                   placeholder="Nom dépense" autofocus>
-            @error('name')
-            <span class="help is-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="mb-5">
-            <label for="description" class="label">Description de la dépense</label>
-            <textarea id="description" name="description" class="textarea" value="{{ old('description') }}"
-                      placeholder="Description dépense ..."></textarea>
-            @error('description')
-            <span class="help is-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="mb-5">
-            <label for="price" class="label">Montant de la dépense</label>
-            <input id="price" type="number"  step=".01" name="price" class="input" value="{{ old('price') }}"
-                   placeholder="Prix ...">
-            @error('price')
-            <span class="help is-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="mb-5">
-            <label for="date" class="label">Date de la dépense</label>
-            <input id="date" type="date" name="date" class="input"
-                   @if(old('date'))
-                   value="{{ old('date') }}"
-                   @else
-                   value="{{ date('d-m-Y') }}"
-                   @endif
-                   placeholder="JJ-MM-YYYY">
-            @error('date')
-            <span class="help is-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="field-body">
-            <div class="fied">
-                <div class="mb-5">
-                    <label for="family_id" class="label">Sous-Type</label>
-                    <div class="control">
-                        <div class="select">
-                            <select class="select" id="family_id" name="family_id">
-                                <option value="">sous-type ...</option>
-                                @foreach($families as $family)
-                                    <option value="{{$family->id}}">{{$family->type->category->name . " / " . $family->type->name . " / " . $family->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    @error('family_id')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Lateral nav -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#spent">
+                                Dépenses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#ListSpent">
+                                Liste dépenses
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-        </div>
-        <div class="mb-5">
-            <label for="account_id" class="label">Compte bancaire</label>
-            <div class="control">
-                <div class="select">
-                    <select class="select" id="account_id" name="account_id">
-                        @foreach($accounts as $account)
-                            <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
-                                @if($account->main == 1)
-                                    | principal
-                                @endif
-                            </option>
-                        @endforeach
-                    </select>
+            </nav>
+            <!-- End lateral nav -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 id="spent" class="h2">Dépenses</h1>
                 </div>
-            </div>
-            @error('account_id')
-            <span class="help is-danger">{{ $message }}</span>
-            @enderror
-        </div>
-                <button type="submit" class="button is-primary ">
-                    <span class="icon is-small">
-                                <i class="fas fa-money-bill-wave"></i>
-                                </span>
-                    <span>Créer une dépense</span></button>
-            @if (session('create'))
-                <span class="help is-success">{{ session('create') }}</span>
-            @endif
-        </form>
-        </div>
-    </div>
-    </section>
-    <!-- End Form Spent -->
-    <!-- Title Table -->
-    <section class="hero is-light">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Liste des dépenses
-                </h1>
-                <h2 class="subtitle">
-                </h2>
-            </div>
-        </div>
-    </section>
-    <!-- End Title Table -->
-    <!-- Table -->
-    <section class="section">
-        <div class="table-container">
-        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
-                <thead>
-                <tr class="is-selected">
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>Prix</th>
-                    <th>Date</th>
-                    <th>Sous-famille</th>
-                    <th>Famille</th>
-                    <th>Categorie</th>
-                    <th>Compte Bancaire</th>
-                    <th>Modifier</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach($spents as $spent)
-            <tr>
-                <td>{{ $spent->name }}</td>
-                <td>{{ $spent->description }}</td>
-                <td>{{ $spent->price }}</td>
-                <td>{{ date('d-m-Y', strtotime($spent->date)) }}</td>
-                <td>{{ $spent->family->name }}</td>
-                <td>{{ $spent->family->type->name }}</td>
-                <td>{{ $spent->family->type->category->name }}</td>
-                <td>{{ $spent->account->name }}</td>
-                <th>
-                    <button id="modalButton" class="button"
-                            onclick="document.getElementById({{ $spent->id }}).style.display='block'"
-                            data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
-                                class="fas fa-pen"></i></span></button>
-                </th>
-            </tr>
-            <!-- Modal Card Spent -->
-            <div id="{{ $spent->id }}" class="modal">
-                <div class="modal-background"></div>
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Modification {{ $spent->name }}</p>
-                        <button class="delete" aria-label="close"
-                                onclick="document.getElementById({{ $spent->id }}).style.display='none'"></button>
-                    </header>
-                    <!-- Content ... -->
-                    <div class="modal-card-body">
-                        <form method="POST" action="{{ url('/spent', ['id' => $spent->id]) }}">
-                            @method('put')
+                <!-- Spent Form -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="POST" action="{{route('create.spent')}}" class="needs-validation form-control" novalidate>
                             @csrf
-                            <div class="card-content">
-                                <div class="mb-5">
-                                    <label for="update_spent_name" class="label">Nom de la dépense</label>
-                                    <input id="spent_id" name="spent_id" class="is-hidden"
-                                           value="{{ $spent->id }}">
-                                    <input id="update_spent_name" type="text" name="update_spent_name"
-                                           class="input"
-                                           value="{{ $spent->name }}"
-                                           placeholder="Nom du sous-type" autofocus>
+                            <div class="row pt-3 mb-3">
+                                <div class="col">
+                                    <label for="name" class="form-label">Désignation du dépense</label>
+                                    <input id="name" type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nom dépense" aria-describedby="validationName" required>
+                                    @error('name')
+                                    <div id="validationName" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="mb-5">
-                                    <label for="update_spent_description" class="label">Description de la dépense</label>
-                                    <textarea id="update_spent_description" name="update_spent_description" class="textarea" value="{{ $spent->description }}"
-                                              placeholder="Description dépense ..."></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="description" class="form-label">Description du dépense</label>
+                                    <textarea id="description" name="description" class="form-control" value="{{ old('description') }}" placeholder="Description dépense ..."></textarea>
                                 </div>
-                                <div class="mb-5">
-                                    <label for="update_spent_price" class="label">Montant de la dépense</label>
-                                    <input id="update_spent_price" type="number"  step=".01" name="update_spent_price" class="input" value="{{ $spent->price }}"
-                                           placeholder="Prix ...">
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="price" class="form-label">Montant du dépense</label>
+                                    <input id="price" type="number"  step=".01" name="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" placeholder="Prix ..." aria-describedby="validationPrice" required>
+                                    @error('price')
+                                    <div id="validationPrice" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="mb-5">
-                                    <label for="update_spentdate" class="label">Date de la dépense</label>
-                                    <input id="update_spent_date" type="date" name="update_spent_date" class="input" value="{{ date('d-m-Y', strtotime($spent->date)) }}">
+                                <div class="col">
+                                    <label for="date" class="form-label">Date du dépense</label>
+                                    <input id="date" type="date" name="date" class="form-control @error('date') is-invalid @enderror"
+                                           @if(old('date'))
+                                           value="{{ old('date') }}"
+                                           @else
+                                           value="{{ date('d-m-Y') }}"
+                                           @endif
+                                           placeholder="JJ-MM-YYYY" aria-describedby="validationDate" required>
+                                    @error('date')
+                                    <div id="validationDate" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="mb-5">
-                                    <div class="control">
-                                        <label for="update_family_id" class="label">Sous-type</label>
-                                        <div class="select">
-                                            <select id="update_family_id" name="update_family_id">
-                                                <option value="{{ $spent->family->id }}">{{ $spent->family->name}}</option>
-                                                @foreach($families as $family)
-                                                    @if($family->id != $spent->family->id)
-                                                        <option value="{{ $family->id }}">{{ $family->name }}</option>
-                                                    @endif
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="family_id" class="form-label">Type de dépense</label>
+                                    <select class="form-select @error('family_id') is-invalid @enderror" id="family_id" name="family_id" aria-describedby="validationFamily" required>
+                                        <option value="">type de dépense ...</option>
+                                        @foreach($categories as $category)
+                                            @foreach($category->types as $type)
+                                                @foreach($type->families as $family)
+                                                    <option value="{{ $family->id }}">{{ $category->name . ' / ' . $type->name . ' / ' . $family->name }}</option>
                                                 @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                            @endforeach
+                                        @endforeach
+                                    </select>
+                                    @error('family_id')
+                                    <div id="validationFamily" class="invalid-feedback">{{ $message }}</div>
+                                    <p class="text-danger" >{{ $message }}</p>
+                                    @enderror
                                 </div>
-                                <div class="mb-5">
-                                    <div class="control">
-                                        <label for="update_account_id" class="label">Compte Bancaire</label>
-                                        <div class="select">
-                                            <select id="update_account_id" name="update_account_id">
-                                                <option value="{{ $spent->account->id }}">{{ $spent->account->number . " : " . $spent->account->name}}
-                                                    @if($spent->account->main == 1)
-                                                        | principal
-                                                    @endif
-                                                </option>
-                                                @foreach($accounts as $account)
-                                                    @if($account->id != $spent->account->id)
-                                                        <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
-                                                            @if($account->main == 1)
-                                                                | principal
-                                                            @endif
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                <div class="col">
+                                    <label for="account_id" class="form-label">Compte bancaire</label>
+                                    <select class="form-select @error('account_id') is-invalid @enderror" id="account_id" name="account_id" aria-describedby="validationAccount" required>
+                                        @foreach($accounts as $account)
+                                            <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
+                                                @if($account->main == 1)
+                                                    | principal
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('account_id')
+                                    <div id="validationAccount" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <button type="submit" class="button is-primary">Enregistrer</button>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary" type="submit">Créer dépense</button>
+                                </div>
                             </div>
                         </form>
-                        <!-- Content ... -->
                     </div>
-                    <footer class="modal-card-foot">
-                        <form action="{{ url('/spent', ['id' => $spent->id]) }}" method="post">
-                            @method('delete')
-                            @csrf
-                            <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
-                        </form>
-                    </footer>
+                    <!-- End Form -->
+                    <div class="col-md-6">
+                        <p>Aliquam quam nibh, tincidunt vitae risus et, mollis convallis tellus. Integer eros est, commodo at bibendum at, facilisis ut mi. Praesent tortor ex, pharetra eu massa ullamcorper, dapibus lacinia lectus. Nullam interdum venenatis ipsum vitae pulvinar. Duis sodales nisl et augue varius, sed pretium dolor iaculis. Morbi tempus sollicitudin magna, ac condimentum orci porttitor non. Pellentesque convallis imperdiet urna, vitae tempor turpis convallis et. Duis eget odio elit. Nullam nec ullamcorper nisi, vel tincidunt ligula. Mauris semper mauris metus, et facilisis dui congue quis. Vestibulum tempor quam a enim ultrices, sit amet euismod nulla tempor.</p>
+                    </div>
                 </div>
-            </div>
-
-            <!-- End Modal Card Spent -->
-                @endforeach
-            </tbody>
-        </table>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2 id="ListSpent">Liste des dépenses</h2>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Import</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spent Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Description</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Compte Bancaire</th>
+                            <th>Modifier</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($spents as $spent)
+                            <tr id="{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}">
+                                <td>{{ $spent->name }}</td>
+                                <td>{{ $spent->description }}</td>
+                                <td>{{ $spent->price . ' €' }}</td>
+                                <td>{{ date('d-m-Y', strtotime($spent->date)) }}</td>
+                                <td>{{ $spent->family->name }}</td>
+                                <td>{{ $spent->account->name }}</td>
+                                <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}').className =' '; document.getElementById('{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}').className =' d-none'">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr id="{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}" class="d-none">
+                                <form id="form-update-spent" method="POST" action="{{ url('/spent', ['id' => $spent->id]) }}">
+                                    @method('put')
+                                    @csrf
+                                    <td><input id="update_spent_name" type="text" name="update_spent_name" class="form-control" value="{{ $spent->name }}" placeholder="Nom du dépense" required></td>
+                                    <td><input id="update_spent_description" name="update_spent_description" class="form-control" value="{{ $spent->description }}" placeholder="Description dépense ..."></td>
+                                    <td><input id="update_spent_price" type="number"  step=".01" name="update_spent_price" class="form-control" value="{{ $spent->price }}" placeholder="Prix ..." required></td>
+                                    <td><input id="update_spent_date" type="date" name="update_spent_date" class="form-control" value="{{ date('d-m-Y', strtotime($spent->date)) }}" required></td>
+                                    <td><select id="update_family_id" name="update_family_id" class="form-select">
+                                            <option value="{{ $spent->family->id }}">{{ $category->name . ' / ' . $type->name . ' / ' . $spent->family->name}}</option>
+                                            @foreach($categories as $category)
+                                                @foreach($category->types as $type)
+                                                    @foreach($type->families as $family)
+                                                        @if($family->id != $spent->family->id)
+                                                            <option value="{{ $family->id }}">{{ $category->name . ' / ' . $type->name . ' / ' . $family->name }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="update_account_id" name="update_account_id" class="form-select">
+                                            <option value="{{ $spent->account->id }}">{{ $spent->account->name}}
+                                                @if($spent->account->main == 1)
+                                                    | principal
+                                                @endif
+                                            </option>
+                                            @foreach($accounts as $account)
+                                                @if($account->id != $spent->account->id)
+                                                    <option value="{{$account->id}}">{{$account->name}}
+                                                        @if($account->main == 1)
+                                                            | principal
+                                                        @endif
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                </form>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}').className =' d-none'; document.getElementById('form-update-spent').submit();">
+                                            <i class="far fa-check-circle"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '', $spent->name) . $spent->id . 'delete' }}">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}').className =' d-none'">
+                                            <i class="far fa-times-circle"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Modal -->
+                            <div class="modal fade" id="{{ str_replace(' ', '',$spent->name) . $spent->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$spent->name) . $spent->id . 'label' }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <form action="{{ url('/spent', ['id' => $spent->id]) }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <p class="border-bottom pb-3 mb-4">Voulez vous supprimer le dépense : {{ $spent->name }} ?</p>
+                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                    <button class="btn btn-primary me-md-2" type="submit">
+                                                        Oui
+                                                    </button>
+                                                    <button class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </main>
+        </div>
     </div>
-    </section>
-    <!-- End Table -->
-
-    <!-- Message Success -->
-        @error('update_name')
-        <div class="card-footer-item">
-            <span class="help is-danger">{{ $message }}</span>
-        </div>
-        @enderror
-        @error('update_price')
-        <div class="card-footer-item">
-            <span class="help is-danger">{{ $message }}</span>
-        </div>
-        @enderror
-        @error('update_date')
-        <div class="card-footer-item">
-            <span class="help is-danger">{{ $message }}</span>
-        </div>
-        @enderror
-        @error('update_family')
-        <div class="card-footer-item">
-            <span class="help is-danger">{{ $message }}</span>
-        </div>
-        @enderror
-        @error('update_account')
-        <div class="card-footer-item">
-            <span class="help is-danger">{{ $message }}</span>
-        </div>
-        @enderror
-    @if (session('update'))
-        <span class="help is-success">{{ session('update') }}</span>
-    @endif
-    @if (session('delete'))
-        <span class="help is-success">{{ session('delete') }}</span>
-    @endif
-    <!-- End Message Success -->
 @endsection
 

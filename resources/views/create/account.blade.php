@@ -1,246 +1,210 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="hero is-medium is-primary is-bold">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Compte bancaire
-                </h1>
-                <h2 class="subtitle">
-                    Créer un nouveau compte bancaire.
-                </h2>
-            </div>
-        </div>
-    </section>
-    <section class="section is-small">
-        <div class="container is-max-desktop">
-        <form method="POST" action="{{ route('create.account') }}">
-            @csrf
-            @method('post')
-                    <h1 class="title">Complétez les informations</h1>
-            <div class="mb-5">
-                <label for="number" class="label">Numéro de compte bancaire</label>
-                <input id="number" type="number" name="number" class="input" value="{{ old('number') }}"
-                       placeholder="Numéro de compte" autofocus>
-                @error('number')
-                <span class="help is-danger">{{ $message }}</span>
-                @enderror
-            </div>
-                <div class="mb-5">
-                    <label for="name" class="label">Nom du compte bancaire</label>
-                    <input id="name" type="text" name="name" class="input" value="{{ old('name') }}"
-                           placeholder="Nom du compte">
-                    @error('name')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Lateral nav -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#account">
+                                Compte bancaire
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#listCar">
+                                Liste comptes bancaires
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="mb-5">
-                    <label for="description" class="label">Description du compte bancaire</label>
-                    <textarea id="description" name="description" class="textarea" value="{{ old('description') }}"
-                              autocomplete="description" placeholder="Description ..."></textarea>
-                    @error('description')
-                    <span class="help is-danger">{{ $message }}</span>
-                    @enderror
+            </nav>
+            <!-- End lateral nav -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 id="account" class="h2">Compte bancaire</h1>
                 </div>
-            <div class="mb-5">
-                <label for="amount" class="label">Montant du compte bancaire</label>
-                <input id="amount" type="number" step=".01" name="amount" class="input" value="{{ old('amount') }}"
-                       placeholder="Montant du compte ..">
-                @error('amount')
-                <span class="help is-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="mb-5">
-            <label for="main" class="label">Compte principal <span class="tag is-warning is-small">
-                            <span class="icon is-small has-text-white"><i class="fa fa-star"></i></span>
-                            </span></label>
-            <div class="control" id="main">
-                <label class="radio">
-                    <input type="radio" name="main" value="1">
-                    Oui
-                </label>
-                <label class="radio">
-                    <input type="radio" name="main" value="0">
-                    Non
-                </label>
-                @error('main')
-                <span class="help is-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            </div>
-                    <button type="submit" class="button is-primary">
-                    <span class="icon is-small">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    </span>
-                        <span>Créer un compte bancaire</span>
-                    </button>
-            </form>
-            @if (session('create'))
-                <span class="help is-success">{{ session('create') }}</span>
-            @endif
-    </div>
-    </section>
-    <!-- End Form Account -->
-    <!-- Title Table -->
-    <section class="hero is-light">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Liste des comptes bancaires
-                </h1>
-                <h2 class="subtitle">
-
-                </h2>
-            </div>
-        </div>
-    </section>
-    <!-- End Title Table -->
-    <!-- Table -->
-    <section class="section">
-        <div class="table-container">
-        <table class="table-container table is-bordered is-striped is-narrow is-hoverable is-fullwidth  has-text-centered">
-            <thead>
-            <tr class="is-selected">
-                <th>Numéro</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Montant</th>
-                <th>Modifier</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($accounts as $account)
-                <tr>
-                    <td>{{ $account->number }}</td>
-                    <td>{{ $account->name }}
-                        @if($account->main == 1)
-                            <span class="tag is-warning is-small">
-                            <span class="icon is-small has-text-white"><i class="fa fa-star"></i></span>
-                            </span>
-                        @endif
-                    </td>
-                    <td>{{ $account->description }}</td>
-                    <td>{{ $account->amount }}</td>
-                    <th>
-                        <button id="modalButton" class="button"
-                                onclick="document.getElementById({{ $account->id }}).style.display='block'"
-                                data-target="modal-ter" aria-haspopup="true"><span class="icon"><i
-                                    class="fas fa-pen"></i></span></button>
-                    </th>
-                </tr>
-                <!-- Modal Card -->
-                <div id="{{ $account->id }}" class="modal">
-                    <div class="modal-background"></div>
-                    <div class="modal-card">
-                        <header class="modal-card-head">
-                            @if($account->main == 1)
-                                <span class="tag is-warning is-small mr-2">
-                            <span class="icon is-small has-text-white"><i class="fa fa-star"></i></span>
-                            </span>
-                            @endif
-                            <p class="modal-card-title">Modification {{ $account->name }}</p>
-                            <button class="delete" aria-label="close"
-                                    onclick="document.getElementById({{ $account->id }}).style.display='none'"></button>
-                        </header>
-                        <!-- Content  -->
-                            <div class="modal-card-body">
-                                <div class="card-content">
-                                    <form method="POST" action="{{ url('/account', ['id' => $account->id]) }}">
-                                        @method('put')
-                                        @csrf
-                                        <div class="mb-5">
-                                        <label for="update_number" class="label">Numéro de compte bancaire</label>
-                                         <input id="update_number" type="text" name="update_number" class="input" value="{{$account->number }}" placeholder="Numéro de compte">
-                                        </div>
-                                    <div class="mb-5">
-                                        <label for="update_name" class="label">Nom du compte bancaire</label>
-                                        <input id="update_name" type="text" name="update_name" class="input" value="{{ $account->name }}" placeholder="Nom compte bancaire" autofocus>
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="update_description" class="label">Description du compte bancaire</label>
-                                        <textarea id="update_description" name="update_description" class="textarea" placeholder="Description ...">{{ $account->description }}</textarea>
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="update_amount" class="label">Montant du compte bancaire</label>
-                                        <input id="update_amount" type="number" step=".01" name="update_amount" class="input" value="{{ $account->amount }}"
-                                               placeholder="Montant du compte ..">
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="main" class="label">Compte principal</label>
-                                        <div class="control" id="main">
-                                            <label class="radio">
-                                                @if($account->main != 1)
-                                                <input type="radio" name="update_main" value="1">
-                                                Oui
-                                            </label>
-                                            <label class="radio">
-                                                <input type="radio" name="update_main" value="0" checked>
-                                                Non
-                                            </label>
-                                            @else
-                                                <input type="radio" name="update_main" value="1" checked>
-                                                Oui
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio" name="update_main" value="0">
-                                                    Non
-                                                </label>
-                                                @endif
-                                        </div>
-                                    </div>
-                                <button type="submit" class="button is-primary">Enregistrer</button>
-                            </form>
+                <!-- Car Form -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <form method="POST" action="{{route('create.account')}}" class="needs-validation form-control" novalidate>
+                            @csrf
+                            <div class="row pt-3 mb-3">
+                                <div class="col">
+                                    <label for="name" class="form-label">Nom du compte bancaire</label>
+                                    <input id="name" type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Nom du compte" aria-describedby="validationName" required>
+                                    @error('name')
+                                    <div id="validationName" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <!-- Content ... -->
                             </div>
-                                    <footer class="modal-card-foot">
-                                    @if($account->spents->count() == 0)
-                                        <form action="{{ url('/account', ['id' => $account->id]) }}" method="post">
-                                            @method('delete')
-                                            @csrf
-                                            <button class=" button is-danger" type="submit"><span>Supprimer</span></button>
-                                        </form>
-                                    @endif
-                                    </footer>
-                        <!-- End Content -->
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="description" class="form-label">Description du compte bancaire</label>
+                                    <textarea id="description" name="description" class="form-control" value="{{ old('description') }}" placeholder="Description ..." aria-describedby="validationDescription" required></textarea>
+                                    @error('description')
+                                    <div id="validationDescription" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="number" class="form-label">Numéro de compte bancaire</label>
+                                        <input id="number" type="number" name="number" class="form-control" value="{{ old('number') }}" placeholder="Numéro de compte" aria-describedby="validationNumber" required>
+                                        @error('number')
+                                        <div id="validationNumber" class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                <div class="col">
+                                    <label for="amount" class="form-label">Montant du compte bancaire</label>
+                                    <input id="amount" type="number" step=".01" name="amount" class="form-control" value="{{ old('amount') }}" placeholder="Montant du compte .." aria-describedby="validationAmount" required>
+                                    @error('amount')
+                                    <div id="validationAmount" class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label class="form-label">Compte principal</label>
+                                    <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="main" id="main1" value="1">
+                                        <label class="form-check-label" for="main1">oui</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="main" id="main2" value="0" checked>
+                                        <label class="form-check-label" for="main2">non</label>
+                                    </div>
+                                    </div>
+                            </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary" type="submit">Créer compte bancaire</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                <!-- End Modal Card -->
-            @endforeach
-            </tbody>
-        </table>
+                    <!-- End Form -->
+                    <div class="col-md-6">
+                        <p>Ici vous pouvez créer et modifier vos différents comptes bancaire.
+                            <br>
+                            Les dépenses et les revenus peuvent être imputés dessus si vous le souhaitez</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2 id="listCar">Liste des dépense de accountburants</h2>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Import</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Car Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Numéro</th>
+                            <th>Désignation</th>
+                            <th>Description</th>
+                            <th>Montant</th>
+                            <th>Principal</th>
+                            <th>Modifier</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($accounts as $account)
+                            <tr id="{{ str_replace(' ', '', $account->name) . $account->id . 'enabled' }}" @if($account->main == 1) class="table-info" @endif>
+                                <td>{{ $account->number }}</td>
+                                <td>{{ $account->name}}</td>
+                                <td>{{ $account->description }}</td>
+                                <td>{{ $account->amount }}</td>
+                                <td>
+                                    @if($account->main == 1)
+                                    Oui
+                                    @else
+                                    Non
+                                    @endif
+                                </td>
+                                <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'enabled' }}').className =' d-none'">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr id="{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}" class="d-none">
+                                <form id="{{ str_replace(' ', '', $account->name) . $account->id . 'update' }}" method="POST" action="{{ url('/account', ['id' => $account->id]) }}">
+                                    @method('put')
+                                    @csrf
+                                    <td><input id="update_number" type="number" name="update_number" class="form-control" value="{{ $account->number }}" placeholder="Numéro de compte" required></td>
+                                    <td><input id="update_name" type="text" name="update_name" class="form-control" value="{{ $account->name }}" placeholder="Désignation du compte" required></td>
+                                    <td><input id="update_description" type="text" name="update_description" class="form-control" value="{{ $account->description }}" placeholder="Description du compte" required></td>
+                                    <td><input id="update_amount" type="number" step=".01" name="update_amount" class="form-control" value="{{ $account->amount }}" placeholder="Montant du compte .." required></td>
+                                    <td><label class="radio">
+                                            @if($account->main != 1)
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="update_main" id="update_main1" value="1">
+                                                    <label class="form-check-label" for="main1">oui</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="update_main" id="update_main2" value="0" checked>
+                                                    <label class="form-check-label" for="main2">non</label>
+                                                </div>
+                                        @else
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="update_main" id="update_main1" value="1" checked>
+                                                    <label class="form-check-label" for="main1">oui</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="update_main" id="update_main2" value="0">
+                                                    <label class="form-check-label" for="main2">non</label>
+                                                </div>
+                                        @endif</td>
+                                </form>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ str_replace(' ', '', $account->name) . $account->id . 'update' }}').submit();">
+                                            <i class="far fa-check-circle"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '', $account->name) . $account->id . 'delete' }}" @if($account->spents->count() != 0) disabled @endif>
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}').className =' d-none'">
+                                            <i class="far fa-times-circle"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Modal -->
+                            <div class="modal fade" id="{{ str_replace(' ', '', $account->name) . $account->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ '#' . str_replace(' ', '', $account->name) . $account->id . 'label' }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <form action="{{ url('/account', ['id' => $account->id]) }}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <p class="border-bottom pb-3 mb-4">Voulez vous supprimer le dépense de le compte {{ $account->name }} ?</p>
+                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                    <button class="btn btn-primary me-md-2" type="submit">
+                                                        Oui
+                                                    </button>
+                                                    <button class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">Annuler</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Table -->
+            </main>
         </div>
-    </section>
-    <!-- End Table -->
-    <!-- message -->
-    @error('update_name')
-    <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
     </div>
-    @enderror
-    @error('update_number')
-    <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
-    </div>
-    @enderror
-    @error('update_amount')
-    <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
-    </div>
-    @enderror
-    @error('update_main')
-    <div class="card-footer-item">
-        <span class="help is-danger">{{ $message }}</span>
-    </div>
-    @enderror
-    @if (session('delete'))
-        <span class="help is-success">{{ session('delete') }}</span>
-    @endif
-    @if (session('update'))
-        <span class="help is-success">{{ session('update') }}</span>
-    @endif
-    <!-- end message -->
 @endsection
-
 
 

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
@@ -20,7 +21,6 @@ class AccountController extends Controller
      */
     public function view()
     {
-
         return view('create.account',[
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);
@@ -54,7 +54,7 @@ class AccountController extends Controller
             'user_id' => Auth::user()->getAuthIdentifier()
         ]);
 
-        return back()->with('create', 'compte ajouté');
+        return back()->with('toast_success', 'compte ajouté');
     }
 
     /**
@@ -66,11 +66,15 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'update_name' => 'required|string',
             'update_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_main' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
 
         if (request('update_main') == 1){
             Account::where('user_id', Auth::user()->getAuthIdentifier())->update(['main' => 0]);
@@ -98,7 +102,7 @@ class AccountController extends Controller
                 ]);
         }
 
-        return back()->with('update', 'compte modifié');
+        return back()->with('toast_success', 'compte modifié');
     }
 
     /**
@@ -112,6 +116,6 @@ class AccountController extends Controller
     {
         Account::where('id', $id)->delete();
 
-        return back()->with('delete', 'compte supprimé');
+        return back()->with('toast_success', 'compte supprimé');
     }
 }
