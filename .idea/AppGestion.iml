@@ -126,16 +126,14 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/ezyang/htmlpurifier" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/complex" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/matrix" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/realrashid/sweet-alert" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/laravel-lang/lang" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bulma" level="application" />
     <orderEntry type="library" name="all" level="application" />
     <orderEntry type="library" name="bulma" level="application" />
-    <orderEntry type="library" name="bulma-extensions" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="bulma-extensions" level="application" />
     <orderEntry type="library" name="feather-icons" level="application" />
     <orderEntry type="library" name="limonte-sweetalert2" level="application" />
   </component>
