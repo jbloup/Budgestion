@@ -1,36 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="section is-medium">
-        <div class="columns">
-            <div class="column"></div>
-            <div class="column is-one-quarter">
-                <div class="field">
-        <form method="POST" action="{{ route('password.email') }}">
-            <h1 class="title is-4">Compléter vos informations</h1>
+    <div class="d-flex justify-content-center mt-5 pt-5">
+        <form method="POST" action="{{ route('password.email') }}" class="needs-validation" novalidate>
             @csrf
-            @method('post')
-            <div class="field">
-                <label for="email" class="label">Votre Email</label>
-                <div class="control has-icons-left has-icons-right">
-                    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" autocomplete="email" placeholder="Votre email" autofocus>
-                    <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-                </span>
-                </div>
-                @error('email')
-                <span class="help is-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <button type="submit" class="button is-primary is-fullwidth">Réinitialisé mot de passe</button>
+            <h1 class="h3 mb-3 fw-normal">Complétez vos informations</h1>
+            <label for="email" class="form-label">Votre adresse Email</label>
+            <input id="email" type="email" name="email" class="form-control mb-3 @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Votre email" aria-describedby="validationEmail" autofocus required>
+            @error('email')
+            <div id="validationEmail" class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Réinitialiser le mot de passe</button>
+            @if (session('status'))
+                <div class="text-danger">{{ session('status') }}</div>
+            @endif
         </form>
-                    @if (session('status'))
-                        <span class="help is-success">{{ session('status') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="column"></div>
-        </div>
-    </section>
+    </div>
 @endsection
 

@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CarController extends Controller
@@ -48,7 +49,7 @@ class CarController extends Controller
 
         ]);
 
-        return back()->with('create', 'véhicule ajouté');
+        return back()->with('toast_success', 'véhicule ajouté');
     }
 
     /**
@@ -60,11 +61,15 @@ class CarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'update_name' => 'required|string|max:255',
             'update_fuel_type' => 'required|string|max:255',
             'update_mileage' => 'required|integer',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
 
         Car::where('user_id', Auth::user()->getAuthIdentifier())
             ->where('id', $id)
@@ -74,7 +79,7 @@ class CarController extends Controller
                     'mileage' => request('update_mileage')]
             );
 
-        return back()->with('update', 'véhicule modifié');
+        return back()->with('toast_success', 'véhicule modifié');
     }
 
     /**
@@ -87,7 +92,7 @@ class CarController extends Controller
     {
         Car::where('id', $id)->delete();
 
-        return back()->with('delete', 'véhicule supprimé');
+        return back()->with('toast_success', 'véhicule supprimé');
     }
 
     /**
@@ -99,6 +104,6 @@ class CarController extends Controller
     {
         Excel::import(new CarsImport, request()->file('import_file'));
 
-        return back()->with('import', 'véhicules importés');
+        return back()->with('toast_success', 'véhicules importés');
     }
 }

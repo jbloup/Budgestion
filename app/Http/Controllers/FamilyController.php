@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Family;
+use App\Models\Kind;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class FamilyController extends Controller
 {
@@ -18,7 +20,6 @@ class FamilyController extends Controller
     {
 
         return view('create.category',[
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);
     }
@@ -29,10 +30,14 @@ class FamilyController extends Controller
      */
     public function create(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'family_name' => 'required|string|max:255',
             'family_type_id' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
 
         Family::create([
             'name'=>request('family_name'),
@@ -40,7 +45,7 @@ class FamilyController extends Controller
             'type_id'=> request('family_type_id')
         ]);
 
-        return back()->with('create', 'Sous-type ajouté');
+        return back()->with('toast_success', 'Sous-type ajouté');
     }
 
     /**
@@ -50,16 +55,20 @@ class FamilyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'update_family_name' => 'required|string|max:255',
             'update_family_type_id' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
 
         Family::where('id', $id)
             ->update(['name' => request('update_family_name'), 'type_id' => request('update_family_type_id')]
             );
 
-        return back()->with('update', 'Sous-type modifié');
+        return back()->with('toast_success', 'Sous-type modifié');
     }
 
     /**
@@ -70,6 +79,6 @@ class FamilyController extends Controller
     {
         Family::where('id', $id)->delete();
 
-        return back()->with('delete', 'Sous-type supprimé');
+        return back()->with('toast_success', 'Sous-type supprimé');
     }
 }

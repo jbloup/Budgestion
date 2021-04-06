@@ -17,6 +17,7 @@ class Fuel extends Model
         'liter',
         'price',
         'date',
+        'mileage',
         'car_id',
         'user_id',
     ];
