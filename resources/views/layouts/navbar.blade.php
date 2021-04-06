@@ -37,10 +37,15 @@
                             </ul>
                         </li>
                         <li>
+                            <a href="#" class="nav-link">
+                                Recherche
+                            </a>
+                        </li>
+                        {{--<li>
                             <a href="{{ route('profil') }}" class="nav-link">
                                 Profil
                             </a>
-                        </li>
+                        </li>--}}
                         @endguest
                     </ul>
                     <div class="d-flex">

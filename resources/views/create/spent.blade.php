@@ -6,15 +6,50 @@
             <!-- Lateral nav -->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#spent">
-                                Dépenses
+                    <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Création</span>
+                    </h5>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link link-secondary" aria-current="page" href="{{ route('category') }}">
+                                <span data-feather="package"></span>
+                                Nomenclature
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ListSpent">
-                                Liste dépenses
+                            <a class="nav-link link-secondary" href="{{ route('car') }}">
+                                <span data-feather="truck"></span>
+                                Véhicule
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('account') }}">
+                                <span data-feather="book-open"></span>
+                                Compte
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('spent') }}">
+                                <span data-feather="credit-card"></span>
+                                Dépense
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('fuel') }}">
+                                <span data-feather="tool"></span>
+                                Dépense carburant
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('earning') }}">
+                                <span data-feather="dollar-sign"></span>
+                                Revenu
                             </a>
                         </li>
                     </ul>
@@ -33,7 +68,7 @@
                             <div class="row pt-3 mb-3">
                                 <div class="col">
                                     <label for="name" class="form-label">Désignation du dépense</label>
-                                    <input id="name" type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nom dépense" aria-describedby="validationName" required>
+                                    <input id="name" type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nom dépense ..." aria-describedby="validationName" required>
                                     @error('name')
                                     <div id="validationName" class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -205,7 +240,7 @@
                                 </td>
                             </tr>
                             <!-- Modal -->
-                            <div class="modal fade" id="{{ str_replace(' ', '',$spent->name) . $spent->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$spent->name) . $spent->id . 'label' }}" aria-hidden="true">
+                            <div class="modal fade" id="{{ 'spent' . $spent->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ 'spent' . $spent->id . 'label' }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-body">

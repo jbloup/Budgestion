@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('content')
     <main role="main">
-
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron mt-5">
             <div class="container mt-5">
                 <h1 class="display-3">Bienvenu sur Budgestion !</h1>
                 <p>L'application de gestion de budget.</p>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">Lire plus &raquo;</a></p>
+                <p><a class="btn btn-primary btn-lg" href="{{ route('register') }}" role="button">Commencer &raquo;</a></p>
             </div>
         </div>
         <div class="container">
@@ -36,6 +35,7 @@
             </div>
         </div>
         <!-- /container -->
+        {{--
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
             <h1 class="display-4 fw-normal">Pricing</h1>
             <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p>
@@ -151,7 +151,7 @@
                     </tbody>
                 </table>
             </div>
-        </main>
+        </main>--}}
 
     </main>
 @endsection

@@ -6,20 +6,50 @@
             <!-- Lateral nav -->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#nomenclature">
+                    <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Création</span>
+                    </h5>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link active" aria-current="page" href="{{ route('category') }}">
+                                <span data-feather="package"></span>
                                 Nomenclature
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#listSpentCategory">
-                                Nomenclature dépense
+                            <a class="nav-link link-secondary" href="{{ route('car') }}">
+                                <span data-feather="truck"></span>
+                                Véhicule
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#listEarningCategory">
-                                Nomenclature revenu
+                            <a class="nav-link link-secondary" href="{{ route('account') }}">
+                                <span data-feather="book-open"></span>
+                                Compte
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('spent') }}">
+                                <span data-feather="credit-card"></span>
+                                Dépense
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('fuel') }}">
+                                <span data-feather="tool"></span>
+                                Dépense carburant
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('earning') }}">
+                                <span data-feather="dollar-sign"></span>
+                                Revenu
                             </a>
                         </li>
                     </ul>
@@ -77,13 +107,13 @@
                         <tbody>
                         @foreach($spentCategories as $category)
                             <!-- Spent Category Row -->
-                            <tr class="table-danger" id="{{ 'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}">
+                            <tr class="table-danger" id="{{ 'spentCategory' . $category->id . 'disabled' }}">
                                 <td>
                                     <select class="form-select" disabled>
                                         <option value="{{ $category->kind }}">Dépense</option>
                                     </select>
                                 </td>
-                                <td onclick="document.getElementById('{{  'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled' }}').className =' table-danger'; document.getElementById('{{ 'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}').className =' d-none'">
+                                <td onclick="document.getElementById('{{  'spentCategory' . $category->id . 'enabled' }}').className =' table-danger'; document.getElementById('{{ 'spentCategory' . $category->id . 'disabled' }}').className =' d-none'">
                                     <input type="text" class="form-control" value="{{ $category->name }}" disabled>
                                 </td>
                                 <td class="text-center">
@@ -97,8 +127,8 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr id="{{ 'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled'}}" class="d-none">
-                                <form id="{{ 'spentCategory' . str_replace(' ', '',$category->name) . $category->id. 'update' }}" method="POST" action="{{ url('/category', ['id' => $category->id]) }}">
+                            <tr id="{{ 'spentCategory' . $category->id . 'enabled'}}" class="d-none">
+                                <form id="{{ 'spentCategory' . $category->id. 'update' }}" method="POST" action="{{ url('/category', ['id' => $category->id]) }}">
                                     @method('put')
                                     @csrf
                                     <td>
@@ -118,13 +148,13 @@
                                 <td></td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}').className =' table-danger'; document.getElementById('{{  'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled' }}').className =' d-none'; document.getElementById('{{ 'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'update' }}').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'spentCategory' . $category->id . 'disabled' }}').className =' table-danger'; document.getElementById('{{  'spentCategory' . $category->id . 'enabled' }}').className =' d-none'; document.getElementById('{{ 'spentCategory' . $category->id . 'update' }}').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'spentCategory' . str_replace(' ', '',$category->name) . $category->id }}" @if($category->types->count() != 0) disabled @endif>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'spentCategory' . $category->id }}" @if($category->types->count() != 0) disabled @endif>
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}').className =' table-danger'; document.getElementById('{{  'spentCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled' }}').className =' d-none'">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'spentCategory' . $category->id . 'disabled' }}').className =' table-danger'; document.getElementById('{{  'spentCategory' . $category->id . 'enabled' }}').className =' d-none'">
                                             <i class="far fa-times-circle"></i>
                                         </button>
                                     </div>
@@ -133,10 +163,10 @@
                             <!-- End Spent Category Row -->
                             <!-- Spent Type Row -->
                             @foreach($category->types as $type)
-                                <tr class="table-info" id="{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}">
+                                <tr class="table-info" id="{{ 'spentType' . $type->id . 'enabled' }}">
                                     <td></td>
                                     <td></td>
-                                    <td onclick="document.getElementById('{{  'spentType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}').className =' table-info'; document.getElementById('{{  'spentType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}').className =' d-none'">
+                                    <td onclick="document.getElementById('{{  'spentType' . $type->id . 'disabled' }}').className =' table-info'; document.getElementById('{{  'spentType' . $type->id . 'enabled' }}').className =' d-none'">
                                         <input type="text" class="form-control" value="{{ $type->name }}" disabled></td>
                                     <td class="text-center">
                                         <button id="{{  'spentFamilyCreateButton' . $type->id . 'enabled' }}" class="btn text-secondary" onclick="document.getElementById('{{  'spentFamilyCreate' . $type->id . 'disabled' }}').className =' table-warning'; document.getElementById('{{  'spentFamilyCreateButton' . $type->id . 'enabled' }}').className =' d-none'; document.getElementById('{{  'spentFamilyCreateDelete' . $type->id . 'disabled' }}').className =' btn text-secondary'">
@@ -148,8 +178,8 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr id="{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}" class="d-none">
-                                    <form id="{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'update' }}" method="POST" action="{{ url('/type', ['id' => $type->id]) }}">
+                                <tr id="{{ 'spentType' . $type->id . 'disabled' }}" class="d-none">
+                                    <form id="{{ 'spentType' . $type->id . 'update' }}" method="POST" action="{{ url('/type', ['id' => $type->id]) }}">
                                         @method('put')
                                         @csrf
                                         <td></td>
@@ -168,20 +198,20 @@
                                     </form>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'update' }}').submit();">
+                                            <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ 'spentType' . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'spentType' . $type->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'spentType' . $type->id . 'update' }}').submit();">
                                                 <i class="far fa-check-circle"></i>
                                             </button>
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'spentType' . $type->name . $type->id . 'delete' }}" @if($type->families->count() != 0) disabled @endif>
                                                 <i class="far fa-trash-alt"></i>
                                             </button>
-                                            <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'spentType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}').className =' d-none'">
+                                            <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{ 'spentType' . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'spentType' . $type->id . 'disabled' }}').className =' d-none'">
                                                 <i class="far fa-times-circle"></i>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <!-- Type Delete Modal -->
-                                <div class="modal fade" id="{{ 'spentType' . str_replace(' ', '',$type->name) . $type->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ 'spentType' . str_replace(' ', '',$type->name) . $type->id . 'label' }}" aria-hidden="true">
+                                <div class="modal fade" id="{{ 'spentType' . $type->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ 'spentType' . $type->id . 'label' }}" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-body">
@@ -202,17 +232,17 @@
                                     <!-- End Type Delete Modal -->
                                 @foreach($type->families as $family)
                                     <!-- End Spent Family Row -->
-                                        <tr class="table-warning" id="{{ 'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}">
+                                        <tr class="table-warning" id="{{ 'spentFamily' . $family->id . 'enabled' }}">
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td onclick="document.getElementById('{{  'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}').className =' table-warning'; document.getElementById('{{  'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}').className =' d-none'">
+                                            <td onclick="document.getElementById('{{  'spentFamily' . $family->id . 'disabled' }}').className =' table-warning'; document.getElementById('{{  'spentFamily' . $family->id . 'enabled' }}').className =' d-none'">
                                                 <input type="text" class="form-control" value="{{ $family->name }}" disabled>
                                             </td>
                                             <td></td>
                                         </tr>
-                                        <tr id="{{ 'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}" class="d-none">
-                                            <form id="{{  'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'update' }}" method="POST" action="{{ url('/subtype', ['id' => $family->id]) }}">
+                                        <tr id="{{ 'spentFamily' . $family->id . 'disabled' }}" class="d-none">
+                                            <form id="{{  'spentFamily' . $family->id . 'update' }}" method="POST" action="{{ url('/subtype', ['id' => $family->id]) }}">
                                                 @method('put')
                                                 @csrf
                                                 <td></td>
@@ -231,13 +261,13 @@
                                             </form>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group">
-                                                    <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'update' }}').submit();">
+                                                    <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'spentFamily' . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'spentFamily' . $family->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'spentFamily' . $family->id . 'update' }}').submit();">
                                                         <i class="far fa-check-circle"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'delete' }}" @if($family->spents->count() != 0) disabled @endif>
+                                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'spentFamily' . $family->id . 'delete' }}" @if($family->spents->count() != 0) disabled @endif>
                                                         <i class="far fa-trash-alt"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}').className =' d-none'">
+                                                    <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'spentFamily' . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'spentFamily' . $family->id . 'disabled' }}').className =' d-none'">
                                                         <i class="far fa-times-circle"></i>
                                                     </button>
                                                 </div>
@@ -245,7 +275,7 @@
                                         </tr>
                                         <!-- End Spent Family Row -->
                                         <!-- Family Delete Modal -->
-                                        <div class="modal fade" id="{{ 'spentFamily' . str_replace(' ', '',$family->name) . $family->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$family->name) . $family->id . 'label' }}" aria-hidden="true">
+                                        <div class="modal fade" id="{{ 'spentFamily' . $family->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$family->name) . $family->id . 'label' }}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-body">
@@ -307,7 +337,7 @@
                                     </tr>
                                     <!-- End Spent Type Form -->
                                     <!-- Category Delete Modal -->
-                                    <div class="modal fade" id="{{ 'spentCategory' . str_replace(' ', '',$category->name) . $category->id }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$category->name) . $category->id . 'label' }}" aria-hidden="true">
+                                    <div class="modal fade" id="{{ 'spentCategory' . $category->id }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$category->name) . $category->id . 'label' }}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-body">
@@ -398,13 +428,13 @@
                         <tbody>
                         @foreach($earningCategories as $category)
                             <!-- Earning Category Row -->
-                            <tr class="table-success" id="{{ 'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}">
+                            <tr class="table-success" id="{{ 'earningCategory' . $category->id . 'disabled' }}">
                                 <td>
                                     <select class="form-select" disabled>
                                         <option value="{{ $category->kind }}">Revenu</option>
                                     </select>
                                 </td>
-                                <td onclick="document.getElementById('{{  'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled' }}').className =' table-success'; document.getElementById('{{ 'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}').className =' d-none'">
+                                <td onclick="document.getElementById('{{  'earningCategory' . $category->id . 'enabled' }}').className =' table-success'; document.getElementById('{{ 'earningCategory' . $category->id . 'disabled' }}').className =' d-none'">
                                     <input type="text" class="form-control" value="{{ $category->name }}" disabled>
                                 </td>
                                 <td class="text-center">
@@ -418,8 +448,8 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr id="{{ 'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled'}}" class="d-none">
-                                <form id="{{ 'earningCategory' . str_replace(' ', '',$category->name) . $category->id. 'update' }}" method="POST" action="{{ url('/category', ['id' => $category->id]) }}">
+                            <tr id="{{ 'earningCategory' . $category->id . 'enabled'}}" class="d-none">
+                                <form id="{{ 'earningCategory' . $category->id. 'update' }}" method="POST" action="{{ url('/category', ['id' => $category->id]) }}">
                                     @method('put')
                                     @csrf
                                     <td>
@@ -439,13 +469,13 @@
                                 <td></td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}').className =' table-success'; document.getElementById('{{  'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled' }}').className =' d-none'; document.getElementById('{{ 'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'update' }}').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'earningCategory' . $category->id . 'disabled' }}').className =' table-success'; document.getElementById('{{  'earningCategory' . $category->id . 'enabled' }}').className =' d-none'; document.getElementById('{{ 'earningCategory' . $category->id . 'update' }}').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'earningCategory' . str_replace(' ', '',$category->name) . $category->id }}" @if($category->types->count() != 0) disabled @endif>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'earningCategory' . $category->id }}" @if($category->types->count() != 0) disabled @endif>
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'disabled' }}').className =' table-success'; document.getElementById('{{  'earningCategory' . str_replace(' ', '',$category->name) . $category->id . 'enabled' }}').className =' d-none'">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'earningCategory' . $category->id . 'disabled' }}').className =' table-success'; document.getElementById('{{  'earningCategory' . $category->id . 'enabled' }}').className =' d-none'">
                                             <i class="far fa-times-circle"></i>
                                         </button>
                                     </div>
@@ -454,10 +484,10 @@
                             <!-- End Earning Category Row -->
                             <!-- Earning Type Row -->
                             @foreach($category->types as $type)
-                                <tr class="table-info" id="{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}">
+                                <tr class="table-info" id="{{ 'earningType' . $type->id . 'enabled' }}">
                                     <td></td>
                                     <td></td>
-                                    <td onclick="document.getElementById('{{  'earningType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}').className =' table-info'; document.getElementById('{{  'earningType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}').className =' d-none'">
+                                    <td onclick="document.getElementById('{{  'earningType' . $type->id . 'disabled' }}').className =' table-info'; document.getElementById('{{  'earningType' . $type->id . 'enabled' }}').className =' d-none'">
                                         <input type="text" class="form-control" value="{{ $type->name }}" disabled></td>
                                     <td class="text-center">
                                         <button id="{{  'earningFamilyCreateButton' . $type->id . 'enabled' }}" class="btn text-secondary" onclick="document.getElementById('{{  'earningFamilyCreate' . $type->id . 'disabled' }}').className =' table-warning'; document.getElementById('{{  'earningFamilyCreateButton' . $type->id . 'enabled' }}').className =' d-none'; document.getElementById('{{  'earningFamilyCreateDelete' . $type->id . 'disabled' }}').className =' btn text-secondary'">
@@ -469,8 +499,8 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr id="{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}" class="d-none">
-                                    <form id="{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'update' }}" method="POST" action="{{ url('/type', ['id' => $type->id]) }}">
+                                <tr id="{{ 'earningType' . $type->id . 'disabled' }}" class="d-none">
+                                    <form id="{{ 'earningType' . $type->id . 'update' }}" method="POST" action="{{ url('/type', ['id' => $type->id]) }}">
                                         @method('put')
                                         @csrf
                                         <td></td>
@@ -489,20 +519,20 @@
                                     </form>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
-                                            <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'update' }}').submit();">
+                                            <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ 'earningType' . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'earningType' . $type->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'earningType' . $type->id . 'update' }}').submit();">
                                                 <i class="far fa-check-circle"></i>
                                             </button>
                                             <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'earningType' . $type->name . $type->id . 'delete' }}" @if($type->families->count() != 0) disabled @endif>
                                                 <i class="far fa-trash-alt"></i>
                                             </button>
-                                            <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'earningType' . str_replace(' ', '',$type->id) . $type->id . 'disabled' }}').className =' d-none'">
+                                            <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{ 'earningType' . $type->id . 'enabled' }}').className =' table-info'; document.getElementById('{{ 'earningType' . $type->id . 'disabled' }}').className =' d-none'">
                                                 <i class="far fa-times-circle"></i>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                                 <!--  Earning Type Delete Modal -->
-                                <div class="modal fade" id="{{ 'earningType' . str_replace(' ', '',$type->name) . $type->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ 'earningType' . str_replace(' ', '',$type->name) . $type->id . 'label' }}" aria-hidden="true">
+                                <div class="modal fade" id="{{ 'earningType' . $type->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ 'earningType' . $type->id . 'label' }}" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-body">
@@ -523,17 +553,17 @@
                                     <!-- End Earning Type Delete Modal -->
                                 @foreach($type->families as $family)
                                     <!-- End Earning Family Row -->
-                                        <tr class="table-warning" id="{{ 'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}">
+                                        <tr class="table-warning" id="{{ 'earningFamily' . $family->id . 'enabled' }}">
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td onclick="document.getElementById('{{  'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}').className =' table-warning'; document.getElementById('{{  'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}').className =' d-none'">
+                                            <td onclick="document.getElementById('{{  'earningFamily' . $family->id . 'disabled' }}').className =' table-warning'; document.getElementById('{{  'earningFamily' . $family->id . 'enabled' }}').className =' d-none'">
                                                 <input type="text" class="form-control" value="{{ $family->name }}" disabled>
                                             </td>
                                             <td></td>
                                         </tr>
-                                        <tr id="{{ 'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}" class="d-none">
-                                            <form id="{{  'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'update' }}" method="POST" action="{{ url('/subtype', ['id' => $family->id]) }}">
+                                        <tr id="{{ 'earningFamily' . $family->id . 'disabled' }}" class="d-none">
+                                            <form id="{{  'earningFamily' . $family->id . 'update' }}" method="POST" action="{{ url('/subtype', ['id' => $family->id]) }}">
                                                 @method('put')
                                                 @csrf
                                                 <td></td>
@@ -552,13 +582,13 @@
                                             </form>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group">
-                                                    <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'update' }}').submit();">
+                                                    <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'earningFamily' . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'earningFamily' . $family->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'earningFamily' . $family->id . 'update' }}').submit();">
                                                         <i class="far fa-check-circle"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'delete' }}" @if($family->earnings->count() != 0) disabled @endif>
+                                                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'earningFamily' . $family->id . 'delete' }}" @if($family->earnings->count() != 0) disabled @endif>
                                                         <i class="far fa-trash-alt"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'disabled' }}').className =' d-none'">
+                                                    <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'earningFamily' . $family->id . 'enabled' }}').className =' table-warning'; document.getElementById('{{  'earningFamily' . $family->id . 'disabled' }}').className =' d-none'">
                                                         <i class="far fa-times-circle"></i>
                                                     </button>
                                                 </div>
@@ -566,7 +596,7 @@
                                         </tr>
                                         <!-- End Earning Family Row -->
                                         <!-- Family Delete Modal -->
-                                        <div class="modal fade" id="{{ 'earningFamily' . str_replace(' ', '',$family->name) . $family->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$family->name) . $family->id . 'label' }}" aria-hidden="true">
+                                        <div class="modal fade" id="{{ 'earningFamily' . $family->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$family->name) . $family->id . 'label' }}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-body">
@@ -628,7 +658,7 @@
                                     </tr>
                                     <!-- End Earning Type Form -->
                                     <!-- Category Delete Modal -->
-                                    <div class="modal fade" id="{{ 'earningCategory' . str_replace(' ', '',$category->name) . $category->id }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$category->name) . $category->id . 'label' }}" aria-hidden="true">
+                                    <div class="modal fade" id="{{ 'earningCategory' . $category->id }}" tabindex="-1" aria-labelledby="{{ 'earningCategory' . $category->id . 'label' }}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-body">

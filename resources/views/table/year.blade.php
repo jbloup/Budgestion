@@ -1,41 +1,43 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="hero is-medium is-primary is-bold">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    Dépenses annuelles
-                </h1>
-                <h2 class="subtitle">
-                    Liste des dépenses de l'année {{ date('Y', mktime(0, 0, 0, 1, 1, $year)) }}.
-                </h2>
-            </div>
-        </div>
-    </section>
-    <section class="section is-small">
-        <div class="container is-fluid">
-            <div class="notification">
-                <nav class="level">
-                    <!-- Left side -->
-                    <div class="level-left">
-                        <div class="level-item">
-                            <h1 class="title is-1">{{ $year }}</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="form-control mb-3">
+                        <h6>Totaux</h6>
+                        <ul class="list-group list-group-flush">
+                            @if($earningCategories->count() > 0)<li class="list-group-item d-flex justify-content-between"><p>Revenu</p><p><span class="badge bg-success">{{ number_format($earningTotalYear, 2, ',', ' ') . ' €' }}</span></p></li>@endif
+                            @if($spentCategories->count() > 0)<li class="list-group-item d-flex justify-content-between"><p>Dépense</p><p><span class="badge bg-danger">@if($fuels->count() > 0)- {{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }} @else - {{ number_format($spentTotalYear, 2, ',', ' ') . ' €' }} @endif</span></p></li>@endif
+                            @if($spentCategories->count() > 0 && $earningCategories->count() > 0)<li class="list-group-item d-flex justify-content-between"><p>Total</p><p>@if($totalYear >= 0)<span class="badge bg-primary">+ {{ number_format($totalYear, 2, ',', ' ') . ' €' }} @else <span class="badge bg-danger">{{ number_format($totalYear, 2, ',', ' ') . ' €' }}</span> @endif</p></li>@endif
+                        </ul>
+                    </div>
+                    @if($cars->count() > 0)
+                        <div class="form-control">
+                            <h6>Kilométres parcourus</h6>
+                            <ul class="list-group list-group-flush">
+                                @foreach($cars as $car)
+                                    <li class="list-group-item d-flex justify-content-between"><p>{{ $car->name }}</p><p>{{ $mileageYearTab[$car->id] . ' km' }}</p></li>
+                                @endforeach
+                            </ul>
                         </div>
-                    </div>
-                    <!-- Right side -->
-                    <div class="level-right is-success">
-                        <p class="level-item subtitle"><span class="tag is-danger is-light is-large">{{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }}</span></p>
-                    </div>
-                </nav>
-                <div class="field">
+                    @endif
+                </div>
+            </nav>
+            <!-- Chart -->
+
+            <!-- End Chart -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Bilan annuel {{ date('Y', mktime(0, 0, 0, 1, 1, $year)) }}</h1>
+                    <!-- Year form -->
                     <form method="post" action="{{ route('year') }}">
                         @csrf
                         @method('post')
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <div class="select is-small">
-                                    <select name="year" id="year">
+                        <div class="row g-1">
+                            <div class="col-7">
+                                <select class="form-select form-select-sm" name="year" id="year">
                                         @for( $i=1980; $i < 2100; $i++ )
                                             @if( $year == $i)
                                                 <option selected="selected" value="{{ $i }}">{{ $i }}</option>
@@ -43,189 +45,194 @@
                                                 <option value="{{ $i }}">{{ $i }}</option>
                                             @endif
                                         @endfor
-                                    </select>
-                                </div>
+                                </select>
                             </div>
-                            <button class="button is-small" type="submit">valider</button>
+                            <div class="col-5">
+                                <button class="btn btn-primary btn-sm" type="submit">valider</button>
+                            </div>
                         </div>
                     </form>
+                    <!-- End Year form -->
                 </div>
-                @if($spents != null)
+                <!-- End Chart -->
+
+                <!-- Year table -->
                 <div class="table-container">
-                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
-                        <thead>
-                        <tr>
-                            <th>Catégorie</th>
-                            @for($i=1;$i<=12;$i++)
-                                @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
-                                    <th class="is-selected">{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
-                                @else
-                                    <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
-                                @endif
-                            @endfor
-                            <th>Total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($categories as $category)
-                            <tr>
-                                <td>{{ $category->name }}</td>
+                    <div class="form-control mb-3">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                            <h3>Total</h3>
+                            @if($totalYear >= 0)
+                                <span class="badge bg-primary">+ {{ number_format($totalYear, 2, ',', ' ') . ' €' }}</span>
+                            @else
+                                <span class="badge bg-danger">{{ number_format($totalYear, 2, ',', ' ') . ' €' }}</span>
+                            @endif
+                        </div>
+                        <table class="table table-bordered table-sm table-hover">
+                            <thead>
+                            <tr class="table-primary">
+                                <th>Catégorie</th>
                                 @for($i=1;$i<=12;$i++)
-                                    @foreach($tabTotalCategoryMonth[$i] as $id => $totalCategoryMonth)
-                                        @if($id == $category->id)
-                                            <td>{{ number_format($totalCategoryMonth, 2, ',', ' ') . ' €' }}</td>
-                                        @endif
-                                    @endforeach
+                                    @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
+                                        <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                    @else
+                                        <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                    @endif
                                 @endfor
-                                <td>{{ number_format($tabTotalCategoryYear[$category->id], 2, ',', ' ') . ' €' }}</td>
+                                <th>Total</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                        <tr>
-                            <th>Total</th>
-                            @for($i=1;$i<=12;$i++)
-                                <th>{{ number_format($tabTotalMonth[$i], 2, ',', ' ') . ' €' }}</th>
-                            @endfor
-                            <th>{{ number_format($totalYear, 2, ',', ' ') . ' €' }}</th>
-                        </tr>
-                            @if($fuels)
-                        <tr>
-                            <td>Carburant</td>
-                            @for($i=1;$i<=12;$i++)
-                                <td>{{ number_format($tabTotalVehicleMonth[$i], 2, ',', ' ') . ' €' }}</td>
-                            @endfor
-                            <td>{{ number_format($totalVehicleYear, 2, ',', ' ') . ' €' }}</td>
-                        </tr>
-                        <tfoot>
-                        <tr>
-                            <th>Total Cat+Carb</th>
-                            @for($i=1;$i<=12;$i++)
-                                <th>{{ number_format($tabTotalFuelAndCategoryMonth[$i], 2, ',', ' ') . ' €' }}</th>
-                            @endfor
-                            <th>{{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }}</th>
-                        </tr>
-                        </tfoot>
-                                @endif
-                    </table>
-                </div>
-                @endif
-            </div>
-        </div>
-    </section>
-    <div class="is-divider subtitle" data-content="Catégorie"></div>
-    <section class="section is-small">
-        @if($spents != null)
-        <div class="container is-fluid">
-            @foreach($categories as $category)
-                <div class="notification">
-                    <nav class="level">
-                        <!-- Left side -->
-                        <div class="level-left">
-                            <div class="level-item">
-                                <p class="title">{{ $category->name }}
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Right side -->
-                        <div class="level-right">
-                            <p class="level-item subtitle"><span class="tag is-danger is-large is-light">{{  number_format($tabTotalCategoryYear[$category->id], 2, ',', ' ') . ' €' }}</span></p>
-                        </div>
-                    </nav>
-                    <div class="table-container">
-                        @foreach($category->types as $type)
-                            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
-                                <thead>
-                                <tr>
-                                    <th class="is-selected">{{ $type->name }}</th>
+                            </thead>
+                            <tbody>
+                            @if($spentCategories->count() > 0)
+                            @foreach($spentCategories as $category)
+                                @if($tabTotalCategoryYear[$category->id] > 0)
+                                <tr class="table-danger">
+                                    <td>{{ $category->name }}</td>
                                     @for($i=1;$i<=12;$i++)
-                                        @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
-                                            <th class="is-selected">{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
-                                        @else
-                                            <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
-                                        @endif
-                                    @endfor
-                                    <th>Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($type->families as $family)
-                                    <tr>
-                                        <td>{{ $family->name }}</td>
-                                        @for($i=1;$i<=12;$i++)
-                                            @foreach($tabTotalFamilyMonth[$i] as $id => $totalFamilyMonth)
-                                                @if($id == $family->id)
-                                                    <td>{{ number_format($totalFamilyMonth, 2, ',', ' ') . ' €' }}</td>
-                                                @endif
-                                            @endforeach
-                                        @endfor
-                                        <td>{{ number_format($tabTotalFamilyYear[$family->id], 2, ',', ' ') . ' €' }}</td>
-                                    </tr>
-                                </tbody>
-                                @endforeach
-                                <tfoot>
-                                <tr>
-                                    <th>Total</th>
-                                    @for($i=1;$i<=12;$i++)
-                                        @foreach($tabTotalTypeMonth[$i] as $id => $tabTotalType)
-                                            @if($id == $type->id)
-                                                <th>{{ number_format($tabTotalType, 2, ',', ' ') . ' €' }}</th>
+                                        @foreach($tabTotalCategoryMonth[$i] as $id => $totalCategoryMonth)
+                                            @if($id == $category->id)
+                                                <td>{{ number_format($totalCategoryMonth, 2, ',', ' ') . ' €' }}</td>
                                             @endif
                                         @endforeach
                                     @endfor
-                                    <th>{{ number_format($tabTotalTypeYear[$type->id], 2, ',', ' ') . ' €' }}</th>
+                                    <td>{{ number_format($tabTotalCategoryYear[$category->id], 2, ',', ' ') . ' €' }}</td>
                                 </tr>
-                                </tfoot>
-                            </table>
-                        @endforeach
+                                @endif
+                            @endforeach
+                            @endif
+                            @if($fuels->count() > 0)
+                                <tr class="table-danger">
+                                    <td>Carburant</td>
+                                    @for($i=1;$i<=12;$i++)
+                                        <td>{{ number_format($tabTotalVehicleMonth[$i], 2, ',', ' ') . ' €' }}</td>
+                                    @endfor
+                                    <td>{{ number_format($totalVehicleYear, 2, ',', ' ') . ' €' }}</td>
+                                </tr>
+                                <tr class="table-info">
+                                    <th>Total</th>
+                                    @for($i=1;$i<=12;$i++)
+                                        <th>{{ number_format($tabTotalFuelAndCategoryMonth[$i], 2, ',', ' ') . ' €' }}</th>
+                                    @endfor
+                                    <th>{{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }}</th>
+                                </tr>
+                            @else
+                            <tr class="table-info">
+                                <th>Total</th>
+                                @for($i=1;$i<=12;$i++)
+                                    <th>{{ number_format($tabSpentTotalMonth[$i], 2, ',', ' ') . ' €' }}</th>
+                                @endfor
+                                <th>{{ number_format($spentTotalYear, 2, ',', ' ') . ' €' }}</th>
+                            </tr>
+                            @endif
+                            @if($earningCategories->count() > 0)
+                            @foreach($earningCategories as $category)
+                                @if($tabTotalCategoryYear[$category->id] > 0)
+                                <tr class="table-success">
+                                    <td>{{ $category->name }}</td>
+                                    @for($i=1;$i<=12;$i++)
+                                        @foreach($tabTotalCategoryMonth[$i] as $id => $totalCategoryMonth)
+                                            @if($id == $category->id)
+                                                <td>{{ number_format($totalCategoryMonth, 2, ',', ' ') . ' €' }}</td>
+                                            @endif
+                                        @endforeach
+                                    @endfor
+                                    <td>{{ number_format($tabTotalCategoryYear[$category->id], 2, ',', ' ') . ' €' }}</td>
+                                </tr>
+                                @endif
+                            @endforeach
+                            <tr class="table-info">
+                                <th>Total</th>
+                                @for($i=1;$i<=12;$i++)
+                                    <th>{{ number_format($tabEarningTotalMonth[$i], 2, ',', ' ') . ' €' }}</th>
+                                @endfor
+                                <th>{{ number_format($earningTotalYear, 2, ',', ' ') . ' €' }}</th>
+                            </tr>
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            @endforeach
-        </div>
-        @else
-            <div class="container is-flex is-justify-content-center">
-                <div class="box p-0">
-                <article class="message is-info">
-                    <div class="message-body">
-                        <p>
-                        Attention !<br>
-                        Pour avoir le bilan annuel de vos dépenses,<br> vous devez dans un premier temps créer au moins une dépense.<br>
-                        Créez votre première dépense <a href="{{ route('spent') }}">ici</a>.
-                        </p>
                     </div>
-                </article>
+            <!-- End Year table -->
+            <!-- Spent Category Year table -->
+                @if($spentCategories->count() > 0)
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dépenses</h1>
+                    <span class="badge bg-danger">- {{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }}</span>
                 </div>
-            </div>
-        @endif
-    </section>
-    <div class="is-divider" data-content="Carburant"></div>
-    <section class="section is-small">
-        @if($fuels)
-        <div class="container is-fluid">
-            <div class="notification">
-                <nav class="level">
-                    <!-- Left side -->
-                    <div class="level-left">
-                        <div class="level-item">
-                            <p class="title">Carburant
-                            </p>
+                    @foreach($spentCategories as $category)
+                        @if($tabTotalCategoryYear[$category->id] > 0)
+                            <div class="table-container">
+                                <div class="form-control mb-3">
+                                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                                        <h3>{{ $category->name }}</h3>
+                                        <span class="badge bg-danger">- {{  number_format($tabTotalCategoryYear[$category->id], 2, ',', ' ') . ' €' }}</span>
+                                    </div>
+                                @foreach($category->types as $type)
+                                    <table class="table table-bordered table-sm table-hover">
+                                        <thead>
+                                        <tr class="table-danger">
+                                            <th>{{ $type->name }}</th>
+                                            @for($i=1;$i<=12;$i++)
+                                                @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
+                                                    <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                                @else
+                                                    <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                                @endif
+                                            @endfor
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($type->families as $family)
+                                            @if($tabTotalFamilyYear[$family->id] > 0)
+                                            <tr class="table-warning">
+                                                <td>{{ $family->name }}</td>
+                                                @for($i=1;$i<=12;$i++)
+                                                    @foreach($tabTotalFamilyMonth[$i] as $id => $totalFamilyMonth)
+                                                        @if($id == $family->id)
+                                                            <td>{{ number_format($totalFamilyMonth, 2, ',', ' ') . ' €' }}</td>
+                                                        @endif
+                                                    @endforeach
+                                                @endfor
+                                                <td>{{ number_format($tabTotalFamilyYear[$family->id], 2, ',', ' ') . ' €' }}</td>
+                                            </tr>
+                                            @endif
+                                        </tbody>
+                                        @endforeach
+                                        <tfoot>
+                                        <tr class="table-info">
+                                            <th>Total</th>
+                                            @for($i=1;$i<=12;$i++)
+                                                @foreach($tabTotalTypeMonth[$i] as $id => $tabTotalType)
+                                                    @if($id == $type->id)
+                                                        <th>{{ number_format($tabTotalType, 2, ',', ' ') . ' €' }}</th>
+                                                    @endif
+                                                @endforeach
+                                            @endfor
+                                            <th>{{ number_format($tabTotalTypeYear[$type->id], 2, ',', ' ') . ' €' }}</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-                    <!-- Right side -->
-                    <div class="level-right">
-                        <p class="level-item subtitle">
-                            <span class="tag is-link is-large is-light mr-1">{{  number_format($totalLiterVehicleYear, 2, ',', ' ') . ' L' }}</span>
-                            <span class="tag is-danger is-large is-light">{{  number_format($totalVehicleYear, 2, ',', ' ') . ' €' }}</span>
-                        </p>
-                    </div>
-                </nav>
+                        @endif
+                    @endforeach
+                @endif
+                <!-- Fuel Year table -->
+                @if($fuels->count() > 0)
                 <div class="table-container">
-                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
+                    <div class="form-control mb-3">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                            <h3>Carburant</h3>
+                            <span class="badge bg-danger">- {{  number_format($totalVehicleYear, 2, ',', ' ') . ' €' }}</span>
+                        </div>
+                    <table class="table table-bordered table-sm table-hover">
                         <thead>
-                        <tr>
+                        <tr class="table-danger">
                             <th>Carburant €</th>
                             @for($i=1;$i<=12;$i++)
                                 @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
-                                    <th class="is-selected">{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                    <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
                                 @else
                                     <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
                                 @endif
@@ -235,7 +242,8 @@
                         </thead>
                         <tbody>
                         @foreach($cars as $car)
-                            <tr>
+                            @if($tabTotalCarYear[$car->id] > 0)
+                            <tr class="table-warning">
                                 <td>{{ $car->name }}</td>
                                 @for($i=1;$i<=12;$i++)
                                     @foreach($tabTotalCarMonth[$i] as $id => $totalCarMonth)
@@ -246,10 +254,11 @@
                                 @endfor
                                 <td>{{ number_format($tabTotalCarYear[$car->id], 2, ',', ' ') . ' €' }}</td>
                             </tr>
+                            @endif
                         @endforeach
                         </tbody>
                         <tfoot>
-                        <tr>
+                        <tr class="table-info">
                             <th>Total</th>
                             @for($i=1;$i<=12;$i++)
                                 <th>{{ number_format($tabTotalVehicleMonth[$i], 2, ',', ' ') . ' €' }}</th>
@@ -258,50 +267,123 @@
                         </tr>
                         </tfoot>
                     </table>
-                </div>
-                <div class="table-container">
-                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth has-text-centered">
-                        <thead>
-                        <tr>
-                            <th>Carburant L</th>
-                            @for($i=1;$i<=12;$i++)
-                                @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
-                                    <th class="is-selected">{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
-                                @else
-                                    <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
-                                @endif
-                            @endfor
-                            <th>Total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($cars as $car)
-                            <tr>
-                                <td>{{ $car->name }}</td>
+
+                        <table class="table table-bordered table-sm table-hover">
+                            <thead>
+                            <tr class="table-primary">
+                                <th>Carburant L</th>
                                 @for($i=1;$i<=12;$i++)
-                                    @foreach($tabTotalLiterCarMonth[$i] as $id => $totalLiterCarMonth)
-                                        @if($id == $car->id)
-                                            <td>{{ number_format($totalLiterCarMonth, 2, ',', ' '). ' L' }}</td>
-                                        @endif
-                                    @endforeach
+                                    @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
+                                        <th class="is-selected">{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                    @else
+                                        <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                    @endif
                                 @endfor
-                                <td>{{ number_format($tabTotalLiterCarYear[$car->id], 2, ',', ' '). ' L' }}</td>
+                                <th>Total</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>Total</th>
-                            @for($i=1;$i<=12;$i++)
-                                <th>{{ number_format($tabTotalLiterVehicleMonth[$i], 2, ',', ' '). ' L' }}</th>
-                            @endfor
-                            <th>{{ number_format($totalLiterVehicleYear, 2, ',', ' '). ' L' }}</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($cars as $car)
+                                @if($tabTotalLiterCarYear[$car->id] > 0)
+                                <tr class="table-warning">
+                                    <td>{{ $car->name }}</td>
+                                    @for($i=1;$i<=12;$i++)
+                                        @foreach($tabTotalLiterCarMonth[$i] as $id => $totalLiterCarMonth)
+                                            @if($id == $car->id)
+                                                <td>{{ number_format($totalLiterCarMonth, 2, ',', ' '). ' L' }}</td>
+                                            @endif
+                                        @endforeach
+                                    @endfor
+                                    <td>{{ number_format($tabTotalLiterCarYear[$car->id], 2, ',', ' '). ' L' }}</td>
+                                </tr>
+                                @endif
+                            @endforeach
+                            </tbody>
+                            <tfoot>
+                            <tr class="table-info">
+                                <th>Total</th>
+                                @for($i=1;$i<=12;$i++)
+                                    <th>{{ number_format($tabTotalLiterVehicleMonth[$i], 2, ',', ' '). ' L' }}</th>
+                                @endfor
+                                <th>{{ number_format($totalLiterVehicleYear, 2, ',', ' '). ' L' }}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-            </div>
+                @endif
+                <!-- End Fuel Year table -->
+                <!-- End Spent Category Year table -->
+                <!-- Earning Category Year table -->
+                @if($earningCategories->count() > 0)
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Revenus</h1>
+                    <span class="badge bg-success">{{ number_format($earningTotalYear, 2, ',', ' ') . ' €' }}</span>
+                </div>
+                @foreach($earningCategories as $category)
+                        @if($tabTotalCategoryYear[$category->id] > 0)
+                    <div class="table-container">
+                        <div class="form-control mb-3">
+                            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                                <h3>{{ $category->name }}</h3>
+                                <span class="badge bg-success">{{  number_format($tabTotalCategoryYear[$category->id], 2, ',', ' ') . ' €' }}</span>
+                            </div>
+                            @foreach($category->types as $type)
+                                @if($tabTotalTypeYear[$type->id] > 0)
+                                <table class="table table-bordered table-sm table-hover">
+                                    <thead>
+                                    <tr class="table-success">
+                                        <th>{{ $type->name }}</th>
+                                        @for($i=1;$i<=12;$i++)
+                                            @if(date('m', mktime(0, 0, 0, $i, 1, $year)) == date('m'))
+                                                <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                            @else
+                                                <th>{{ date('F', mktime(0, 0, 0, $i, 1, $year)) }}</th>
+                                            @endif
+                                        @endfor
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($type->families as $family)
+                                        @if($tabTotalFamilyYear[$family->id] > 0)
+                                            <tr class="table-warning">
+                                                <td>{{ $family->name }}</td>
+                                                @for($i=1;$i<=12;$i++)
+                                                    @foreach($tabTotalFamilyMonth[$i] as $id => $totalFamilyMonth)
+                                                        @if($id == $family->id)
+                                                            <td>{{ number_format($totalFamilyMonth, 2, ',', ' ') . ' €' }}</td>
+                                                        @endif
+                                                    @endforeach
+                                                @endfor
+                                                <td>{{ number_format($tabTotalFamilyYear[$family->id], 2, ',', ' ') . ' €' }}</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                    @endforeach
+                                    <tfoot>
+                                    <tr class="table-info">
+                                        <th>Total</th>
+                                        @for($i=1;$i<=12;$i++)
+                                            @foreach($tabTotalTypeMonth[$i] as $id => $tabTotalType)
+                                                @if($id == $type->id)
+                                                    <th>{{ number_format($tabTotalType, 2, ',', ' ') . ' €' }}</th>
+                                                @endif
+                                            @endforeach
+                                        @endfor
+                                        <th>{{ number_format($tabTotalTypeYear[$type->id], 2, ',', ' ') . ' €' }}</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                        @endif
+                @endforeach
+                @endif
+                <!-- End Earning Category Year table -->
+            </main>
         </div>
-        @endif
-    </section>
+    </div>
 @endsection

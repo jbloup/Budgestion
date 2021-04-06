@@ -6,15 +6,50 @@
             <!-- Lateral nav -->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#fuel">
-                                Dépenses de carburant
+                    <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Création</span>
+                    </h5>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link link-secondary" aria-current="page" href="{{ route('category') }}">
+                                <span data-feather="package"></span>
+                                Nomenclature
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ListFuel">
-                                Liste dépenses de carburant
+                            <a class="nav-link link-secondary" href="{{ route('car') }}">
+                                <span data-feather="truck"></span>
+                                Véhicule
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('account') }}">
+                                <span data-feather="book-open"></span>
+                                Compte
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('spent') }}">
+                                <span data-feather="credit-card"></span>
+                                Dépense
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('fuel') }}">
+                                <span data-feather="tool"></span>
+                                Dépense carburant
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('earning') }}">
+                                <span data-feather="dollar-sign"></span>
+                                Revenu
                             </a>
                         </li>
                     </ul>
@@ -118,19 +153,19 @@
                         </thead>
                         <tbody>
                         @foreach($fuels as $fuel)
-                            <tr id="{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'enabled' }}">
+                            <tr id="{{  'fuel' . $fuel->id . 'enabled' }}">
                                 <td>{{ $fuel->car->name }}</td>
                                 <td>{{ $fuel->liter }}</td>
                                 <td>{{ $fuel->price . ' €' }}</td>
                                 <td>{{ date('d-m-Y', strtotime($fuel->date)) }}</td>
                                 <td>{{ $fuel->mileage }}</td>
-                                <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'disabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'enabled' }}').className =' d-none'">
+                                <td><button class="btn" onclick="document.getElementById('{{  'fuel' . $fuel->id . 'disabled' }}').className =' '; document.getElementById('{{  'fuel' . $fuel->id . 'enabled' }}').className =' d-none'">
                                         <i class="fas fa-pen"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr id="{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'disabled' }}" class="d-none">
-                                <form id="{{ str_replace(' ', '', $fuel->name) . $fuel->id . 'update' }}" method="POST" action="{{ url('/fuel', ['id' => $fuel->id]) }}">
+                            <tr id="{{  'fuel' . $fuel->id . 'disabled' }}" class="d-none">
+                                <form id="{{ 'fuel' . $fuel->id . 'update' }}" method="POST" action="{{ url('/fuel', ['id' => $fuel->id]) }}">
                                     @method('put')
                                     @csrf
                                     <td><select id="update_car_id" name="update_car_id" class="form-select">
@@ -147,20 +182,20 @@
                                 </form>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ str_replace(' ', '', $fuel->name) . $fuel->id . 'update' }}').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'fuel' . $fuel->id . 'enabled' }}').className =' '; document.getElementById('{{  'fuel' . $fuel->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'fuel' . $fuel->id . 'update' }}').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '', $fuel->name) . $fuel->id . 'delete' }}">
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'fuel' . $fuel->id . 'delete' }}">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $fuel->name) . $fuel->id . 'disabled' }}').className =' d-none'">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'fuel' . $fuel->id . 'enabled' }}').className =' '; document.getElementById('{{  'fuel' . $fuel->id . 'disabled' }}').className =' d-none'">
                                             <i class="far fa-times-circle"></i>
                                         </button>
                                     </div>
                                 </td>
                             </tr>
                             <!-- Modal -->
-                            <div class="modal fade" id="{{ str_replace(' ', '', $fuel->name) . $fuel->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '', $fuel->name) . $fuel->id . 'label' }}" aria-hidden="true">
+                            <div class="modal fade" id="{{ 'fuel' . $fuel->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ 'fuel' . $fuel->id . 'label' }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-body">

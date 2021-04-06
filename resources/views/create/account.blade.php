@@ -6,15 +6,50 @@
             <!-- Lateral nav -->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#account">
-                                Compte bancaire
+                    <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Création</span>
+                    </h5>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link link-secondary" aria-current="page" href="{{ route('category') }}">
+                                <span data-feather="package"></span>
+                                Nomenclature
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#listCar">
-                                Liste comptes bancaires
+                            <a class="nav-link link-secondary" href="{{ route('car') }}">
+                                <span data-feather="truck"></span>
+                                Véhicule
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('account') }}">
+                                <span data-feather="book-open"></span>
+                                Compte
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('spent') }}">
+                                <span data-feather="credit-card"></span>
+                                Dépense
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('fuel') }}">
+                                <span data-feather="tool"></span>
+                                Dépense carburant
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                        <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('earning') }}">
+                                <span data-feather="dollar-sign"></span>
+                                Revenu
                             </a>
                         </li>
                     </ul>
@@ -33,7 +68,7 @@
                             <div class="row pt-3 mb-3">
                                 <div class="col">
                                     <label for="name" class="form-label">Nom du compte bancaire</label>
-                                    <input id="name" type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Nom du compte" aria-describedby="validationName" required>
+                                    <input id="name" type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Nom du compte ..." aria-describedby="validationName" required>
                                     @error('name')
                                     <div id="validationName" class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -51,7 +86,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="number" class="form-label">Numéro de compte bancaire</label>
-                                    <input id="number" type="number" name="number" class="form-control" value="{{ old('number') }}" placeholder="Numéro de compte" aria-describedby="validationNumber" required>
+                                    <input id="number" type="number" name="number" class="form-control" value="{{ old('number') }}" placeholder="Numéro de compte ..." aria-describedby="validationNumber" required>
                                     @error('number')
                                     <div id="validationNumber" class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -117,7 +152,7 @@
                         </thead>
                         <tbody>
                         @foreach($accounts as $account)
-                            <tr id="{{ str_replace(' ', '', $account->name) . $account->id . 'enabled' }}" @if($account->main == 1) class="table-info" @endif>
+                            <tr id="{{ 'account' . $account->id . 'enabled' }}" @if($account->main == 1) class="table-info" @endif>
                                 <td>{{ $account->number }}</td>
                                 <td>{{ $account->name}}</td>
                                 <td>{{ $account->description }}</td>
@@ -129,13 +164,13 @@
                                         Non
                                     @endif
                                 </td>
-                                <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'enabled' }}').className =' d-none'">
+                                <td><button class="btn" onclick="document.getElementById('{{  'account' . $account->id . 'disabled' }}').className =' '; document.getElementById('{{  'account' . $account->id . 'enabled' }}').className =' d-none'">
                                         <i class="fas fa-pen"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr id="{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}" class="d-none">
-                                <form id="{{ str_replace(' ', '', $account->name) . $account->id . 'update' }}" method="POST" action="{{ url('/account', ['id' => $account->id]) }}">
+                            <tr id="{{  'account' . $account->id . 'disabled' }}" class="d-none">
+                                <form id="{{ 'account' . $account->id . 'update' }}" method="POST" action="{{ url('/account', ['id' => $account->id]) }}">
                                     @method('put')
                                     @csrf
                                     <td><input id="update_number" type="number" name="update_number" class="form-control" value="{{ $account->number }}" placeholder="Numéro de compte" required></td>
@@ -165,20 +200,20 @@
                                 </form>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ str_replace(' ', '', $account->name) . $account->id . 'update' }}').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'account' . $account->id . 'enabled' }}').className =' '; document.getElementById('{{  'account' . $account->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'account' . $account->id . 'update' }}').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '', $account->name) . $account->id . 'delete' }}" @if($account->spents->count() != 0) disabled @endif>
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'account' . $account->id . 'delete' }}" @if($account->spents->count() != 0) disabled @endif>
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $account->name) . $account->id . 'disabled' }}').className =' d-none'">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'account' . $account->id . 'enabled' }}').className =' '; document.getElementById('{{  'account' . $account->id . 'disabled' }}').className =' d-none'">
                                             <i class="far fa-times-circle"></i>
                                         </button>
                                     </div>
                                 </td>
                             </tr>
                             <!-- Modal -->
-                            <div class="modal fade" id="{{ str_replace(' ', '', $account->name) . $account->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ '#' . str_replace(' ', '', $account->name) . $account->id . 'label' }}" aria-hidden="true">
+                            <div class="modal fade" id="{{ 'account' . $account->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ '#' . 'account' . $account->id . 'label' }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-body">

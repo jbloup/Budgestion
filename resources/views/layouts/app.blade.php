@@ -18,7 +18,7 @@
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         <strong>Budgestion</strong> by Jean-baptiste LOUP &copy; Copyright 2020 &middot
-        <a class="text-dark" href="https://www.jbloup.fr">About Me</a>
+        <a class="text-dark" href="https://www.jbloup.fr">À propos</a>
     </div>
     <!-- Copyright -->
 </footer>

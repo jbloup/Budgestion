@@ -20,11 +20,14 @@ class TableController extends Controller
         setlocale(LC_TIME, "fr_FR");
 
         $fuels = Fuel::where('user_id', Auth::user()->getAuthIdentifier())->get();
+        $cars = Car::where('user_id', Auth::user()->getAuthIdentifier())->get();
         $categories = Category::where('user_id', Auth::user()->getAuthIdentifier())->get();
         $spentCategories = Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'spent')->get();
         $earningCategories = Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'earning')->get();
         $categoryTotals = null;
         $typeTotals = null;
+
+        $mileageMonthTab = null;
         $spentTotal = 0;
         $earningTotal = 0;
         $fuelTotal = 0;
@@ -43,6 +46,20 @@ class TableController extends Controller
                 $fuelTotal += $fuel->price;
                 $fuelTotalLiter += $fuel->liter;
             }
+        }
+
+        foreach($cars as $car){
+            $mileageMonth = 0;
+            $mileageTab = null;
+            foreach ($car->fuels as $fuel) {
+                if (($fuel->date >= $date) && ($fuel->date < $date2)) {
+                    $mileageTab[$fuel->id] = $fuel->mileage;
+                }
+                if($mileageTab != null){
+                    $mileageMonth = max($mileageTab) - min($mileageTab);
+                }
+            }
+            $mileageMonthTab[$car->id] = $mileageMonth;
         }
 
         foreach ($categories as $category){
@@ -73,7 +90,8 @@ class TableController extends Controller
             $earningTotal += $categoryTotals[$category->id];
         }
 
-        $total= $earningTotal - $spentTotal;
+        $spentFuelTotal = $spentTotal + $fuelTotal;
+        $total = $earningTotal - $spentFuelTotal;
 
         return view('table.month',[
             'spentCategories' => $spentCategories,
@@ -88,6 +106,9 @@ class TableController extends Controller
             'spentTotal' => number_format($spentTotal, 2, ',', ' '),
             'earningTotal' => number_format($earningTotal, 2, ',', ' '),
             'total' => number_format($total, 2, ',', ' '),
+            'spentFuelTotal' => number_format($spentFuelTotal, 2, ',', ' '),
+            'cars' => $cars,
+            'mileageMonthTab' => $mileageMonthTab,
         ]);
     }
 
@@ -97,9 +118,11 @@ class TableController extends Controller
     public function year(){
 
         $categories = Category::where('user_id', Auth::user()->getAuthIdentifier())->get();
+        $spentCategories = Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'spent')->get();
+        $earningCategories = Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'earning')->get();
         $cars = Car::where('user_id', Auth::user()->getAuthIdentifier())->get();
-        $fuels = false;
-        $spents = false;
+        $fuels = Fuel::where('user_id', Auth::user()->getAuthIdentifier())->get();
+
         $tabTotalFamilyMonth = null;
         $tabTotalFamilyYear = null;
         $tabTotalFamily = null;
@@ -120,7 +143,8 @@ class TableController extends Controller
         $tabTotalLiterCarYear = null;
         $tabTotalLiterCar = null;
 
-        $tabTotalMonth = null;
+        $tabSpentTotalMonth = null;
+        $tabEarningTotalMonth = null;
         $tabTotalVehicleMonth = null;
         $tabTotalLiterVehicleMonth = null;
 
@@ -138,8 +162,10 @@ class TableController extends Controller
         for($i=1;$i<=12;$i++) {
             $date = date('Y-m', mktime(0, 0, 0, $i, 1, $year));
             $date2 = date('Y-m', strtotime('+1 month', strtotime($date)));
-            $totalMonth = 0;
-            $totalYear = 0;
+            $spentTotalMonth = 0;
+            $spentTotalYear = 0;
+            $earningTotalMonth = 0;
+            $earningTotalYear = 0;
             foreach($categories as $category){
                 $totalCategoryMonth = 0;
                 $totalCategoryYear = 0;
@@ -149,8 +175,7 @@ class TableController extends Controller
                     foreach($type->families as $family){
                         $totalSpentYear = 0;
                         $totalSpentMonth = 0;
-                        if($family->spents->count() != 0) {
-                            $spents = true;
+                        if($family->spents->count() > 0) {
                             foreach ($family->spents as $spent) {
                                 if (($spent->date >= $date) && ($spent->date < $date2)) {
                                     $totalSpentMonth += $spent->price;
@@ -160,6 +185,17 @@ class TableController extends Controller
                                 }
                             }
                         }
+                        else if($family->earnings->count() > 0) {
+                            foreach ($family->earnings as $earning) {
+                                if (($earning->date >= $date) && ($earning->date < $date2)) {
+                                    $totalSpentMonth += $earning->amount;
+                                }
+                                if (($earning->date >= $year) && ($earning->date < $year2)) {
+                                    $totalSpentYear += $earning->amount;
+                                }
+                            }
+                        }
+
                         $tabTotalFamily[$family->id] = $totalSpentMonth;
                         $tabTotalFamilyMonth[$i] = $tabTotalFamily;
 
@@ -181,10 +217,18 @@ class TableController extends Controller
                 $tabTotalCategoryMonth[$i] = $tabTotalCategory;
 
                 $tabTotalCategoryYear[$category->id] = $totalCategoryYear;
+            }
 
-                $totalYear += $totalCategoryYear;
-                $totalMonth += $totalCategoryMonth;
-                $tabTotalMonth[$i] = $totalMonth;
+            foreach($spentCategories as $category){
+                $spentTotalYear += $tabTotalCategoryYear[$category->id];
+                $spentTotalMonth += $tabTotalCategory[$category->id];
+                $tabSpentTotalMonth[$i] = $spentTotalMonth;
+            }
+
+            foreach($earningCategories as $category){
+                $earningTotalYear += $tabTotalCategoryYear[$category->id];
+                $earningTotalMonth += $tabTotalCategory[$category->id];
+                $tabEarningTotalMonth[$i] = $earningTotalMonth;
             }
 
             $totalVehicleMonth = 0;
@@ -194,12 +238,12 @@ class TableController extends Controller
             $totalLiterVehicleYear = 0;
 
             foreach ($cars as $car){
-                if($car->fuels->count() != 0){
-                    $fuels = true;
                     $totalFuelMonth = 0;
                     $totalLiterFuelMonth = 0;
                     $totalFuelYear = 0;
                     $totalLiterFuelYear = 0;
+                    $mileageYear = 0;
+                    $mileageTab = null;
                     foreach ($car->fuels as $fuel){
                         if(($fuel->date >= $date) && ($fuel->date < $date2)){
                             $totalFuelMonth +=  $fuel->price;
@@ -208,8 +252,14 @@ class TableController extends Controller
                         if(($fuel->date > $year) && ($fuel->date < $year2)){
                             $totalFuelYear +=  $fuel->price;
                             $totalLiterFuelYear += $fuel->liter;
+                            $mileageTab[$fuel->id] = $fuel->mileage;
+                        }
+                        if($mileageTab != null){
+                            $mileageYear = max($mileageTab) - min($mileageTab);
                         }
                     }
+                    $mileageYearTab[$car->id] = $mileageYear;
+
                     $tabTotalCar[$car->id] = $totalFuelMonth;
                     $tabTotalCarMonth[$i] = $tabTotalCar;
 
@@ -228,30 +278,35 @@ class TableController extends Controller
                     $totalLiterVehicleYear += $totalLiterFuelYear;
                     $totalLiterVehicleMonth += $totalLiterFuelMonth;
                     $tabTotalLiterVehicleMonth[$i] = $totalLiterVehicleMonth;
-                }
+
             }
 
-            if($fuels){
-                $tabTotalFuelAndCategoryMonth[$i] = $tabTotalMonth[$i] + $tabTotalVehicleMonth[$i];
-                $totalFuelAndCategoryYear = $totalYear + $totalVehicleYear;
+            if($fuels->count() > 0){
+                $tabTotalFuelAndCategoryMonth[$i] = $tabSpentTotalMonth[$i] + $tabTotalVehicleMonth[$i];
+                $totalFuelAndCategoryYear = $spentTotalYear + $totalVehicleYear;
             }else{
                 $totalFuelAndCategoryYear = 0;
             }
-
+            $totalYear = $earningTotalYear - $spentTotalYear - $totalFuelAndCategoryYear;
         }
 
         return view('table.year',[
-            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'spentCategories' => $spentCategories,
+            'earningCategories' => $earningCategories,
+            'cars' => $cars,
             'fuels' => $fuels,
-            'spents' => $spents,
             'year' => $year,
             'year2' => $year2,
+            'mileageYearTab' => $mileageYearTab,
+            'mileageTab' => $mileageTab,
             'totalYear' => $totalYear,
+            'spentTotalYear' => $spentTotalYear,
+            'earningTotalYear' => $earningTotalYear,
             'totalVehicleYear' => $totalVehicleYear,
             'totalLiterVehicleYear' => $totalLiterVehicleYear,
             'totalFuelAndCategoryYear' => $totalFuelAndCategoryYear,
-            'tabTotalMonth' => $tabTotalMonth,
+            'tabSpentTotalMonth' => $tabSpentTotalMonth,
+            'tabEarningTotalMonth' => $tabEarningTotalMonth,
             'tabTotalVehicleMonth' => $tabTotalVehicleMonth,
             'tabTotalFuelAndCategoryMonth' => $tabTotalFuelAndCategoryMonth,
             'tabTotalLiterVehicleMonth' => $tabTotalLiterVehicleMonth,

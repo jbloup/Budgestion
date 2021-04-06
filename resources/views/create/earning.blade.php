@@ -6,15 +6,50 @@
             <!-- Lateral nav -->
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#earning">
-                                Revenus
+                    <h5 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Création</span>
+                    </h5>
+                    <ul class="nav flex-column mb-2">
+                        <li>
+                            <a class="nav-link link-secondary" aria-current="page" href="{{ route('category') }}">
+                                <span data-feather="package"></span>
+                                Nomenclature
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#ListEarning">
-                                Liste revenus
+                            <a class="nav-link link-secondary" href="{{ route('car') }}">
+                                <span data-feather="truck"></span>
+                                Véhicule
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('account') }}">
+                                <span data-feather="book-open"></span>
+                                Compte
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('spent') }}">
+                                <span data-feather="credit-card"></span>
+                                Dépense
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-secondary" href="{{ route('fuel') }}">
+                                <span data-feather="tool"></span>
+                                Dépense carburant
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('earning') }}">
+                                <span data-feather="dollar-sign"></span>
+                                Revenu
                             </a>
                         </li>
                     </ul>
@@ -33,7 +68,7 @@
                             <div class="row pt-3 mb-3">
                                 <div class="col">
                                     <label for="name" class="form-label">Désignation du revenu</label>
-                                    <input id="name" type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nom revenu" aria-describedby="validationName" required>
+                                    <input id="name" type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nom revenu ..." aria-describedby="validationName" required>
                                     @error('name')
                                     <div id="validationName" class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -138,20 +173,20 @@
                         </thead>
                         <tbody>
                         @foreach($earnings as $earning)
-                            <tr id="{{ str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}">
+                            <tr id="{{ 'earning' . $earning->id . 'enabled' }}">
                                 <td>{{ $earning->name }}</td>
                                 <td>{{ $earning->description }}</td>
                                 <td>{{ $earning->amount . ' €' }}</td>
                                 <td>{{ date('d-m-Y', strtotime($earning->date)) }}</td>
                                 <td>{{ $earning->family->name }}</td>
                                 <td>{{ $earning->account->name }}</td>
-                                <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}').className =' d-none'">
+                                <td><button class="btn" onclick="document.getElementById('{{  'earning' . $earning->id . 'disabled' }}').className =' '; document.getElementById('{{  'earning' . $earning->id . 'enabled' }}').className =' d-none'">
                                         <i class="fas fa-pen"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr id="{{ str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}" class="d-none">
-                                <form id="{{ str_replace(' ', '', $earning->name) . $earning->id . 'update' }}" method="POST" action="{{ url('/earning', ['id' => $earning->id]) }}">
+                            <tr id="{{ 'earning' . $earning->id . 'disabled' }}" class="d-none">
+                                <form id="{{ 'earning' . $earning->id . 'update' }}" method="POST" action="{{ url('/earning', ['id' => $earning->id]) }}">
                                     @method('put')
                                     @csrf
                                     <td><input id="update_earning_name" type="text" name="update_earning_name" class="form-control" value="{{ $earning->name }}" placeholder="Nom du revenu" required></td>
@@ -192,20 +227,20 @@
                                 </form>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ str_replace(' ', '', $earning->name) . $earning->id . 'update' }}').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{  'earning' . $earning->id . 'enabled' }}').className =' '; document.getElementById('{{  'earning' . $earning->id . 'disabled' }}').className =' d-none'; document.getElementById('{{ 'earning' . $earning->id . 'update' }}').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '',$earning->name) . $earning->id . 'delete' }}">
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'earning' . $earning->id . 'delete' }}">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $earning->name) . $earning->id . 'disabled' }}').className =' d-none'">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{  'earning' . $earning->id . 'enabled' }}').className =' '; document.getElementById('{{  'earning' . $earning->id . 'disabled' }}').className =' d-none'">
                                             <i class="far fa-times-circle"></i>
                                         </button>
                                     </div>
                                 </td>
                             </tr>
                             <!-- Modal -->
-                            <div class="modal fade" id="{{ str_replace(' ', '',$earning->name) . $earning->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ str_replace(' ', '',$earning->name) . $earning->id . 'label' }}" aria-hidden="true">
+                            <div class="modal fade" id="{{ '$earning' . $earning->id . 'delete' }}" tabindex="-1" aria-labelledby="{{ 'earning' . $earning->id . 'label' }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-body">
