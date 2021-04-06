@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Type;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -20,7 +20,8 @@ class CategoryController extends Controller
     {
         return view('create.category',[
             'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->get(),
-            'types' => Type::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'spentCategories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'spent')->get(),
+            'earningCategories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'earning')->get(),
         ]);
     }
 
@@ -32,19 +33,23 @@ class CategoryController extends Controller
      */
     public function create(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255'
+        $validator = Validator::make($request->all(), [
+            'category_name' => 'required|string|max:255',
+            'category_kind' => 'required|string|max:255'
         ]);
 
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+
         Category::create([
-            'name' => request('name'),
-            'description' => request('description'),
+            'name' => request('category_name'),
+            'kind' => request('category_kind'),
             'user_id' => Auth::user()->getAuthIdentifier()
 
         ]);
 
-        return back()->with('create', 'catégorie ajoutée');
+        return back()->with('toast_success', 'Catégorie ajoutée');
     }
 
     /**
@@ -56,17 +61,21 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'update_name' => 'required|string|max:255',
-            'update_description' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'update_category_name' => 'required|string|max:255',
+            'update_category_kind' => 'required|string|max:255',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
 
         Category::where('user_id', Auth::user()->getAuthIdentifier())
             ->where('id', $id)
-            ->update(['name' => request('update_name'), 'description' => request('update_description')]
+            ->update(['name' => request('update_category_name'), 'kind' => request('update_category_kind')]
             );
 
-        return back()->with('update', 'catégorie modifiée');
+        return back()->with('toast_success', 'Catégorie modifiée');
     }
 
     /**
@@ -79,6 +88,6 @@ class CategoryController extends Controller
     {
         Category::where('id', $id)->delete();
 
-        return back()->with('delete', 'catégorie supprimée');
+        return back()->with('toast_success', 'Catégorie supprimée');
     }
 }

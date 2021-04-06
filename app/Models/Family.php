@@ -37,4 +37,9 @@ class Family extends Model
     {
         return $this->hasMany(Spent::class, 'family_id', 'id');
     }
+
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class, 'family_id', 'id');
+    }
 }

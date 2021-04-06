@@ -18,6 +18,7 @@ class CreateFuelsTable extends Migration
             $table->decimal('liter', $precision = 10, $scale = 2);
             $table->decimal('price', $precision = 10, $scale = 2);
             $table->date('date');
+            $table->unsignedBigInteger('mileage');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('car_id')->constrained();
             $table->timestamps();

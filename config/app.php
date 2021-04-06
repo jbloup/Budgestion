@@ -178,6 +178,13 @@ return [
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        /*
+        * Package Service Providers...
+        */
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+
+
+
     ],
 
     /*

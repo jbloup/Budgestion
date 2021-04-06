@@ -5,27 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Earning extends Model
 {
-
     use HasFactory;
 
     /**
      * @var string
      */
-    protected $table = 'categories';
+    protected $table = 'earnings';
 
     protected $guarded = array();
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
-        'kind',
+        'description',
+        'amount',
+        'date',
         'user_id',
+        'account_id',
+        'family_id',
+
     ];
 
     public function user()
@@ -33,8 +32,13 @@ class Category extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function types()
+    public function account()
     {
-        return $this->hasMany(Type::class, 'category_id', 'id');
+        return $this->belongsTo('App\Models\Account');
+    }
+
+    public function family()
+    {
+        return $this->belongsTo('App\Models\Family');
     }
 }

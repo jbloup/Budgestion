@@ -1,52 +1,30 @@
-
 @extends('layouts.app')
 
 @section('content')
-    <section class="section is-medium">
-        <div class="columns">
-            <div class="column"></div>
-    <div class="column is-one-quarter">
-    <div class="field">
-    <form method="POST" action="{{ route('login') }}">
-        <h1 class="title is-4">Se connecter</h1>
-        @csrf
-        <div class="field mb-5">
-            <label for="email" class="label">Email</label>
-            <div class="control has-icons-left has-icons-right">
-                <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" autocomplete="email" placeholder="Votre email" autofocus>
-                <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-                </span>
-            </div>
+    <div class="d-flex justify-content-center mt-5 pt-5">
+        <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate>
+            @csrf
+            <h1 class="h3 mb-3 fw-normal">Connexion</h1>
+            <label for="email" class="visually-hidden">Adresse Email</label>
+            <input id="email" type="email" name="email" class="form-control mb-2 @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Votre email" aria-describedby="validationEmail" autofocus required>
             @error('email')
-            <span class="help is-danger">{{ $message }}</span>
+            <div id="validationEmail" class="invalid-feedback">{{ $message }}</div>
             @enderror
-        </div>
-        <div class="field mb-5">
-            <label for="password" class="label">Mot de passe</label>
-            <div class="control has-icons-left has-icons-right">
-                <input id="password" type="password" name="password" class="input" value="{{ old('password') }}" autocomplete="password" placeholder="Votre mot de passe">
-                <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-                </span>
-            </div>
+            <label for="password" class="visually-hidden">Mot de passe</label>
+            <input id="password" type="password" name="password" class="form-control mb-2 @error('password') is-invalid @enderror" value="{{ old('password') }}" placeholder="Votre mot de passe" aria-describedby="validationPassword" required>
             @error('password')
-            <span class="help is-danger">{{ $message }}</span>
+            <div id="validationPassword" class="invalid-feedback">{{ $message }}</div>
             @enderror
-        </div>
-        <div class="field mb-5">
-        <button type="submit" class="button is-primary is-fullwidth">Se connecter</button>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Se souvenir de moi
+                </label>
             </div>
-        <div class="field">
-        <a href="{{ route('password.email') }}" class="button is-small is-light is-fullwidth">Mot de passe oublié ?</a>
-        </div>
+            <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Se connecter</button>
+            <a href="{{ route('password.email') }}" class="link-secondary">Mot de passe oublié ?</a>
         </form>
         @if (session('status'))
-            <span class="help is-success">{{ session('status') }}</span>
+            <script>alert({{ session('status') }})</script>
         @endif
     </div>
-    </div>
-            <div class="column"></div>
-        </div>
-    </section>
 @endsection

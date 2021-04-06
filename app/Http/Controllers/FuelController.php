@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class FuelController extends Controller
 {
@@ -22,7 +23,7 @@ class FuelController extends Controller
     public function view()
     {
         return view('create.fuel',[
-            'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
+            'fuels' => Fuel::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->limit(50)->get(),
             'cars' => Car::where('user_id', Auth::user()->getAuthIdentifier())->get(),
         ]);
     }
@@ -47,6 +48,7 @@ class FuelController extends Controller
             'liter' => request('liter'),
             'price' => request('price'),
             'date' => date('Y-m-d', strtotime(request('date'))),
+            'mileage' => request('mileage'),
             'user_id' => Auth::user()->getAuthIdentifier(),
             'car_id' => request('car_id'),
         ]);
@@ -54,7 +56,7 @@ class FuelController extends Controller
         Car::where('id', request('car_id'))
         ->update(['mileage' => request('mileage'),]);
 
-        return back()->with('create', 'dépense de carburant modifiée');
+        return back()->with('toast_success', 'dépense de carburant modifiée');
     }
 
     /**
@@ -66,24 +68,33 @@ class FuelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'update_fuel_liter' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_fuel_price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_fuel_date' => 'required|date',
+            'update_fuel_mileage' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'update_car_id' => 'required|integer',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
 
         Fuel::where('id', $id)
             ->update([
                 'liter' => request('update_fuel_liter'),
                 'price' => request('update_fuel_price'),
                 'date' => date('Y-m-d', strtotime(request('update_fuel_date'))),
+                'mileage' => request('update_fuel_mileage'),
                 'user_id' => Auth::user()->getAuthIdentifier(),
                 'car_id' => request('update_car_id'),
 
             ]);
 
-        return back()->with('update', 'dépense de carburant modifiée');
+        Car::where('id', request('car_id'))
+            ->update(['mileage' => request('update_fuel_mileage'),]);
+
+        return back()->with('toast_success', 'dépense de carburant modifiée');
     }
 
     /**
@@ -96,6 +107,6 @@ class FuelController extends Controller
     {
         Fuel::where('id', $id)->delete();
 
-        return back()->with('delete', 'dépense supprimée');
+        return back()->with('toast_success', 'Dépense de carburant supprimée !');
     }
 }

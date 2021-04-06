@@ -1,57 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="section is-medium">
-        <div class="columns">
-            <div class="column"></div>
-            <div class="column is-one-quarter">
-                <div class="field mb-5">
-        <form method="POST" action="{{ route('password.update') }}">
-            <h1 class="title is-4">Entrez votre adresse email</h1>
+    <div class="d-flex justify-content-center mt-5 pt-5">
+        <form method="POST" action="{{ route('password.update') }}" class="needs-validation" novalidate>
             @csrf
-            <input name="token" class="is-hidden" value="{{ $token }}">
-            <div class="field mb-5">
-                <label class="label">Adresse E-mail</label>
-                <p class="control has-icons-left has-icons-right">
-                    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}"
-                           autocomplete="email" placeholder="Votre email" autofocus>
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-envelope"></i>
-                    </span>
-                </p>
-                @error('email')
-                <span class="help is-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="field mb-5">
-                <label for="password" class="label">Mot de passe</label>
-                <p class="control has-icons-left">
-                <input id="password" type="password" name="password" class="input" value="{{ old('password') }}"
-                       autocomplete="password" placeholder="Votre mot de passe">
-                <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-                </span>
-                </p>
-                @error('password')
-                <span class="help is-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="field mb-5">
-                <label for="password_confirmation" class="label">Confirmation du mot de passe</label>
-                <p class="control has-icons-left">
-                <input id="password_confirmation" type="password" name="password_confirmation" class="input"
-                       value="{{ old('password_confirmation') }}" autocomplete="password_confirmation"
-                       placeholder="Retapez votre mot de passe">
-                <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-                </span>
-                </p>
-            </div>
-            <button type="submit" class="button is-primary is-fullwidth">Réinitialiser mot de passe</button>
+            <input name="token" class="visually-hidden" value="{{ $token }}">
+            <h1 class="h3 mb-3 fw-normal">Complétez vos informations</h1>
+            <label for="email" class="form-label @error('email') is-invalid @enderror">Votre adresse Email</label>
+            <input id="email" type="email" name="email" class="form-control mb-2" value="{{ old('email') }}" placeholder="Votre email" aria-describedby="validationEmail" autofocus required>
+            @error('email')
+            <div id="validationEmail" class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <label for="password" class="form-label">Mot de passe</label>
+            <input id="password" type="password" name="password" class="form-control mb-2 @error('password') is-invalid @enderror" value="{{ old('password') }}" placeholder="Votre mot de passe" aria-describedby="validationPassword" required>
+            @error('password')
+            <div id="validationPassword" class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <label for="password_confirmation" class="form-label">Confirmation du mot de passe</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" class="form-control mb-3 @error('password_confirmation') is-invalid @enderror" value="{{ old('password_confirmation') }}" placeholder="Retapez votre mot de passe" aria-describedby="validationPasswordConfirmation" required>
+            @error('password_confirmation')
+            <div id="validationPasswordConfirmation" class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Réinitialiser le mot de passe</button>
+            @if (session('status'))
+                <div class="text-danger">{{ session('status') }}</div>
+            @endif
         </form>
-                </div>
-            </div>
-            <div class="column"></div>
-        </div>
-    </section>
+    </div>
 @endsection

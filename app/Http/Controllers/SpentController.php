@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\SpentsImport;
 use App\Models\Account;
+use App\Models\Category;
 use App\Models\Family;
 use App\Models\Spent;
 use Illuminate\Contracts\Foundation\Application;
@@ -25,8 +26,8 @@ class SpentController extends Controller
     public function view()
     {
         return view('create.spent',[
-            'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->get(),
-            'families' => Family::where('user_id', Auth::user()->getAuthIdentifier())->get(),
+            'spents' => Spent::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('created_at', 'desc')->limit(50)->get(),
+            'categories' => Category::where('user_id', Auth::user()->getAuthIdentifier())->where('kind', 'spent')->get(),
             'accounts' => Account::where('user_id', Auth::user()->getAuthIdentifier())->orderBy('main', 'desc')->get(),
         ]);
     }
@@ -40,7 +41,7 @@ class SpentController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-           'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'price' => 'required|regex:/^\d+(\.\d{1,2})?$/',
             'date' => 'required|date',
             'family_id' => 'required|integer',
@@ -57,7 +58,7 @@ class SpentController extends Controller
                 'family_id' => request('family_id'),
         ]);
 
-        return back()->with('create', 'dépense ajoutée');
+        return back()->with('toast_success', 'Dépense ajoutée !');
     }
 
     /**
@@ -89,7 +90,7 @@ class SpentController extends Controller
 
             ]);
 
-        return back()->with('update', 'dépense modifiée');
+        return back()->with('toast_success', 'Dépense modifiée !');
     }
 
     /**
@@ -102,7 +103,7 @@ class SpentController extends Controller
     {
         DB::table('spents')->where('id', $id)->delete();
 
-        return back()->with('delete', 'dépense supprimée');
+        return back()->with('toast_success', 'Dépense supprimée !');
     }
 
     /**
