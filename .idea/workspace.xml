@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SpentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SpentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/create/spent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/create/spent.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/table/month.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/table/month.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/table/year.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/table/year.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="6a956be4-1782-4206-ab99-7a82b63ef79f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -527,7 +519,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617785777207</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="fix/errors_table(#1):&#10;&#10;- spent, app, month, table blade modification&#10;- spent controler">
+      <created>1617795509035</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1617795509035</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -570,7 +569,8 @@
     <MESSAGE value="[feat]earning-refund(earning/family):&#10;&#10;- finish all form creation&#10;- Add validation fr lang" />
     <MESSAGE value="[feat]earning-refund(earning/family):&#10;&#10;- blade modification" />
     <MESSAGE value="[feat]earning-refund(earning/family):&#10;&#10;- no account select modify &#10;- mielageTab defien null&#10;- test sweetalert" />
-    <option name="LAST_COMMIT_MESSAGE" value="[feat]earning-refund(earning/family):&#10;&#10;- no account select modify &#10;- mielageTab defien null&#10;- test sweetalert" />
+    <MESSAGE value="fix/errors_table(#1):&#10;&#10;- spent, app, month, table blade modification&#10;- spent controler" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix/errors_table(#1):&#10;&#10;- spent, app, month, table blade modification&#10;- spent controler" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

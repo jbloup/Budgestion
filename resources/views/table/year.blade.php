@@ -155,7 +155,6 @@
                 @endif
             <!-- End Year table -->
             <!-- Spent Category Year table -->
-                @if($spentCategories->count() > 0)
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dépenses</h1>
                     <span class="badge bg-danger">- {{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }}</span>
@@ -219,7 +218,6 @@
                         </div>
                         @endif
                     @endforeach
-                @endif
                 <!-- Fuel Year table -->
                 @if($fuels->count() > 0)
                 <div class="table-container">
