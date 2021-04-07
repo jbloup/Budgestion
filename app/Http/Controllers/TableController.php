@@ -179,6 +179,7 @@ class TableController extends Controller
                         $totalSpentYear = 0;
                         $totalSpentMonth = 0;
                         if($family->spents->count() > 0) {
+                            $spentCount = true;
                             foreach ($family->spents as $spent) {
                                 if (($spent->date >= $date) && ($spent->date < $date2)) {
                                     $totalSpentMonth += $spent->price;
@@ -189,6 +190,7 @@ class TableController extends Controller
                             }
                         }
                         else if($family->earnings->count() > 0) {
+                            $earningCount = true;
                             foreach ($family->earnings as $earning) {
                                 if (($earning->date >= $date) && ($earning->date < $date2)) {
                                     $totalSpentMonth += $earning->amount;
@@ -296,6 +298,8 @@ class TableController extends Controller
         return view('table.year',[
             'spentCategories' => $spentCategories,
             'earningCategories' => $earningCategories,
+            'spentCount' => $spentCount,
+            'earningCount' => $earningCount,
             'cars' => $cars,
             'fuels' => $fuels,
             'year' => $year,
