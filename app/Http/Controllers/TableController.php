@@ -150,6 +150,9 @@ class TableController extends Controller
 
         $tabTotalFuelAndCategoryMonth = null;
 
+        $mileageYearTab = null;
+        $mileageTab = null;
+
         if(request('year') == null){
             $year = date('Y');
             $year2 = date('Y', strtotime('+1 year'));
