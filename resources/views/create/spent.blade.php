@@ -177,19 +177,19 @@
                         </thead>
                         <tbody>
                         @foreach($spents as $spent)
-                            <tr id="{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}">
+                            <tr id="{{ 'spent' . $spent->id . 'enabled' }}">
                                 <td>{{ $spent->name }}</td>
                                 <td>{{ $spent->description }}</td>
                                 <td>{{ $spent->price . ' €' }}</td>
                                 <td>{{ date('d-m-Y', strtotime($spent->date)) }}</td>
                                 <td>{{ $spent->family->name }}</td>
                                 <td>{{ $spent->account->name }}</td>
-                                <td><button class="btn" onclick="document.getElementById('{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}').className =' '; document.getElementById('{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}').className =' d-none'">
+                                <td><button class="btn" onclick="document.getElementById('{{  'spent' . $spent->id . 'disabled' }}').className =' '; document.getElementById('{{ 'spent' . $spent->id . 'enabled' }}').className =' d-none'">
                                         <i class="fas fa-pen"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr id="{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}" class="d-none">
+                            <tr id="{{  'spent' . $spent->id . 'disabled' }}" class="d-none">
                                 <form id="form-update-spent" method="POST" action="{{ url('/spent', ['id' => $spent->id]) }}">
                                     @method('put')
                                     @csrf
@@ -231,13 +231,13 @@
                                 </form>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}').className =' d-none'; document.getElementById('form-update-spent').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ 'spent' . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  'spent' . $spent->id . 'disabled' }}').className =' d-none'; document.getElementById('form-update-spent').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . str_replace(' ', '', $spent->name) . $spent->id . 'delete' }}">
+                                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'spent' . $spent->id . 'delete' }}">
                                             <i class="far fa-trash-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{ str_replace(' ', '', $spent->name) . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  str_replace(' ', '', $spent->name) . $spent->id . 'disabled' }}').className =' d-none'">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('{{ 'spent' . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  'spent' . $spent->id . 'disabled' }}').className =' d-none'">
                                             <i class="far fa-times-circle"></i>
                                         </button>
                                     </div>
