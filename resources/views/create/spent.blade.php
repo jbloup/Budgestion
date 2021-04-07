@@ -123,6 +123,9 @@
                                 <div class="col">
                                     <label for="account_id" class="form-label">Compte bancaire</label>
                                     <select class="form-select @error('account_id') is-invalid @enderror" id="account_id" name="account_id" aria-describedby="validationAccount" required>
+                                        @if($accounts->count() <= 0)
+                                        <option value="">compte ...</option>
+                                        @else
                                         @foreach($accounts as $account)
                                             <option value="{{$account->id}}">{{$account->number . " : " . $account->name}}
                                                 @if($account->main == 1)
@@ -130,6 +133,7 @@
                                                 @endif
                                             </option>
                                         @endforeach
+                                        @endif
                                     </select>
                                     @error('account_id')
                                     <div id="validationAccount" class="invalid-feedback">{{ $message }}</div>
