@@ -290,9 +290,9 @@ class TableController extends Controller
                 $tabTotalFuelAndCategoryMonth[$i] = $tabSpentTotalMonth[$i] + $tabTotalVehicleMonth[$i];
                 $totalFuelAndCategoryYear = $spentTotalYear + $totalVehicleYear;
             }else{
-                $totalFuelAndCategoryYear = 0;
+                $totalFuelAndCategoryYear = $spentTotalYear;
             }
-            $totalYear = $earningTotalYear - $spentTotalYear - $totalFuelAndCategoryYear;
+            $totalYear = $earningTotalYear - $totalFuelAndCategoryYear;
         }
 
         return view('table.year',[
