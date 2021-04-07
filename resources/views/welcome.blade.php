@@ -15,22 +15,18 @@
                 <div class="col-md-3">
                     <h2>Dépenses</h2>
                     <p>Après avoir créer vos catégories, type et sous-type, enregistrez et classez vos dépenses.</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">Détails &raquo;</a></p>
                 </div>
                 <div class="col-md-3">
                     <h2>Revenus</h2>
                     <p>Enregistrez également vos différents revenus, qui seront eux aussi classés par catégorie, type et sous-type.</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">Détails &raquo;</a></p>
-                </div>
-                <div class="col-md-3">
-                    <h2>Bilans</h2>
-                    <p>Consultez les bilans annuels et mensuels de vos dépenses et de vos revenus.</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">Détails &raquo;</a></p>
                 </div>
                 <div class="col-md-3">
                     <h2>Véhicules</h2>
                     <p>Créez des véhicules avec leur kilométrage, mis à jour lors de l'enregistrement des dépenses de carburant.</p>
-                    <p><a class="btn btn-secondary" href="#" role="button">Détails &raquo;</a></p>
+                </div>
+                <div class="col-md-3">
+                    <h2>Bilans</h2>
+                    <p>Consultez les bilans annuels et mensuels de vos dépenses et de vos revenus.</p>
                 </div>
             </div>
         </div>

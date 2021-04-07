@@ -57,7 +57,7 @@
                 <!-- End Chart -->
 
                 <!-- Year table -->
-                @if($totalYear > 0)
+                @if($spentCount || $earningCount)
                 <div class="table-container">
                     <div class="form-control mb-3">
                         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
