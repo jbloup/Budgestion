@@ -4,7 +4,7 @@
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron mt-5">
             <div class="container mt-5">
-                <h1 class="display-3">Bienvenu sur Budgestion !</h1>
+                <h1 class="display-3">Bienvenue sur Budgestion !</h1>
                 <p>L'application de gestion de budget.</p>
                 <p><a class="btn btn-primary btn-lg" href="{{ route('register') }}" role="button">Commencer &raquo;</a></p>
             </div>
