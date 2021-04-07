@@ -33,7 +33,7 @@
                         @csrf
                         @method('post')
                         <div class="row g-1">
-                            <div class="col">
+                            <div class="col-4">
                                 <select class="form-select form-select-sm" name="month" id="month">
                                     @for($i=1;$i<=12;$i++)
                                         @if(date('m', mktime(0, 0, 0, $i, 10)) == date('m', strtotime($date)))
@@ -44,7 +44,7 @@
                                     @endfor
                                 </select>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <select class="form-select form-select-sm"  name="year" id="year">
                                     @for( $i=1980; $i < 2100; $i++ )
                                         @if( date("Y", strtotime($date)) == $i)
@@ -55,7 +55,7 @@
                                     @endfor
                                 </select>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <button class="btn btn-primary btn-sm" type="submit">valider</button>
                             </div>
                         </div>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Imports\SpentsImport;
 use App\Models\Account;
 use App\Models\Category;
-use App\Models\Family;
 use App\Models\Spent;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;

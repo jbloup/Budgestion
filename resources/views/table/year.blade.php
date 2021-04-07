@@ -8,9 +8,9 @@
                     <div class="form-control mb-3">
                         <h6>Totaux</h6>
                         <ul class="list-group list-group-flush">
-                            @if($earningCategories->count() > 0)<li class="list-group-item d-flex justify-content-between"><p>Revenu</p><p><span class="badge bg-success">{{ number_format($earningTotalYear, 2, ',', ' ') . ' €' }}</span></p></li>@endif
-                            @if($spentCategories->count() > 0)<li class="list-group-item d-flex justify-content-between"><p>Dépense</p><p><span class="badge bg-danger">@if($fuels->count() > 0)- {{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }} @else - {{ number_format($spentTotalYear, 2, ',', ' ') . ' €' }} @endif</span></p></li>@endif
-                            @if($spentCategories->count() > 0 && $earningCategories->count() > 0)<li class="list-group-item d-flex justify-content-between"><p>Total</p><p>@if($totalYear >= 0)<span class="badge bg-primary">+ {{ number_format($totalYear, 2, ',', ' ') . ' €' }} @else <span class="badge bg-danger">{{ number_format($totalYear, 2, ',', ' ') . ' €' }}</span> @endif</p></li>@endif
+                            <li class="list-group-item d-flex justify-content-between"><p>Revenu</p><p><span class="badge bg-success">{{ number_format($earningTotalYear, 2, ',', ' ') . ' €' }}</span></p></li>
+                            <li class="list-group-item d-flex justify-content-between"><p>Dépense</p><p><span class="badge bg-danger">@if($fuels->count() > 0)- {{ number_format($totalFuelAndCategoryYear, 2, ',', ' ') . ' €' }} @else - {{ number_format($spentTotalYear, 2, ',', ' ') . ' €' }} @endif</span></p></li>
+                            <li class="list-group-item d-flex justify-content-between"><p>Total</p><p>@if($totalYear >= 0)<span class="badge bg-primary">+ {{ number_format($totalYear, 2, ',', ' ') . ' €' }} @else <span class="badge bg-danger">{{ number_format($totalYear, 2, ',', ' ') . ' €' }}</span> @endif</p></li>
                         </ul>
                     </div>
                     @if($cars->count() > 0)
@@ -57,6 +57,7 @@
                 <!-- End Chart -->
 
                 <!-- Year table -->
+                @if($totalYear > 0)
                 <div class="table-container">
                     <div class="form-control mb-3">
                         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
@@ -149,8 +150,9 @@
                                 @endif
                             </tbody>
                         </table>
+                        </div>
                     </div>
-                    </div>
+                @endif
             <!-- End Year table -->
             <!-- Spent Category Year table -->
                 @if($spentCategories->count() > 0)
@@ -267,7 +269,6 @@
                         </tr>
                         </tfoot>
                     </table>
-
                         <table class="table table-bordered table-sm table-hover">
                             <thead>
                             <tr class="table-primary">
@@ -315,7 +316,6 @@
                 <!-- End Fuel Year table -->
                 <!-- End Spent Category Year table -->
                 <!-- Earning Category Year table -->
-                @if($earningCategories->count() > 0)
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Revenus</h1>
                     <span class="badge bg-success">{{ number_format($earningTotalYear, 2, ',', ' ') . ' €' }}</span>
@@ -381,7 +381,7 @@
                     </div>
                         @endif
                 @endforeach
-                @endif
+
                 <!-- End Earning Category Year table -->
             </main>
         </div>
