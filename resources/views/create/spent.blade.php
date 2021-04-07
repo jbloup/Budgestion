@@ -190,7 +190,7 @@
                                 </td>
                             </tr>
                             <tr id="{{  'spent' . $spent->id . 'disabled' }}" class="d-none">
-                                <form id="form-update-spent" method="POST" action="{{ url('/spent', ['id' => $spent->id]) }}">
+                                <form id="{{  'spent' . $spent->id . 'update' }}" method="POST" action="{{ url('/spent', ['id' => $spent->id]) }}">
                                     @method('put')
                                     @csrf
                                     <td><input id="update_spent_name" type="text" name="update_spent_name" class="form-control" value="{{ $spent->name }}" placeholder="Nom du dépense" required></td>
@@ -231,7 +231,7 @@
                                 </form>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ 'spent' . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  'spent' . $spent->id . 'disabled' }}').className =' d-none'; document.getElementById('form-update-spent').submit();">
+                                        <button class="btn btn-outline-success" type="submit" onclick="document.getElementById('{{ 'spent' . $spent->id . 'enabled' }}').className =' '; document.getElementById('{{  'spent' . $spent->id . 'disabled' }}').className =' d-none'; document.getElementById('{{  'spent' . $spent->id . 'update' }}').submit();">
                                             <i class="far fa-check-circle"></i>
                                         </button>
                                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="{{ '#' . 'spent' . $spent->id . 'delete' }}">
